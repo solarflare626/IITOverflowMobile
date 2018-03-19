@@ -1,48 +1,65 @@
-
-<ion-header class="homeheader">
-  <ion-navbar class="homenavbar" >
-    <ion-title>Home</ion-title>
-        <!-- <ion-searchbar class="searchbar-md searchbar-input" placeholder="Search here!"></ion-searchbar> -->
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Edit Information
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content class="home">
-  <ion-card  class="cards">
+<ion-content padding>
+  <div *ngIf="isLoggedIn; else loginTemplate">
+      <h1>Welcome, {{displayName}}!</h1>  
+      <p> Change your information if you want to change the default info.</p>
 
-  <ion-item>
-    <ion-avatar item-start>
-      <img src="assets/imgs/download1.jpeg">
-    </ion-avatar>
-    <h2>Marty McFly</h2>
-    <p>November 5, 1955</p>
-  </ion-item>
+      <p><ion-avatar item-left>
+        <img src="{{imageUrl}}" class = "center" >
+        </ion-avatar>
+      </p>
+      <button ion-button round class = "center" (click) = "uploadFile1()" ><ion-icon name="ion-camera"> Change Profile Pic</ion-icon></button>
 
-   
+      <ion-list>
+          <ion-item>
+            <ion-label fixed>Full Name</ion-label>
+            <ion-input type="text" value=" {{ displayName }}"></ion-input>
+          </ion-item>
+        
+          <ion-item>
+              <ion-label fixed>Display Name</ion-label>
+              <ion-input type="text" value=""></ion-input>
+          </ion-item>
 
-  <ion-card-content>
-    <p>Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a DeLorean?! Whoa. This is heavy.</p>
-  </ion-card-content>
+          <ion-item>
+              <ion-label fixed>Email</ion-label>
+              <ion-input type="text" value=" {{email}}"></ion-input>
+          </ion-item>
 
-  <ion-row>
-    <ion-col>
-      <button ion-button icon-left clear small>
-        <ion-icon name="thumbs-up"></ion-icon>
-        <div>12 Likes</div>
-      </button>
-    </ion-col>
-    <ion-col>
-      <button ion-button icon-left clear small>
-        <ion-icon name="text"></ion-icon>
-        <div>4 Comments</div>
-      </button>
-    </ion-col>
-    <ion-col center text-center>
-      <ion-note>
-        11h ago
-      </ion-note>
-    </ion-col>
-  </ion-row>
+          <ion-item>
+              <ion-label>Interests</ion-label>
+              <ion-select [(ngModel)]="toppings" multiple="true" cancelText="Cancel" okText="Done!">
+                <ion-option value="Mathematics" selected="true"> Mathematics</ion-option>
+                <ion-option value="CS">Computer and Information Sciences</ion-option>
+                <ion-option value="Physical science">Physical Science</ion-option>
+                <ion-option value="Chemical science">Chemical Science</ion-option>
+                <ion-option value="Environmental science">Environmental Sciences</ion-option>
+                <ion-option value="Biological science">Biological Science</ion-option>
+                <ion-option value="Psychology">Psychology</ion-option>
+                <ion-option value="Sociology">Sociology</ion-option>
+                <ion-option value="Law">Law</ion-option>
+                <ion-option value="Nano technology">Nano technology</ion-option>
+              </ion-select>
+            </ion-item>
 
-</ion-card>
 
+      </ion-list>
+
+      <div><button ion-button class = "center">Submit Information</button></div>
+     <div><button ion-button (click)="presentConfirm()" class = "center">Logout From Google</button></div>
+    
+  </div>
+  
+
+  <ng-template #loginTemplate>
+    <h1>Please Login to see your Google Account Information</h1>
+    <p><button ion-button (click)="login()">Login With Google</button></p>
+  </ng-template>
 </ion-content>

@@ -1,26 +1,23 @@
-import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { MyApp } from './app.component';
-
-import { NotificationPage } from '../pages/notification/notification';
-import { ChatPage } from '../pages/chat/chat';
-import { ProfilePage } from '../pages/profile/profile';
-import { QandaPage } from '../pages/qanda/qanda';
-import { HomePage } from '../pages/home/home';
-import { TabsPage } from '../pages/tabs/tabs';
-import { StatusBar } from '@ionic-native/status-bar';
+import { ErrorHandler, NgModule } from '@angular/core';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+
+import { MyApp } from './app.component';
+import { HomePage } from '../pages/home/home';
+
+import { GooglePlus } from '@ionic-native/google-plus';
+import { AlertController } from 'ionic-angular';
+
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { File } from '@ionic-native/file';
+import { Camera } from '@ionic-native/camera';
 
 @NgModule({
   declarations: [
     MyApp,
-    NotificationPage,
-    ProfilePage,
-    HomePage,
-    ChatPage,
-    QandaPage,
-    TabsPage
+    HomePage
   ],
   imports: [
     BrowserModule,
@@ -29,17 +26,18 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    NotificationPage,
-    ProfilePage,
-    ChatPage,
-    HomePage,
-    QandaPage,
-    TabsPage
+    HomePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    GooglePlus,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    FileTransfer,
+    FileTransferObject,
+    File,
+    Camera
   ]
 })
+
 export class AppModule {}
