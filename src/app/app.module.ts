@@ -7,6 +7,7 @@ import { NotificationPage } from '../pages/notification/notification';
 import { ChatPage } from '../pages/chat/chat';
 import { ProfilePage } from '../pages/profile/profile';
 import { QandaPage } from '../pages/qanda/qanda';
+import { PostQuestionPage } from '../pages/post_question/post_question';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -20,6 +21,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HomePage,
     ChatPage,
     QandaPage,
+    PostQuestionPage,
     TabsPage
   ],
   imports: [
@@ -34,6 +36,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ChatPage,
     HomePage,
     QandaPage,
+    PostQuestionPage,
     TabsPage
   ],
   providers: [

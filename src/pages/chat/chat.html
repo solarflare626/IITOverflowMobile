@@ -7,6 +7,43 @@
 </ion-header>
 
 <ion-content padding>
+  <div padding>
+  <ion-segment [(ngModel)]="tab">
+    <ion-segment-button value="convo">
+      Conversations
+    </ion-segment-button>
+    <ion-segment-button value="contact">
+      Contacts
+    </ion-segment-button>
+  </ion-segment>
+</div>
+
+<div [ngSwitch]="tab">
+  <ion-list *ngSwitchCase="'convo'">
+    <ion-item>
+    <ion-avatar item-start>
+      <img src="assets/imgs/download1.jpeg">
+    </ion-avatar>
+    <h2>BangLoLi</h2>
+    <p>You: Halp, wa nko kabalo unsay buhaton sa...</p>
+  </ion-item>
+  </ion-list>
+
+  <ion-list *ngSwitchCase="'contact'">
+    <ion-item>
+      <ion-thumbnail item-start>
+        <img src="assets/imgs/download1.jpg">
+      </ion-thumbnail>
+      <h2>Someone U. Dunnoe</h2>
+    </ion-item>
+      <ion-item>
+      <ion-thumbnail item-start>
+        <img src="assets/imgs/download1.jpg">
+      </ion-thumbnail>
+      <h2>Nowan I. Noe</h2>
+    </ion-item>
+  </ion-list>
+</div>
 	 <ion-fab class="newmessage" bottom right>
    		<button ion-fab><ion-icon name="md-add"></ion-icon></button>
    		<ion-fab-list side="top">
@@ -15,34 +52,4 @@
      	<button ion-fab><ion-icon name="md-globe"></ion-icon></button>
    </ion-fab-list>
  	</ion-fab>
-   <ion-list>
-  <ion-item>
-    <ion-avatar item-start>
-      <img src="assets/imgs/download1.jpeg">
-    </ion-avatar>
-    <h2>Finn</h2>
-    <h3>Don't Know What To Do!</h3>
-    <p>I've had a pretty messed up day. If we just...</p>
-  </ion-item>
-</ion-list>
-   <ion-list>
-  <ion-item>
-    <ion-avatar item-start>
-      <img src="assets/imgs/download1.jpeg">
-    </ion-avatar>
-    <h2>Finn</h2>
-    <h3>Don't Know What To Do!</h3>
-    <p>I've had a pretty messed up day. If we just...</p>
-  </ion-item>
-</ion-list>
- <ion-list>
-  <ion-item>
-    <ion-avatar item-start>
-      <img src="assets/imgs/download1.jpeg">
-    </ion-avatar>
-    <h2>Finn</h2>
-    <h3>Don't Know What To Do!</h3>
-    <p>I've had a pretty messed up day. If we just...</p>
-  </ion-item>
-</ion-list>
 </ion-content>
