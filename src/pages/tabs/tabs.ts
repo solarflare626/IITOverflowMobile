@@ -1,21 +1,17 @@
 import { Component } from '@angular/core';
 
-import { NotificationPage } from '../notification/notification';
-import { ProfilePage } from '../profile/profile';
+import { AboutPage } from '../about/about';
+import { ContactPage } from '../contact/contact';
 import { HomePage } from '../home/home';
-import { QandaPage} from '../qanda/qanda';
-import { ChatPage } from '../chat/chat';
 
 @Component({
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
 
-  home_tab = HomePage;
-  notif_tab = NotificationPage;
-  profile_tab = ProfilePage;
-  qanda_tab = QandaPage;
-  chat_tab = ChatPage;
+  tab1Root = HomePage;
+  tab2Root = AboutPage;
+  tab3Root = ContactPage;
 
   constructor() {
 

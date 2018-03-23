@@ -1,35 +1,32 @@
+
 page-home {
 
-.cards{
-	margin-bottom: 10px;
-	float: none;
-	display: inline-block;
-	width: 90%;
-	border-radius: 25px;
-
- 
-
-	}
-.home {
-	background-color : #D1D1D1;
-	text-align: center;
 }
 
 
-.searchbar-md .searchbar-input {
- border-radius: 30px;
-  height: 5%;
-  box-shadow: 0 0 2px 1px #6273FF;
-
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+.select_home {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
 }
 
-.homeheader{
-box-shadow: 0 0 2px 3px #E5E5E5 ;
-	
+.upvote {
+    background-color:#4CAF50;
 }
 
+.downvote {
+    background-color: #f44336;
 
 
 }
 
-
+.vote {
+    width: 50px;
+}

@@ -1,48 +1,180 @@
-
-<ion-header class="homeheader">
-  <ion-navbar class="homenavbar" >
-    <ion-title>Home</ion-title>
-        <!-- <ion-searchbar class="searchbar-md searchbar-input" placeholder="Search here!"></ion-searchbar> -->
+<ion-header>
+  <ion-navbar>
+    <ion-title> <ion-icon name="md-book"></ion-icon>Flow.IIT</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content class="home">
-  <ion-card  class="cards">
+<ion-content padding>
 
-  <ion-item>
-    <ion-avatar item-start>
-      <img src="assets/imgs/download1.jpeg">
-    </ion-avatar>
-    <h2>Marty McFly</h2>
-    <p>November 5, 1955</p>
+  <ion-searchbar
+  [(ngModel)]="myInput"
+  [showCancelButton]="shouldShowCancel"
+  (ionCancel)="onCancel($event)"
+  id = "search">
+</ion-searchbar>
+
+<ion-item no-lines class = "center">
+    <ion-select [(ngModel)]="select_categories" class = "select_home">
+      <ion-option *ngFor="let c of categories" value="{{c}}" [selected]="select_categories == c">{{ c }}</ion-option>
+    </ion-select>
+</ion-item>
+
+<ion-item no-lines class = "center">
+    <ion-select [(ngModel)]="select_sort" class = "select_home">
+        <ion-option *ngFor="let s of sort" value="{{s}}" [selected]="select_sort == s">{{ s }}</ion-option>
+      </ion-select>
+</ion-item>
+
+
+<button class = "askButton" ion-button block>Ask Question</button>
+<ion-list>
+  <ion-item-sliding #item>
+    <ion-item>
+<ion-card>
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="../../assets/imgs/avatar_6225.jpg" >
+  
+      </ion-avatar>
+      <h2>makoooy123</h2>
+      <p><strong>Categories:</strong> Computer Science</p>
+    </ion-item>
+  
+    <ion-card-content>
+      <h1>How to declare a variable in javascript?</h1>
+    </ion-card-content>
+    <ion-row>
+        <ion-col>
+            
+          <button ion-button icon-left small round outline>
+           Javascript
+          </button>
+          <button ion-button icon-left small round outline>
+              CSS
+            </button>
+        </ion-col>
+
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-left clear small>
+          <ion-icon name="thumbs-up"></ion-icon>
+          <div>12 Likes</div>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button icon-left clear small>
+          <ion-icon name="text"></ion-icon>
+          <div>4 Comments</div>
+        </button>
+      </ion-col>
+      <ion-col center text-center>
+        <ion-note>
+          11h ago
+        </ion-note>
+      </ion-col>
+    </ion-row>
+
+  </ion-card>
   </ion-item>
+  <ion-item-options side="left">
+      <button ion-button class="upvote"><ion-icon name="arrow-dropup" class = "vote"></ion-icon></button>
+      <button ion-button class="downvote"><ion-icon name="arrow-dropdown" class = "vote"></ion-icon></button>
+    </ion-item-options>
+</ion-item-sliding>
 
-   
 
-  <ion-card-content>
-    <p>Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a DeLorean?! Whoa. This is heavy.</p>
-  </ion-card-content>
+<ion-card > 
 
-  <ion-row>
-    <ion-col>
-      <button ion-button icon-left clear small>
-        <ion-icon name="thumbs-up"></ion-icon>
-        <div>12 Likes</div>
-      </button>
-    </ion-col>
-    <ion-col>
-      <button ion-button icon-left clear small>
-        <ion-icon name="text"></ion-icon>
-        <div>4 Comments</div>
-      </button>
-    </ion-col>
-    <ion-col center text-center>
-      <ion-note>
-        11h ago
-      </ion-note>
-    </ion-col>
-  </ion-row>
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="../../assets/imgs/test1.png">
+  
+      </ion-avatar>
+      <h2>jinjavu123</h2>
+      <p><strong>Categories:</strong> Computer Science</p>
+    </ion-item>
+  
+    <ion-card-content>
+      <h1>what if I want to put a help function!! where should i put it???</h1>
+    </ion-card-content>
+    <ion-row>
+        <ion-col>
+            
+          <button ion-button icon-left small round outline>
+           Python
+          </button>
+        
+        </ion-col>
 
-</ion-card>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-left clear small>
+          <ion-icon name="thumbs-up"></ion-icon>
+          <div>12 Likes</div>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button icon-left clear small>
+          <ion-icon name="text"></ion-icon>
+          <div>4 Comments</div>
+        </button>
+      </ion-col>
+      <ion-col center text-center>
+        <ion-note>
+          11h ago
+        </ion-note>
+      </ion-col>
+    </ion-row>
 
+  </ion-card>
+
+
+<ion-card>
+
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="../../assets/imgs/test2.jpg">
+  
+      </ion-avatar>
+      <h2>makoooy123</h2>
+      <p><strong>Categories:</strong> Computer Science</p>
+    </ion-item>
+  
+    <ion-card-content>
+      <h1>java.lang.NullPointerException Error in NetBeans :(</h1>
+    </ion-card-content>
+    <ion-row>
+        <ion-col>
+            
+          <button ion-button icon-left small round outline>
+           Java
+          </button>
+    
+        </ion-col>
+
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-left clear small>
+          <ion-icon name="thumbs-up"></ion-icon>
+          <div>12 Likes</div>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button icon-left clear small>
+          <ion-icon name="text"></ion-icon>
+          <div>4 Comments</div>
+        </button>
+      </ion-col>
+      <ion-col center text-center>
+        <ion-note>
+          11h ago
+        </ion-note>
+      </ion-col>
+    </ion-row>
+
+  </ion-card>
+</ion-list>
 </ion-content>
