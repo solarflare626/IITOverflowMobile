@@ -1,12 +1,8 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Edit Information
-    </ion-title>
-  </ion-navbar>
+
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class = "bg">
   <div *ngIf="isLoggedIn; else loginTemplate">
       <h1>Welcome, {{displayName}}!</h1>  
       <p> Change your information if you want to change the default info.</p>
@@ -59,7 +55,14 @@
   
 
   <ng-template #loginTemplate>
-    <h1>Please Login to see your Google Account Information</h1>
-    <p><button ion-button (click)="login()">Login With Google</button></p>
+    <img src="../../assets/imgs/flowLogo.png" alt="" class = "flowLogo">
+    <div id="flowDesc">
+    <h1 >IIT Overflow</h1>
+    <p style="color: white; font-size: 15px;">IIT Overflow is an interactive app which caters MSU-IIT student's daily inquiry for knowledge. 
+      We provide a fast-pace environment where students can ask questions regarding their homeworks or projects.
+    </p>
+  </div>
+  <img src="../../assets/imgs/googleLogo1.png" alt="" class = "googleLoginButton" ng-click="login()">
+    <!-- <p><button ion-button (click)="login()">Login With Google</button></p> -->
   </ng-template>
 </ion-content>

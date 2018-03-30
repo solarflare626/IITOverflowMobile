@@ -55,6 +55,7 @@ export class HomePage {
       
       })
       .catch(err => console.error(err));
+      console.log("Login button pressed")
   }
 
   logout() {
