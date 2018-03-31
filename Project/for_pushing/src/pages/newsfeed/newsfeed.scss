@@ -1,8 +1,29 @@
+page-newsfeed {
 
-page-home {
-
+.questiondetails {
+    border: 1px solid #c0c0c0;
+    border-radius: 5px;
+    padding: 10px;
 }
 
+.comment {
+    border: 1px solid #c0c0c0;
+    border-radius: 30px;
+    margin: 10px;
+    width: 75%;
+    padding: 10px;
+    float: left;
+}
+
+.comment_answer {
+    width: 20%;
+    border-radius: 30px;
+    margin: 10px;
+    padding: 10px;
+    float: left;
+    background-color: #0080ff;
+    color: white;
+}
 
 .center {
     display: block;
@@ -29,4 +50,6 @@ page-home {
 
 .vote {
     width: 50px;
+}
+
 }

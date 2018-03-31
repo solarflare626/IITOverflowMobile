@@ -9,10 +9,12 @@ import { MessagingPage } from '../pages/messaging/messaging';
 import { ProfilePage } from '../pages/profile/profile';
 import { NewsFeedPage } from '../pages/newsfeed/newsfeed';
 import { TabsPage } from '../pages/tabs/tabs';
+import { QuestionPage } from '../pages/question/question';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { MessagingProvider } from '../providers/messaging/messaging';
 import { NewsfeedProvider } from '../providers/newsfeed/newsfeed';
+import { NotificationProvider } from '../providers/notification/notification';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,7 @@ import { NewsfeedProvider } from '../providers/newsfeed/newsfeed';
     ProfilePage,
     NewsFeedPage,
     MessagingPage,
+    QuestionPage,
     TabsPage
   ],
   imports: [
@@ -35,6 +38,7 @@ import { NewsfeedProvider } from '../providers/newsfeed/newsfeed';
     ProfilePage,
     MessagingPage,
     NewsFeedPage,
+    QuestionPage,
     TabsPage
   ],
   providers: [
@@ -42,7 +46,8 @@ import { NewsfeedProvider } from '../providers/newsfeed/newsfeed';
     SplashScreen,
     MessagingProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    NewsfeedProvider
+    NewsfeedProvider,
+    NotificationProvider
   ]
 })
 export class AppModule {}

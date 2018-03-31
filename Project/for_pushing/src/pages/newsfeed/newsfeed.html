@@ -13,25 +13,37 @@
   id = "search">
 </ion-searchbar>
 
-<ion-item no-lines class = "center">
+<ion-item no-lines class = "center" style="display: inline-block;">
     <ion-select [(ngModel)]="select_categories" class = "select_home">
       <ion-option *ngFor="let c of categories" value="{{c}}" [selected]="select_categories == c">{{ c }}</ion-option>
     </ion-select>
-</ion-item>
-
-<ion-item no-lines class = "center">
     <ion-select [(ngModel)]="select_sort" class = "select_home">
         <ion-option *ngFor="let s of sort" value="{{s}}" [selected]="select_sort == s">{{ s }}</ion-option>
-      </ion-select>
+    </ion-select>
 </ion-item>
 
 
-<button class = "askButton" ion-button block>Ask Question</button>
+<button class = "askButton" ion-button block [navPush]="postquestion">Ask Question</button>
 
 <ion-list>
-  <ion-item-sliding #item *ngFor="let question of questions">
-    <ion-item>
+    <ion-item *ngFor="let question of questions">
+      <!--<ion-item-sliding #item>
+      <ion-item class="questiondetails" no lines>
+        <h1>VOTES: {{ question.votes }} </h1>
+      </ion-item>
+      <ion-item-options side="left">
+        <button ion-button class="upvote">UPVOTE</button>
+        <button ion-button class="downvote">DOWNVOTE</button>
+      </ion-item-options>
+      </ion-item-sliding>-->
       <ion-card>
+        <ion-row>
+          <ion-col col-1 style="text-align: center;">
+            <button ion-button clear><img src="../../assets/imgs/arrow-up-b.png"></button>
+            <h1>{{ question.votes }}</h1>
+            <button ion-button clear><img src="../../assets/imgs/arrow-down-b.png"></button>
+          </ion-col>
+          <ion-col col-11>
         <ion-item>
           <ion-avatar item-start>
           <img src="../../assets/imgs/avatar_6225.jpg" >
@@ -41,40 +53,24 @@
           <p *ngFor="let cat of question.categories">{{ cat }}</p>
         </ion-item>
       <ion-card-content>
-      <h1>{{ question.title }}</h1>
+        <ion-item text-wrap>
+        <p><strong>{{ question.title }}</strong></p>
+      <p>{{ question.question }}</p>
+    </ion-item>
       </ion-card-content>
       <ion-row>
         <ion-col>  
-          <button ion-button icon-left small round outline *ngFor="let tag of question.tags">
+          <button ion-button icon-left small round outline *ngFor="let tag of question.tags" style="font-size: 10px;">
             {{ tag }}
           </button>
         </ion-col>
       </ion-row>
-      <ion-row>
-      <ion-col>
-        <button ion-button icon-left clear small>
-          <ion-icon name="thumbs-up"></ion-icon>
-          <div>{{ question.votes }} Votes</div>
-        </button>
-      </ion-col>
-      <!--<ion-col>
-        <button ion-button icon-left clear small>
-          <ion-icon name="text"></ion-icon>
-          <div>4 Comments</div>
-        </button>
-      </ion-col>-->
-      <ion-col center text-center>
-        <ion-note>
-          {{ question.dateposted }}
-        </ion-note>
-      </ion-col>
+    </ion-col>
       </ion-row>
       </ion-card>
+      <ion-item no lines>
+        <input type="text" placeholder="Add comment..." class="comment"><button class="comment_answer">Post</button>
+      </ion-item>
     </ion-item>
-  <ion-item-options side="left">
-      <button ion-button class="upvote"><ion-icon name="arrow-dropup" class = "vote"></ion-icon></button>
-      <button ion-button class="downvote"><ion-icon name="arrow-dropdown" class = "vote"></ion-icon></button>
-    </ion-item-options>
-</ion-item-sliding>
 </ion-list>
 </ion-content>

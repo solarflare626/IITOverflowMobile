@@ -15,6 +15,8 @@ export class MessagingPage {
 	convos: any;
 	contacts: any;
 	searching: any = false;
+  select_convo: any;
+  select_contact: any;
 
   constructor(public navCtrl: NavController, public dataService: MessagingProvider) {
   	this.tab = 'convo';
