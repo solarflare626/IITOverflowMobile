@@ -1,6 +1,3 @@
-<ion-header>
-
-</ion-header>
 
 <ion-content padding class = "bg">
   <div *ngIf="isLoggedIn; else loginTemplate">
@@ -62,7 +59,7 @@
       We provide a fast-pace environment where students can ask questions regarding their homeworks or projects.
     </p>
   </div>
-  <img src="../../assets/imgs/googleLogo1.png" alt="" class = "googleLoginButton" ng-click="login()">
+  <img src="../../assets/imgs/googleLogo1.png" alt="" class = "googleLoginButton" (click)="login()">
     <!-- <p><button ion-button (click)="login()">Login With Google</button></p> -->
   </ng-template>
 </ion-content>

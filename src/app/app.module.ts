@@ -6,6 +6,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { UserProvider } from '../providers/user/user';
+import { HTTP } from '@ionic-native/http';
+import { ApiProvider } from '../providers/api/api';
 
 import { GooglePlus } from '@ionic-native/google-plus';
 import { AlertController } from 'ionic-angular';
@@ -13,6 +16,7 @@ import { AlertController } from 'ionic-angular';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { Camera } from '@ionic-native/camera';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [
@@ -21,7 +25,11 @@ import { Camera } from '@ionic-native/camera';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot({
+      name: '__mydb',
+         driverOrder: ['indexeddb', 'sqlite', 'websql']
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -36,7 +44,10 @@ import { Camera } from '@ionic-native/camera';
     FileTransfer,
     FileTransferObject,
     File,
-    Camera
+    Camera,
+    UserProvider,
+    HTTP,
+    ApiProvider
   ]
 })
 

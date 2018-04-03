@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
+import { HTTP } from '@ionic-native/http';
+import { UserProvider } from '../../providers/user/user';
+import { HomePage } from '../../pages/home/home';
 
+import { GLOBALS } from '../../models/globals';
 // Ionic -Angular
 import { NavController, 
   AlertController,
@@ -11,6 +15,19 @@ import { GooglePlus } from '@ionic-native/google-plus';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
+
+export class User{
+  id: number;
+  displayname: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string;
+  email:  string;
+  pricture:  string;
+  constructor(values: Object = {}) {
+       Object.assign(this, values);
+  }
+} 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
@@ -25,11 +42,12 @@ export class HomePage {
   givenName: any;
   userId: any;
   imageUrl: any;
-
+  globals = new GLOBALS();
   isLoggedIn:boolean = false;
-
+  user:User;
   imageURI: any;
   imageFileName: any;
+  accessToken: string;
 
   constructor(public navCtrl: NavController,
     private googlePlus: GooglePlus, 
@@ -37,13 +55,32 @@ export class HomePage {
     private transfer: FileTransfer,
     private camera: Camera,
     public toastCtrl: ToastController,
-    public loadingCtrl: LoadingController) {
+    public loadingCtrl: LoadingController,
+    private http: HTTP, private userProvider:UserProvider) {
+
+      this.userProvider.get().then(data => {
+
+  			if(data){
+	  			console.log("Found user in starage: ", data);
+	  			this.isLoggedIn= true;
+	  			//this.navCtrl.setRoot(HomePage) // login if has credentials stored in storage
+
+	  			}else{
+	  				console.log("No saved user");
+	  			}
+
+  		}).catch(error =>{
+  			console.error
+  		});
+
+
     
   }
   login() {
-    this.googlePlus.login({})
+    this.googlePlus.login({'webClientId':'976545483152-vsg906t0vnk04b5gra3861c98jqi7hcq.apps.googleusercontent.com','offline': true})
       .then(res => {
         console.log(res);
+        
         this.displayName = res.displayName;
         this.email = res.email;
         this.familyName = res.familyName;
@@ -51,11 +88,47 @@ export class HomePage {
         this.userId = res.userId;
         this.imageUrl = res.imageUrl;
 
-        this.isLoggedIn = true;
+        console.log(JSON.stringify(res));
+        console.log(this.globals.baseUrl);
+        this.http.post(this.globals.baseUrl+'/users/OAuthLogin', {"idToken":res.idToken}, {})
+        .then(data  => {
+            data = JSON.parse(data.data);
+            console.log("hahaha",data);
+            this.userId = data.userId;
+            this.accessToken = data.id;
+            
+            console.log("data",data.userId);
+            this.http.get(this.globals.baseUrl+'/users/'+this.userId,{},{}).then(resp=>{
+            this.user = resp.data;
+
+            this.userProvider.set(resp.data);
+            console.log("User: ",resp.data);
+            //this.navCtrl.setRoot(HomePage)
+            this.isLoggedIn = true;
+            }).catch(error => {
+
+            console.log("hahaha2",error.status);
+            console.log(error.error); // error message as string
+            console.log(error.headers);
+
+          });
+        })
+        .catch(error => {
+
+          console.log("hahaha",error.status);
+          console.log(error.error); // error message as string
+          console.log(error.headers);
+
+        });
+
+       
+
+
       
       })
-      .catch(err => console.error(err));
-      console.log("Login button pressed")
+      .catch(err => alert(err));
+      
+     
   }
 
   logout() {
@@ -69,6 +142,7 @@ export class HomePage {
         this.userId = "";
         this.imageUrl = "";
         this.isLoggedIn = false;
+        this.userProvider.delete();
       })
       .catch(err => console.error(err));
   }
