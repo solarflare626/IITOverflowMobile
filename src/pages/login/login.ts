@@ -1,28 +1,39 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { GooglePlus } from '@ionic-native/google-plus';
 import { HTTP } from '@ionic-native/http';
 import { UserProvider } from '../../providers/user/user';
-import { HomePage } from '../../pages/home/home';
+import { TabsPage } from '../../pages/tabs/tabs';
 
 import { GLOBALS } from '../../models/globals';
+// Ionic -Angular
+import { NavController, 
+  AlertController,
+  ToastController, 
+  LoadingController} from 'ionic-angular';
+
+// Native Components
+import { GooglePlus } from '@ionic-native/google-plus';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+
 
 export class User{
-   id: number;
-   displayname: string;
-   createdAt: string;
-   updatedAt: string;
-   deletedAt: string;
-   email:  string;
-   pricture:  string;
-   constructor(values: Object = {}) {
-        Object.assign(this, values);
-   }
+  id: number;
+  displayname: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string;
+  email:  string;
+  pricture:  string;
+  constructor(values: Object = {}) {
+       Object.assign(this, values);
+  }
 } 
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
+   providers: [GooglePlus]
 })
+
 export class LoginPage {
 
   displayName: any;
@@ -31,20 +42,28 @@ export class LoginPage {
   givenName: any;
   userId: any;
   imageUrl: any;
-  accessToken: string;
-  user:User;
   globals = new GLOBALS();
   isLoggedIn:boolean = false;
-  constructor(public navCtrl: NavController,public googlePlus: GooglePlus, private http: HTTP, private userProvider:UserProvider) {
-  		//this.userProvider.delete();  //remove this to remove auto login. deletes data in local storage
+  user:User;
+  imageURI: any;
+  imageFileName: any;
+  accessToken: string;
 
-  		
-  		this.userProvider.get().then(data => {
+  constructor(public navCtrl: NavController,
+    private googlePlus: GooglePlus, 
+    private alertCtrl: AlertController,
+    private transfer: FileTransfer,
+    private camera: Camera,
+    public toastCtrl: ToastController,
+    public loadingCtrl: LoadingController,
+    private http: HTTP, private userProvider:UserProvider) {
+
+      this.userProvider.get().then(data => {
 
   			if(data){
 	  			console.log("Found user in starage: ", data);
 	  			this.isLoggedIn= true;
-	  			this.navCtrl.setRoot(HomePage) // login if has credentials stored in storage
+	  			this.navCtrl.setRoot(TabsPage) // login if has credentials stored in storage
 
 	  			}else{
 	  				console.log("No saved user");
@@ -53,14 +72,15 @@ export class LoginPage {
   		}).catch(error =>{
   			console.error
   		});
-  			
-  		
+
+
+    
   }
   login() {
-  	// include webClientId to include idToken in results. Set to client Id of loopback / web in google credentials
     this.googlePlus.login({'webClientId':'976545483152-vsg906t0vnk04b5gra3861c98jqi7hcq.apps.googleusercontent.com','offline': true})
       .then(res => {
-       
+        console.log(res);
+        
         this.displayName = res.displayName;
         this.email = res.email;
         this.familyName = res.familyName;
@@ -72,18 +92,20 @@ export class LoginPage {
         console.log(this.globals.baseUrl);
         this.http.post(this.globals.baseUrl+'/users/OAuthLogin', {"idToken":res.idToken}, {})
         .then(data  => {
-            //data = data.data;
-            console.log(data.data);
-            this.userId = data.data.userId;
-            this.accessToken = data.data.id;
-            this.isLoggedIn = true;
-
+            //data = JSON.parse(data.data);
+            let d = JSON.parse(data.data);
+            console.log("hahaha",d);
+            this.userId = d.userId;
+            this.accessToken = d.id;
+            
+            console.log("data",d.userId);
             this.http.get(this.globals.baseUrl+'/users/'+this.userId,{},{}).then(resp=>{
             this.user = resp.data;
 
             this.userProvider.set(resp.data);
             console.log("User: ",resp.data);
-            this.navCtrl.setRoot(HomePage)
+            this.navCtrl.setRoot(TabsPage);
+            this.isLoggedIn = true;
             }).catch(error => {
 
             console.log("hahaha2",error.status);
@@ -106,13 +128,11 @@ export class LoginPage {
       
       })
       .catch(err => alert(err));
+      
+     
   }
 
   logout() {
-
-  this.userProvider.delete();
-   this.isLoggedIn = false;
-
     this.googlePlus.logout()
       .then(res => {
         console.log(res);
@@ -122,9 +142,77 @@ export class LoginPage {
         this.givenName = "";
         this.userId = "";
         this.imageUrl = "";
-        
-      }).catch(err => console.error(err));
+        this.isLoggedIn = false;
+        this.userProvider.delete();
+      })
+      .catch(err => console.error(err));
   }
 
+  presentConfirm() {
+    let alert = this.alertCtrl.create({
+      title: 'Do not Leave Please?',
+      message: 'Are you sure you to want Logout?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Confirm',
+          handler: () => {
+            console.log('Logout');
+            this.logout();
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+  
+  uploadFile1() {
+    let loader = this.loadingCtrl.create({
+      content: "Uploading..."
+    });
+    loader.present();
+    const fileTransfer: FileTransferObject = this.transfer.create();
+  
+    let options: FileUploadOptions = {
+      fileKey: 'ionicfile',
+      fileName: 'ionicfile',
+      chunkedMode: false,
+      mimeType: "image/jpeg",
+      headers: {}
+    }
+  
+    fileTransfer.upload(this.imageURI, 'http://192.168.0.7:8080/api/uploadImage', options)
+      .then((data) => {
+      console.log(data+" Uploaded Successfully");
+      this.imageFileName = "http://192.168.0.7:8080/static/images/ionicfile.jpg"
+      loader.dismiss();
+      this.presentToast("Image uploaded successfully");
+    }, (err) => {
+      console.log(err);
+      loader.dismiss();
+      this.presentToast(err);
+    });
+  }
+
+  presentToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'bottom'
+    });
+  
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+  
+    toast.present();
+  }
+  
 
 }

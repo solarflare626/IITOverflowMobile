@@ -1,0 +1,75 @@
+<ion-content padding>
+  <ion-content id="homeScroll">
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-searchbar
+  [(ngModel)]="myInput"
+  [showCancelButton]="shouldShowCancel"
+  (ionCancel)="onCancel($event)"
+  id = "search">
+</ion-searchbar>
+
+<ion-item no-lines class = "center" style="display: inline-block;">
+    <ion-select [(ngModel)]="select_categories" class = "select_home">
+      <ion-option *ngFor="let c of categories" value="{{c}}" [selected]="select_categories == c">{{ c }}</ion-option>
+    </ion-select>
+    <ion-select [(ngModel)]="select_sort" class = "select_home">
+        <ion-option *ngFor="let s of sort" value="{{s}}" [selected]="select_sort == s">{{ s }}</ion-option>
+    </ion-select>
+</ion-item>
+
+
+<button class = "askButton" ion-button block [navPush]="postquestion">Ask Question</button>
+
+<ion-list>
+    <ion-item *ngFor="let question of questions">
+      <!--<ion-item-sliding #item>
+      <ion-item class="questiondetails" no lines>
+        <h1>VOTES: {{ question.votes }} </h1>
+      </ion-item>
+      <ion-item-options side="left">
+        <button ion-button class="upvote">UPVOTE</button>
+        <button ion-button class="downvote">DOWNVOTE</button>
+      </ion-item-options>
+      </ion-item-sliding>-->
+      <ion-card >
+        
+        <ion-row>
+          <ion-col col-1 style="text-align: center;">
+            <button ion-button clear><img src="../../assets/imgs/arrow-up-b.png"></button>
+            <ion-icon name="md-arrow-round-up"></ion-icon>
+            <h1>{{ question.votes }}</h1>
+            <button ion-button clear><img src="../../assets/imgs/arrow-down-b.png"></button>
+          </ion-col>
+          <ion-col col-11>
+        <ion-item>
+            <ion-avatar item-start  style="height: 5px !important;width: 5px !important;">
+              <img src="{{ question.user.picture }}" >
+            </ion-avatar>
+            <h2>{{ question.user.displayname }}</h2>
+            <p><strong>Categories:</strong></p>
+            <p *ngFor="let cat of question.categories">{{ cat }}</p>
+        </ion-item>
+        <ion-card-content>
+          <ion-item text-wrap>
+            <p><strong>{{ question.title }}</strong></p>
+            <p>{{ question.question }}</p>
+          </ion-item>
+        </ion-card-content>
+      <ion-row>
+        <ion-col>  
+          <button ion-button icon-left small round outline *ngFor="let tag of question.tags" style="font-size: 10px;">
+            {{ tag }}
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+      </ion-row>
+      </ion-card>
+      <ion-item no lines>
+        <input type="text" placeholder="Add comment..." class="comment"><button class="comment_answer">Post</button>
+      </ion-item>
+    </ion-item>
+</ion-list>
+</ion-content>

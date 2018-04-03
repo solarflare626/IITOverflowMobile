@@ -5,9 +5,12 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 import { UserProvider } from '../providers/user/user';
+import { MessagingProvider } from '../providers/messaging/messaging';
+import { NewsfeedProvider } from '../providers/newsfeed/newsfeed';
+import { NotificationProvider } from '../providers/notification/notification';
 import { HTTP } from '@ionic-native/http';
+import { HttpModule } from '@angular/http';
 import { ApiProvider } from '../providers/api/api';
 
 import { GooglePlus } from '@ionic-native/google-plus';
@@ -18,13 +21,28 @@ import { File } from '@ionic-native/file';
 import { Camera } from '@ionic-native/camera';
 import { IonicStorageModule } from '@ionic/storage';
 
+import { LoginPage } from '../pages/login/login';
+import { ProfilePage } from '../pages/profile/profile';
+import { NotificationPage } from '../pages/notification/notification';
+import { MessagingPage } from '../pages/messaging/messaging';
+import { NewsFeedPage } from '../pages/newsfeed/newsfeed';
+import { TabsPage } from '../pages/tabs/tabs';
+import { QuestionPage } from '../pages/question/question';
+
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    LoginPage,
+    ProfilePage,
+    NotificationPage,
+    NewsFeedPage,
+    MessagingPage,
+    QuestionPage,
+    TabsPage
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot({
       name: '__mydb',
@@ -34,20 +52,30 @@ import { IonicStorageModule } from '@ionic/storage';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    LoginPage,
+    NotificationPage,
+    ProfilePage,
+    NewsFeedPage,
+    MessagingPage,
+    QuestionPage,
+    TabsPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     GooglePlus,
+    MessagingProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    NewsfeedProvider,
+    NotificationProvider,
     FileTransfer,
     FileTransferObject,
     File,
     Camera,
     UserProvider,
     HTTP,
-    ApiProvider
+    ApiProvider,
+    HttpModule,
   ]
 })
 
