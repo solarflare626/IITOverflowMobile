@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar>
+ 
+    <ion-searchbar [(ngModel)]="searchTerm" [formControl]="searchControl"></ion-searchbar>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+<div padding>
+
+<ion-segment [(ngModel)]="tab">
+    <ion-segment-button value="convo">
+      Conversations
+    </ion-segment-button>
+    <ion-segment-button value="contact">
+      Contacts
+    </ion-segment-button>
+</ion-segment>
+
+</div>
+
+<div [ngSwitch]="tab">
+  <ion-list *ngSwitchCase="'convo'">
+    <ion-list>
+        <ion-item *ngFor="let convo of convos">
+          <h3 style="padding-top: 10px;">{{convo.name}}</h3>
+          <h6>{{convo.preview}}</h6>
+        </ion-item>
+  </ion-list>
+  </ion-list>
+
+  <ion-list *ngSwitchCase="'contact'">
+    <ion-list>
+        <ion-item *ngFor="let contact of contacts">
+          <h3 style="padding-top: 10px;">{{ contact }}</h3>
+        </ion-item>
+  </ion-list>
+  </ion-list>
+</div>
+
+	 <ion-fab class="newmessage" bottom right>
+   		<button ion-fab><ion-icon name="md-add"></ion-icon></button>
+   	<ion-fab-list side="top">
+     	<button ion-fab><ion-icon name="md-message"></ion-icon></button>
+     	<button ion-fab><ion-icon name="md-contact"></ion-icon></button>
+     	<button ion-fab><ion-icon name="md-globe"></ion-icon></button>
+   </ion-fab-list>
+ 	</ion-fab>
+</ion-content>

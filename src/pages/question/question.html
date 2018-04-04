@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Question
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+<ion-list no-lines>
+        <ion-item>
+            <ion-label floating>Title</ion-label>
+            <ion-input type="text" [(ngModel)]="title"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label floating>Question</ion-label>
+            <ion-textarea rows="3" [(ngModel)]="question"></ion-textarea>
+        </ion-item>
+
+        <ion-item>
+          <ion-searchbar [(ngModel)]="searchTerm" [formControl]="searchControl"></ion-searchbar>
+          <ion-item *ngIf="searchTerm.length > 3">
+          <ion-item *ngFor="let tag of tags">
+            <h4 style="float: left;">{{ tag }}</h4>
+            <button class="add_tag" (click)="addTags(tag);">ADD</button>
+          </ion-item>
+          </ion-item>
+        </ion-item>
+        <ion-item>
+          <h2>Selected tags:</h2>
+          <button ion-button icon-left small round outline 
+          *ngFor="let tag of select_tags" 
+          style="font-size: 10px;"
+          (click)="removeTags(tag);">
+            {{ tag }}
+          </button>
+        </ion-item>
+    <ion-item>
+      <button ion-button block full (click)="submit();">POST</button>
+    </ion-item>
+</ion-list>
+</ion-content>
