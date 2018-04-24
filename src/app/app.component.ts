@@ -16,8 +16,7 @@ import { timer } from 'rxjs/observable/timer';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = LoginPage;
-
+  rootPage:any = TabsPage;
   showSplash = true;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
@@ -26,7 +25,6 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
-
       timer(3000).subscribe(() => this.showSplash = false)
     });
   }
