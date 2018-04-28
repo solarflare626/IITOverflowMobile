@@ -1,0 +1,51 @@
+ <ion-header>
+  <ion-navbar>
+    <ion-title>IIT Overflow</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid fixed>
+    <ion-row justify-content-start>
+      <ion-col col-8>
+        <ion-searchbar 
+          placeholder= "Search Questions" 
+          animated = true>
+        </ion-searchbar>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-select 
+            placeholder = "Sort by"
+            interface = "popover"
+            class = "items">
+              <ion-option value="Active">Active</ion-option>
+              <ion-option value="Newest">Newest</ion-option>
+              <ion-option value="Votes">Votes</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+  
+  <ion-list>
+      <ion-item *ngFor="let question of questions" (click)="viewQuestion(question)" class="question-container">
+        <ion-avatar item-start style="width: 20px; height: 20px; color: white; background-color: #0099ff; text-align: center; padding-top: 10px; border-radius: 10px;">
+          <p style="color: white;"> {{ computeVotes(question.upvotesCount, question.downvotesCount) }} </p>
+        </ion-avatar>
+        <p class = "question">{{ question.question }}</p>
+        <ion-row>
+          <ion-col col-6>
+              <ion-note item-start class = "note" *ngFor="let tag of question.tags"> {{ tag.name }} </ion-note>
+          </ion-col>
+          <ion-col col-6>
+              <ion-note><p style="text-align:right; font-size: 12px; color: #c5c5c5;"> {{ question.dateposted }}</p></ion-note>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+  </ion-list>
+  <ion-fab right bottom>
+    <button ion-fab (click)="postQuestion()"><ion-icon name="md-bulb" style="zoom:1.4;"></ion-icon></button>
+  </ion-fab>
+</ion-content>
