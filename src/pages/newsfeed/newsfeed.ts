@@ -18,10 +18,12 @@ export class NewsFeedPage {
   categories: any;
   sort: string[] = ['Sort by...', 'Newest', 'Oldest', 'Followed', 'Unanswered'];
 
-  constructor(public navCtrl: NavController, public dataService: NewsfeedProvider, public http: Http) {
-    this.select_categories = 'Select category...';
-    this.select_sort = 'Sort by...';
-    this.user = {"id": 4, "email": "christinejane.beleta@g.msuiit.edu.ph", "displayname": "Cjbeleta", "picture": "random"};
+  constructor(public navCtrl: NavController, 
+    public dataService: NewsfeedProvider, 
+    public http: Http) {
+      this.select_categories = 'Select category...';
+      this.select_sort = 'Sort by...';
+      this.user = {"id": 4, "email": "christinejane.beleta@g.msuiit.edu.ph", "displayname": "Cjbeleta", "picture": "random"};
     //this.reload();
   }
 //////////////////////////////////////////////////////////////// -> onload
@@ -33,6 +35,7 @@ export class NewsFeedPage {
         err => {
           console.log("ERROR Q");
         });
+        
     this.dataService.listCategories().subscribe(
       data =>{
         this.categories = data;
@@ -42,12 +45,8 @@ export class NewsFeedPage {
       });
   }
 //////////////////////////////////////////////////////////////// -> question functions
-  computeVotes(up, down) {
-    return (up-down);
-  }
-
   postQuestion() {
-    this.navCtrl.push(this.questionpage, {option: true, question: {"id": 0}});
+    this.navCtrl.push(this.questionpage, {option: true});
   }
 
   viewQuestion(question) {

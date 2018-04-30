@@ -21,9 +21,7 @@ export class NewsfeedProvider {
       .get(
         this.globals.baseUrl + 
           //'/api/Questions?filter={"include":[{"relation":"answers","scope":{"include":"user"}},{"relation":"category"},{"relation":"user"}]}'
-          '/api/Questions?filter[include]=category&filter[include]=user&filter[counts]=upvotes&filter[counts]=downvotes'
-
-          
+          '/api/Questions?filter[include]=category&filter[include]=user'
       )
       .map(res => res.json());
   }
@@ -46,7 +44,7 @@ export class NewsfeedProvider {
 
   listCategories() {
     return this.http
-      .get(this.globals.baseUrl + "/api/Categories?filter[include]=tags")
+      .get(this.globals.baseUrl + "/api/Categories")
       .map(res => res.json());
   }
 

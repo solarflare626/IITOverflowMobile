@@ -6,97 +6,171 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-    <ion-list no-lines *ngIf="option">
-        <ion-item>
-            <ion-label floating>Title</ion-label>
-            <ion-input type="text" [(ngModel)]="title"></ion-input>
-        </ion-item>
+<ion-content>
+  <!-- View Question -->
+  <ion-list no-lines *ngIf="option">
+    <ion-item>
+      <ion-label floating>Question</ion-label>
+      <ion-textarea rows="3" [(ngModel)]="question"></ion-textarea>
+    </ion-item>
 
-        <ion-item>
-            <ion-label floating>Question</ion-label>
-            <ion-textarea rows="3" [(ngModel)]="question"></ion-textarea>
-        </ion-item>
-
-        <ion-item>
-          <ion-select [(ngModel)]="selected_category" placeholder="Select category...">
-            <ion-option *ngFor="let c of categories" value="{{ c }}">
-              {{ c.name }}
-            </ion-option>
-          </ion-select>
-        </ion-item>
-        <ion-item>
-          <ion-searchbar [(ngModel)]="searchTerm" [formControl]="searchControl"></ion-searchbar>
-          <ion-item *ngFor="let tag of tags" (click)="addTags(tag.id);">
-              <h4 style="float: left;">{{ tag.name }}</h4>
-          </ion-item>
-        </ion-item>
-        <ion-item>
-          <h2>Selected tags:</h2>
-          <button ion-button icon-left small round outline 
-          *ngFor="let tag of select_tags" 
-          style="font-size: 10px;"
-          (click)="removeTags(tag.id);">
-            {{ tag }}
-          </button>
-        </ion-item>
-      <ion-item>
-        <button ion-button block full (click)="postQuestion();">POST</button>
+    <ion-item>
+      <ion-searchbar [(ngModel)]="searchTerm" [formControl]="searchControl"></ion-searchbar>
+      <ion-item *ngFor="let tag of tags" (click)="addTags(tag.id);">
+          <h4 style="float: left;">{{ tag.name }}</h4>
       </ion-item>
-    </ion-list>
- 
-    <!-- INSERT -->
-    <ion-list no-lines *ngIf="!option">
-        <ion-item>
+    </ion-item>
+
+    <ion-item>
+      <h2>Selected tags:</h2>
+      <button ion-button icon-left small round outline 
+      *ngFor="let tag of select_tags" 
+      style="font-size: 10px;"
+      (click)="removeTags(tag.id);">
+        {{ tag }}
+      </button>
+    </ion-item>
+    <ion-item>
+      <button ion-button block full (click)="postQuestion();">POST</button>
+    </ion-item>
+  </ion-list>
+
+  <ion-list no-lines *ngIf="!option">
+    <br>
+    <ion-item-divider style="padding-right: 16px">
+      <ion-row>
+        <ion-col col-auto style = "padding: 12px 12px 12px 1.5px;" >
           <ion-row>
-            <ion-col col-1>
-              <div style="text-align: center;">
-              <button class="votebutton"><ion-icon name="md-arrow-dropup"></ion-icon></button>
-              <p>{{ computeVotes(selected_question.upvotesCount, selected_question.downvotesCount) }}</p>
-              <button class="votebutton"><ion-icon name="md-arrow-dropdown"></ion-icon></button>
-              </div>
-            </ion-col>
-            <ion-col style="padding-left: 5%;">
-              <ion-row>
-                <ion-item text-wrap>
-                 {{ selected_question.question }} 
-                </ion-item>
-              </ion-row>
-              <ion-row>
-                <h6>Category: {{ selected_question.category.name }}</h6>
-              </ion-row>
-              <!--<ion-row>
-                <button ion-button icon-left small round outline *ngFor="let tag of selected_question.tags" style="font-size: 10px;">
-                  {{ tag.name }}
-                </button>
-              </ion-row>
-              -->
-            </ion-col>
+              <button ion-button clear><ion-icon name="md-arrow-dropup" ></ion-icon></button>
+          </ion-row>
+          <ion-row >
+              <div style="margin-left: auto; margin-right: auto; display: block;"><strong><p>1350</p></strong></div>
           </ion-row>
           <ion-row>
-              <button ion-button clear style="width:31%;" *ngIf="followed" (click)="unfollowQuestion()">Unfollow</button>
-              <button ion-button clear style="width:31%;" *ngIf="!followed" (click)="followQuestion()">Follow</button>
-              <button ion-button clear style="width:31%;" (click)="showHideCommentBar()">Comment</button>
-              <button ion-button clear style="width:31%;" (click)="showHideAnswerBar()">Answer</button>
+              <button ion-button clear><ion-icon name="md-arrow-dropdown"></ion-icon></button>
           </ion-row>
-          <ion-row *ngIf="viewCommentBar">
-            <div class="input-container"><textarea [(ngModel)]="comment" class="comment-answer-input" placeholder="Enter comment here..."></textarea></div>
-            <button class="post" (click)="postComment()">Post Comment</button>
+        </ion-col>
+
+      
+        <ion-col style="padding: 0 1.5px 1.5px 3px; ">
+          <ion-row>
+            <ion-item style="padding: 0; font-weight:bold;" text-wrap>
+              {{ selected_question.question }} 
+            </ion-item>
           </ion-row>
-          <ion-row *ngIf="viewAnswerBar">
-            <div class="input-container"><textarea [(ngModel)]="answer" class="comment-answer-input" placeholder="Enter answer here..." ></textarea></div>
-            <button class="post" (click)="postAnswer()">Post Answer</button>
+
+          <ion-row>
+              <ion-col col-8>
+                  <ion-note item-start class = "note">Category: {{ selected_question.category.name }}</ion-note>
+              </ion-col>
           </ion-row>
-          <ion-row *ngFor="let answer of answers">
-            <div (click)="showHideAnswerActionBar(answer.id)">
-              <h6>Posted by: {{ answer.user.displayname }}</h6>
-              <p>{{ answer.answer }}</p>
-              <div style="margin: 5px;" *ngIf="viewAnswerActionBar && answer.id == selected_answer">
-                <button ion-button clear style="width: 45%;">Edit</button>
-                <button ion-button clear style="width: 45%;" (click)="deleteAnswer(answer.id)">Delete</button>
-              </div>
-            </div>
+
+          <!--<ion-row>
+            <button ion-button icon-left small round outline *ngFor="let tag of selected_question.tags" style="font-size: 10px;">
+              {{ tag.name }}
+            </button>
           </ion-row>
-        </ion-item>
-    </ion-list>
+          -->
+        </ion-col>
+      </ion-row>
+     
+      <hr>
+      
+      <!-- Question Description will be placed here -->
+      <p text-wrap>Using angular "bg build" I am placing all the static assets into the public folder as 
+        described above at the root of my project. Now using an express app I am able to serve the static assets 
+        from public folder via the index.html and works fine when I run "node app.js" and browse to 
+        http://localhost:port relevant code here</p>
+      <br>
+      
+      <!-- Info of the User who posted the Question -->
+      <p>Asked By:</p>
+      <ion-card style="margin:0px; width: 65%; border-radius: 10px;" class= "info"> 
+        <ion-item class = "test">
+          <ion-avatar item-start >
+            <img src="../../assets/imgs/avatar.jpg" style= "width: 40px !important;">
+          </ion-avatar>
+          
+          <h3>Mark Nambatac</h3>
+          <p>Date: May 1, 2018</p>
+        </ion-item>      
+      </ion-card>
+     
+      <hr>
+      <ion-row>
+          <button ion-button clear style="width:31%;height: 2rem; font-size:1.4rem;" *ngIf="followed" (click)="unfollowQuestion()">Unfollow</button>
+          <button ion-button clear style="width:31%;height: 2rem; font-size:1.4rem;" *ngIf="!followed" (click)="followQuestion()"><ion-icon name="ion-star"></ion-icon>Follow</button>
+          <button ion-button clear style="width:31%; height: 2rem; font-size:1.4rem;" (click)="showHideCommentBar()"><ion-icon name="ion-edit"></ion-icon>Comment</button>
+          <!-- <button ion-button clear style="width:31%; height: 2rem; font-size:1.3rem;" (click)="showHideAnswerBar()">Answer</button> -->
+      </ion-row>
+
+      <br>
+      
+      <ion-row *ngIf="viewCommentBar">
+        <div class="input-container"><textarea [(ngModel)]="comment" class="comment-answer-input" placeholder="Enter comment here..."></textarea></div>
+        <button class="post" (click)="postComment()">Post Comment</button>
+      </ion-row>
+
+      <ion-row *ngIf="viewAnswerBar">
+        <div class="input-container"><textarea [(ngModel)]="answer" class="comment-answer-input" placeholder="Enter answer here..." ></textarea></div>
+        <button class="post" (click)="postAnswer()">Post Answer</button>
+      </ion-row>
+
+    </ion-item-divider>
+      <!-- Comments -->
+      <ion-grid text-wrap style = "background-color: #E0E0E0;">
+        <ion-row>
+          <ion-col col-3>
+            <p></p>
+          </ion-col>
+          <ion-col>
+            <ion-row>
+                <p>open-quote does open a quotation. It doesn't refer to a double-quote character. – <font color= "blue">Bergi </font> Apr 26 at 18:03</p>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-grid text-wrap style = "background-color: #E0E0E0;">
+          <ion-row>
+            <ion-col col-3>
+              <p></p>
+            </ion-col>
+            <ion-col>
+              <ion-row>
+                  <p>From what I remember there's some known bugs in GCC here. That being said, don't use bit-fields. 
+                    Don't read a book teaching you to use bit-fields – <font color= "blue">makoooy123 </font> Apr 12 at 14:03</p>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+
+
+
+        <ion-item-divider style="padding-right: 16px">
+      <!-- Answers -->
+      <ion-row *ngFor="let answer of answers">
+        <ion-col col-auto style = "padding: 12px 12px 12px 1.5px;" >
+          <ion-row>
+              <button ion-button clear><ion-icon name="md-arrow-dropup" ></ion-icon></button>
+          </ion-row>
+          <ion-row >
+              <div style="margin-left: auto; margin-right: auto; display: block;"><strong><p>12</p></strong></div>
+          </ion-row>
+          <ion-row>
+              <button ion-button clear><ion-icon name="md-arrow-dropdown"></ion-icon></button>
+          </ion-row>
+        </ion-col>
+
+        <ion-col text-wrap >
+          <h6>Posted by: {{ answer.user.displayname }}</h6>
+          <p>{{ answer.answer }}</p>
+          <button ion-button clear style="width: 45%;">Edit</button>
+          <button ion-button clear style="width: 45%;" (click)="deleteAnswer(answer.id)">Delete</button>
+        </ion-col>
+      </ion-row>
+    </ion-item-divider>
+    
+  </ion-list>
 </ion-content>

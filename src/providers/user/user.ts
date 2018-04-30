@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-
+import { Http } from '@angular/http';
+import 'rxjs/add/operator/map';
+import { GLOBALS } from '../../models/globals';
 /*
   Generated class for the UserProvider provider.
 
@@ -9,8 +11,8 @@ import { Storage } from '@ionic/storage';
 */
 @Injectable()
 export class UserProvider {
-
-  constructor(public storage: Storage) {
+  globals = new GLOBALS();
+  constructor(public storage: Storage, public http: Http) {
      /*this.storage.get('user').then((val) => {
 	    console.log('User init:',JSON.stringify(JSON.parse(val)));
 	 });*/
@@ -31,6 +33,16 @@ export class UserProvider {
   public delete(){
     this.storage.remove('user');
     console.log("deleted");
+  }
+
+  listQuestions(user_id) {
+    return this.http
+      .get(
+        this.globals.baseUrl + 
+          //'/api/Questions?filter={"include":[{"relation":"answers","scope":{"include":"user"}},{"relation":"category"},{"relation":"user"}]}'
+          '/api/Questions?filter[where][userId]=' + user_id
+      )
+      .map(res => res.json());
   }
 
 }
