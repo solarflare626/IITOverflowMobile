@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { NewsfeedProvider } from '../../providers/newsfeed/newsfeed';
 import { QuestionPage } from '../../pages/question/question';
+import {AddquestionPage } from '../../pages/addquestion/addquestion';
 import { Http } from '@angular/http';
 import { GLOBALS } from '../../models/globals';
 @Component({ 
@@ -51,7 +52,7 @@ export class NewsFeedPage {
   }
 //////////////////////////////////////////////////////////////// -> question functions
   postQuestion() {
-    this.navCtrl.push(this.questionpage, {option: true});
+    this.navCtrl.push(AddquestionPage, {option: true});
   }
 
   viewQuestion(question) {
@@ -67,7 +68,7 @@ export class NewsFeedPage {
     var seconds = Math.floor( date2 / 1000);
 
     if(Math.floor(seconds / 3600) >= 24)
-      return new Date(date).toUTCString();
+      return new Date(date).toUTCString().slice(0,-10);
 
     if(Math.floor(seconds / 3600))
       return  ""+Math.floor(seconds / 3600)+" hours ago";
@@ -79,9 +80,8 @@ export class NewsFeedPage {
         return  ""+Math.floor(seconds / 1)+" seconds ago";
     
     
-        return new Date(date).toUTCString();
+        return new Date(date).toUTCString().slice(0,-10);
     
-      
   
   }
   /*

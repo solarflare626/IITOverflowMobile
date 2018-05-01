@@ -1,11 +1,19 @@
-import { App } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { NavController, IonicPage, ToastController, AlertController } from 'ionic-angular';
-import { UserProvider } from '../../providers/user/user';
-import { GooglePlus } from '@ionic-native/google-plus';
-import { LoginPage } from '../../pages/login/login';
-import { GLOBALS } from '../../models/globals';
 import { Http } from '@angular/http';
+import { GooglePlus } from '@ionic-native/google-plus';
+import { App, NavController, 
+  IonicPage, 
+  ToastController, 
+  AlertController } from 'ionic-angular';
+
+import { UserProvider } from '../../providers/user/user';
+
+import { GLOBALS } from '../../models/globals';
+
+import { LoginPage } from '../../pages/login/login';
+import { FollowersPage } from '../../pages/followers/followers';
+import { FollowingPage } from '../../pages/following/following';
+import { QuestionPage } from '../../pages/question/question';
 
 @Component({
   selector: 'page-profile',
@@ -15,20 +23,22 @@ export class ProfilePage {
   questions: any;
   following = false;
   user: any;
-  
-  // user = {
-  //   name: 'Mark Angelo G. Nambatac',
-  //   profileImage: '../../assets/imgs/avatar/avatar.jpg',
-  //   coverImage: '../../assets/imgs/background/background-5.jpg',
-  //   occupation: 'Student',
-  //   college: 'SCS',
-  //   course: 'Computer Science',
-  //   description: 'A wise man once said: The more you do something, the better you will become at it.',
-  //   interests: ['Python', 'Javascript', 'Web Development'],
-  //   followers: 456,
-  //   following: 1052,
-  //   posts: 35
-  // };
+  questionPage: QuestionPage;
+
+  user1 = {
+    name: 'Mark Angelo G. Nambatac',
+    profileImage: '../../assets/imgs/avatar/avatar.jpg',
+    coverImage: '../../assets/imgs/background/background-5.jpg',
+    occupation: 'Student',
+    college: 'SCS',
+    course: 'Computer Science',
+    description: 'A wise man once said: The more you do something, the better you will become at it.',
+    interests: ['Python', 'Javascript', 'Web Development'],
+    followers: 456,
+    following: 1052,
+    posts: 35
+   
+  };
 
   // posts = [
   //   {
@@ -68,7 +78,7 @@ export class ProfilePage {
     private googlePlus: GooglePlus, 
     private userProvider:UserProvider,
     public appCtrl: App) {
-      this.user = {"id": "4", "email": "christinejane.beleta@g.msuiit.edu.ph", "displayname": "Cjbeleta", "picture": "random"};
+      this.user = {"id": "4", "email": "christinejane.beleta@g.msuiit.edu.ph", "displayname": "Cjbeleta", "picture": "../../assets/imgs/avatar/avatar.jpg"};
     }
     
 
@@ -165,5 +175,18 @@ export class ProfilePage {
     alert.present();
   }
 
+  viewFollowers() {
+    this.navCtrl.push(FollowersPage);
+    console.log("Followers Clicked!");
+  }
+
+  viewFollowing() {
+    this.navCtrl.push(FollowingPage);
+
+  }
+
+  viewQuestion(question) {
+    this.navCtrl.push(QuestionPage, {option: false, question: question});
+  }
 }
 

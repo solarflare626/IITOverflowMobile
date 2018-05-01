@@ -12,9 +12,6 @@ import { HTTP } from '@ionic-native/http';
 import { HttpModule } from '@angular/http';
 import { ApiProvider } from '../providers/api/api';
 
-import { NativeApiProvider } from '../nativeProviders/nativeApi/nativeApi';
-import { NativeUserProvider } from '../nativeProviders/nativeUser/nativeUser';
-
 import { GooglePlus } from '@ionic-native/google-plus';
 import { AlertController } from 'ionic-angular';
 
@@ -30,6 +27,16 @@ import { MessagingPage } from '../pages/messaging/messaging';
 import { NewsFeedPage } from '../pages/newsfeed/newsfeed';
 import { TabsPage } from '../pages/tabs/tabs';
 import { QuestionPage } from '../pages/question/question';
+import { AnswerPage } from '../pages/answer/answer';
+import { FollowersPage } from '../pages/followers/followers';
+import { FollowingPage } from '../pages/following/following';
+import { AddquestionPage } from '../pages/addquestion/addquestion';
+
+// Import Froala Editor.
+import "froala-editor/js/froala_editor.pkgd.min.js";
+
+// Import Angular2 plugin.
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 
 @NgModule({
   declarations: [
@@ -40,7 +47,11 @@ import { QuestionPage } from '../pages/question/question';
     NewsFeedPage,
     MessagingPage,
     QuestionPage,
-    TabsPage
+    AnswerPage,
+    TabsPage,
+    FollowersPage,
+    FollowingPage,
+    AddquestionPage
   ],
   imports: [
     BrowserModule,
@@ -49,7 +60,10 @@ import { QuestionPage } from '../pages/question/question';
     IonicStorageModule.forRoot({
       name: '__mydb',
          driverOrder: ['indexeddb', 'sqlite', 'websql']
-    })
+    }),
+    FroalaEditorModule.forRoot(), 
+    FroalaViewModule.forRoot(),
+ 
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -60,7 +74,11 @@ import { QuestionPage } from '../pages/question/question';
     NewsFeedPage,
     MessagingPage,
     QuestionPage,
-    TabsPage
+    AnswerPage,
+    TabsPage,
+    FollowersPage,
+    FollowingPage,
+    AddquestionPage
   ],
   providers: [
     SplashScreen,
@@ -78,8 +96,6 @@ import { QuestionPage } from '../pages/question/question';
     HTTP,
     ApiProvider,
     HttpModule,
-    NativeApiProvider,
-    NativeUserProvider
   ]
 })
 

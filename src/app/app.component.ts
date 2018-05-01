@@ -16,7 +16,7 @@ import { timer } from 'rxjs/observable/timer';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = LoginPage;
+  rootPage:any = TabsPage;
 
   showSplash = true;
 
