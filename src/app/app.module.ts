@@ -12,6 +12,9 @@ import { HTTP } from '@ionic-native/http';
 import { HttpModule } from '@angular/http';
 import { ApiProvider } from '../providers/api/api';
 
+import { NativeApiProvider } from '../nativeProviders/nativeApi/nativeApi';
+import { NativeUserProvider } from '../nativeProviders/nativeUser/nativeUser';
+
 import { GooglePlus } from '@ionic-native/google-plus';
 import { AlertController } from 'ionic-angular';
 
@@ -75,6 +78,8 @@ import { QuestionPage } from '../pages/question/question';
     HTTP,
     ApiProvider,
     HttpModule,
+    NativeApiProvider,
+    NativeUserProvider
   ]
 })
 

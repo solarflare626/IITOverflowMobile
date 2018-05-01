@@ -20,8 +20,8 @@ export class NewsfeedProvider {
     return this.http
       .get(
         this.globals.baseUrl + 
-          //'/api/Questions?filter={"include":[{"relation":"answers","scope":{"include":"user"}},{"relation":"category"},{"relation":"user"}]}'
-          '/api/Questions?filter[include]=category&filter[include]=user'
+          '/api/Questions?filter={"include":[{"relation":"answers","scope":{"include":"user"}},{"relation":"category"},{"relation":"user"}]}'
+          //'/api/Questions?filter[include]=category&filter[include]=user'
       )
       .map(res => res.json());
   }
@@ -29,8 +29,8 @@ export class NewsfeedProvider {
   getSpecificQuestionAnswers(question_id) {
     return this.http
       .get(
-        this.globals.baseUrl +
-          '/api/Answers/?filter[include]=user&filter[where][questionId]='+question_id
+        this.globals.baseUrl + 
+          '/api/Answers/?filter={"include":[{"relation":"user"},{"relation":"comments","scope":{"include":"user"}}],"where":{"questionId":'+question_id+'}}'
       )
       .map(res => res.json());
   } 
