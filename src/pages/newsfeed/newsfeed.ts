@@ -62,12 +62,12 @@ export class NewsFeedPage {
 
   getDate(date){
 
-    date = new Date().getTime() - new Date(date).getTime();
+    var date2 = new Date().getTime() - new Date(date).getTime();
     
-    var seconds = Math.floor( date / 1000);
+    var seconds = Math.floor( date2 / 1000);
 
     if(Math.floor(seconds / 3600) >= 24)
-      return date.toUTCString();
+      return new Date(date).toUTCString();
 
     if(Math.floor(seconds / 3600))
       return  ""+Math.floor(seconds / 3600)+" hours ago";
@@ -79,7 +79,7 @@ export class NewsFeedPage {
         return  ""+Math.floor(seconds / 1)+" seconds ago";
     
     
-    return date.toUTCString();
+        return new Date(date).toUTCString();
     
       
   
