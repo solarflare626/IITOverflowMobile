@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { NavController, NavParams, ToastController } from 'ionic-angular';
+
 import { NewsfeedProvider } from '../../providers/newsfeed/newsfeed';
 import { UserProvider } from '../../providers/user/user';
+
+import { AnswerPage } from '../../pages/answer/answer';
+
 import 'rxjs/add/operator/debounceTime';
 
 
@@ -37,6 +41,7 @@ export class QuestionPage {
   comment: String;
   answer: String;
   answers: any;
+  answerpage: AnswerPage;
 
   constructor(public navCtrl: NavController, 
       public navParams: NavParams, 
@@ -171,23 +176,26 @@ export class QuestionPage {
     this.selected_answer = answer_id;
   }
 
-  postAnswer() {
-    this.new_answer = {
-      userId: 4, 
-      questionId: this.selected_question.id,
-      answer: this.answer
-    };
-    let data = JSON.stringify(this.new_answer);
-    this.dataService.postAnswer(data).subscribe(data=>{
-      this.setAnswers();
-      
-    });
-    this.viewAnswerBar = false;
-    this.answer = ""; 
-    
-    
+  addAnswer() {
+    console.log(this.selected_question_id);
+    this.navCtrl.push(AnswerPage, {questionId: this.selected_question_id});
   }
 
+  // postAnswer() {
+  //     this.new_answer = {
+  //     userId: 4, 
+  //     questionId: this.selected_question.id,
+  //     answer: this.answer
+  //   };
+  //   let data = JSON.stringify(this.new_answer);
+  //   this.dataService.postAnswer(data).subscribe(data=>{
+  //     this.setAnswers();
+      
+  //   });
+  //   this.viewAnswerBar = false;
+  //   this.answer = ""; 
+  
+  // }
   deleteAnswer(answer_id) {
     this.dataService.deleteAnswer(answer_id).subscribe(data =>{
       this.setAnswers();

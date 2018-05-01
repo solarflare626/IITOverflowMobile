@@ -18,6 +18,8 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { DataProvider } from '../providers/data/data';
+import { AnswersPage } from '../pages/answer/answer';
+
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -31,7 +33,9 @@ var AppModule = /** @class */ (function () {
                 ChatPage,
                 QandaPage,
                 PostQuestionPage,
-                TabsPage
+                AnswersPage,
+                TabsPage,
+
             ],
             imports: [
                 BrowserModule,
@@ -46,6 +50,7 @@ var AppModule = /** @class */ (function () {
                 HomePage,
                 QandaPage,
                 PostQuestionPage,
+                AnswersPage,
                 TabsPage
             ],
             providers: [

@@ -61,7 +61,9 @@
 
           <ion-row>
               <ion-col col-8>
-                  <ion-note item-start class = "note">Category: {{ selected_question.category.name }}</ion-note>
+                  <ion-note item-start class = "note">Category: Computer Science</ion-note>
+                  <!-- <ion-note item-start class = "note">Category: {{ selected_question.category.name }}</ion-note> -->
+
               </ion-col>
           </ion-row>
 
@@ -96,12 +98,21 @@
         </ion-item>      
       </ion-card>
      
+     
       <hr>
       <ion-row>
-          <button ion-button clear style="width:31%;height: 2rem; font-size:1.4rem;" *ngIf="followed" (click)="unfollowQuestion()">Unfollow</button>
-          <button ion-button clear style="width:31%;height: 2rem; font-size:1.4rem;" *ngIf="!followed" (click)="followQuestion()"><ion-icon name="ion-star"></ion-icon>Follow</button>
-          <button ion-button clear style="width:31%; height: 2rem; font-size:1.4rem;" (click)="showHideCommentBar()"><ion-icon name="ion-edit"></ion-icon>Comment</button>
-          <!-- <button ion-button clear style="width:31%; height: 2rem; font-size:1.3rem;" (click)="showHideAnswerBar()">Answer</button> -->
+          <ion-col >
+              <button ion-button clear style="height: 2rem; font-size:1.4rem;" *ngIf="followed" (click)="unfollowQuestion()"><ion-icon name="md-close-circle"></ion-icon>&ensp;Unfollow</button>
+              <button ion-button clear style="height: 2rem; font-size:1.4rem;" *ngIf="!followed" (click)="followQuestion()"><ion-icon name="md-star"></ion-icon>&ensp; Follow</button>    
+          </ion-col>
+          <ion-col >
+              <button ion-button clear style="height: 2rem; font-size:1.4rem;" (click)="showHideCommentBar()"><ion-icon name="md-create"></ion-icon>&ensp;Comment</button>
+              <!-- <button ion-button clear style="width:31%; height: 2rem; font-size:1.3rem;" (click)="showHideAnswerBar()">Answer</button> -->  
+          </ion-col>
+          <ion-col>
+ 
+          </ion-col>
+            
       </ion-row>
 
       <br>
@@ -111,10 +122,7 @@
         <button class="post" (click)="postComment()">Post Comment</button>
       </ion-row>
 
-      <ion-row *ngIf="viewAnswerBar">
-        <div class="input-container"><textarea [(ngModel)]="answer" class="comment-answer-input" placeholder="Enter answer here..." ></textarea></div>
-        <button class="post" (click)="postAnswer()">Post Answer</button>
-      </ion-row>
+      
 
     </ion-item-divider>
       <!-- Comments -->
@@ -148,29 +156,54 @@
 
 
 
-        <ion-item-divider style="padding-right: 16px">
-      <!-- Answers -->
-      <ion-row *ngFor="let answer of answers">
-        <ion-col col-auto style = "padding: 12px 12px 12px 1.5px;" >
-          <ion-row>
-              <button ion-button clear><ion-icon name="md-arrow-dropup" ></ion-icon></button>
-          </ion-row>
-          <ion-row >
-              <div style="margin-left: auto; margin-right: auto; display: block;"><strong><p>12</p></strong></div>
-          </ion-row>
-          <ion-row>
-              <button ion-button clear><ion-icon name="md-arrow-dropdown"></ion-icon></button>
-          </ion-row>
-        </ion-col>
-
-        <ion-col text-wrap >
-          <h6>Posted by: {{ answer.user.displayname }}</h6>
-          <p>{{ answer.answer }}</p>
-          <button ion-button clear style="width: 45%;">Edit</button>
-          <button ion-button clear style="width: 45%;" (click)="deleteAnswer(answer.id)">Delete</button>
-        </ion-col>
-      </ion-row>
-    </ion-item-divider>
-    
+      <ion-item-divider style="padding-right: 16px">
+        <!-- Answers -->
+        <ion-row *ngFor="let answer of answers">
+          <ion-col col-auto style = "padding: 12px 12px 12px 1.5px;" >
+            <ion-row>
+                <button ion-button clear><ion-icon name="md-arrow-dropup" ></ion-icon></button>
+            </ion-row>
+            <ion-row >
+                <div style="margin-left: auto; margin-right: auto; display: block;"><strong><p>12</p></strong></div>
+            </ion-row>
+            <ion-row>
+                <button ion-button clear><ion-icon name="md-arrow-dropdown"></ion-icon></button>
+            </ion-row>
+          </ion-col>
+          
+          <ion-col text-wrap >
+            <br>
+            <p>{{ answer.answer }}</p>
+            <h6>Posted by: {{ answer.user.displayname }}</h6>
+            <!-- <ion-row>
+                <button ion-button clear style="height: 2rem; font-size:1.4rem;"><ion-icon name="md-create"></ion-icon>&ensp; Edit</button>  
+                <button ion-button clear style="height: 2rem; font-size:1.4rem;" (click)="deleteAnswer(answer.id)"><ion-icon name="md-trash"></ion-icon>&ensp; Delete</button>  
+            </ion-row> -->
+            
+            <hr>
+            <ion-row>
+                <ion-col>
+                  <button ion-button clear style="height: 2rem; font-size:1.4rem;"><ion-icon name="md-copy"></ion-icon>&ensp; Edit</button>  
+                </ion-col>
+                <ion-col>
+                  <button ion-button clear style="height: 2rem; font-size:1.4rem;" (click)="deleteAnswer(answer.id)"><ion-icon name="md-trash"></ion-icon>&ensp; Delete</button>  
+                </ion-col> 
+                <ion-col>
+                  
+                </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+       </ion-item-divider>
+       <br>
+       <!-- <button ion-button full style= "height: 5rem !important;font-size: 1.2rem; " (click)="showHideAnswerBar()">Add Answer</button> -->
+       <button ion-button full style= "height: 5rem !important;font-size: 1.2rem;" 
+              (click) = "addAnswer()" >Add Answer</button>
+<!--       
+       <ion-row *ngIf="viewAnswerBar">
+          <div class="input-container"><textarea [(ngModel)]="answer" class="comment-answer-input" placeholder="Enter answer here..." ></textarea></div>
+          <button class="post" (click)="postAnswer()">Post Answer</button>
+        
+        </ion-row> -->
   </ion-list>
 </ion-content>

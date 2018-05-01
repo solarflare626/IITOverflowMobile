@@ -27,6 +27,7 @@ import { MessagingPage } from '../pages/messaging/messaging';
 import { NewsFeedPage } from '../pages/newsfeed/newsfeed';
 import { TabsPage } from '../pages/tabs/tabs';
 import { QuestionPage } from '../pages/question/question';
+import { AnswerPage } from '../pages/answer/answer';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { QuestionPage } from '../pages/question/question';
     NewsFeedPage,
     MessagingPage,
     QuestionPage,
+    AnswerPage,
     TabsPage
   ],
   imports: [
@@ -57,6 +59,7 @@ import { QuestionPage } from '../pages/question/question';
     NewsFeedPage,
     MessagingPage,
     QuestionPage,
+    AnswerPage,
     TabsPage
   ],
   providers: [
