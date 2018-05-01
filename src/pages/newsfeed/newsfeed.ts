@@ -1,3 +1,4 @@
+import { App } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { NewsfeedProvider } from '../../providers/newsfeed/newsfeed';
@@ -20,22 +21,26 @@ export class NewsFeedPage {
 
   constructor(public navCtrl: NavController, 
     public dataService: NewsfeedProvider, 
-    public http: Http) {
+    public http: Http,
+    public appCtrl: App
+  ) {
       this.select_categories = 'Select category...';
       this.select_sort = 'Sort by...';
-      this.user = {"id": 4, "email": "christinejane.beleta@g.msuiit.edu.ph", "displayname": "Cjbeleta", "picture": "random"};
+      this.user = {"id": 9,  "displayname": "Hokage", "picture": "random"};
     //this.reload();
+    
   }
 //////////////////////////////////////////////////////////////// -> onload
   ionViewDidLoad() {
     this.dataService.listQuestions().subscribe(
         data => {
           this.questions = data;
+          console.log(this.questions);
         },
         err => {
           console.log("ERROR Q");
         });
-        
+         
     this.dataService.listCategories().subscribe(
       data =>{
         this.categories = data;
@@ -50,10 +55,35 @@ export class NewsFeedPage {
   }
 
   viewQuestion(question) {
-    this.navCtrl.push(this.questionpage, {option: false, question: question});
+    this.appCtrl.getRootNav().push(this.questionpage, {option: false, question: question});
+ 
+    //this.navCtrl.push(this.questionpage, {option: false, question: question});
   }
 
+  getDate(date){
 
+    var date2 = new Date().getTime() - new Date(date).getTime();
+    
+    var seconds = Math.floor( date2 / 1000);
+
+    if(Math.floor(seconds / 3600) >= 24)
+      return new Date(date).toUTCString();
+
+    if(Math.floor(seconds / 3600))
+      return  ""+Math.floor(seconds / 3600)+" hours ago";
+
+    if(Math.floor(seconds / 60))
+        return  ""+Math.floor(seconds / 60)+" minutes ago";
+    
+    if(Math.floor(seconds / 1))
+        return  ""+Math.floor(seconds / 1)+" seconds ago";
+    
+    
+        return new Date(date).toUTCString();
+    
+      
+  
+  }
   /*
    reload(){
 

@@ -12,6 +12,9 @@ import { HTTP } from '@ionic-native/http';
 import { HttpModule } from '@angular/http';
 import { ApiProvider } from '../providers/api/api';
 
+import { NativeApiProvider } from '../nativeProviders/nativeApi/nativeApi';
+import { NativeUserProvider } from '../nativeProviders/nativeUser/nativeUser';
+
 import { GooglePlus } from '@ionic-native/google-plus';
 import { AlertController } from 'ionic-angular';
 
@@ -27,7 +30,6 @@ import { MessagingPage } from '../pages/messaging/messaging';
 import { NewsFeedPage } from '../pages/newsfeed/newsfeed';
 import { TabsPage } from '../pages/tabs/tabs';
 import { QuestionPage } from '../pages/question/question';
-import { AnswerPage } from '../pages/answer/answer';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,6 @@ import { AnswerPage } from '../pages/answer/answer';
     NewsFeedPage,
     MessagingPage,
     QuestionPage,
-    AnswerPage,
     TabsPage
   ],
   imports: [
@@ -59,7 +60,6 @@ import { AnswerPage } from '../pages/answer/answer';
     NewsFeedPage,
     MessagingPage,
     QuestionPage,
-    AnswerPage,
     TabsPage
   ],
   providers: [
@@ -78,6 +78,8 @@ import { AnswerPage } from '../pages/answer/answer';
     HTTP,
     ApiProvider,
     HttpModule,
+    NativeApiProvider,
+    NativeUserProvider
   ]
 })
 
