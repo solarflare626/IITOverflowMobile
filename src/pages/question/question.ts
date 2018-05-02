@@ -9,7 +9,6 @@ import {AlertController} from 'ionic-angular';
 import {NativeUserProvider} from '../../nativeProviders/nativeUser/nativeUser';
 import {NativeApiProvider} from '../../nativeProviders/nativeApi/nativeApi';
 
-import { Autosize} from '../../components/autosize/autosize';
 @Component({selector: 'page-question', templateUrl: 'question.html'})
 export class QuestionPage {
   @ViewChild('myInput') myInput: ElementRef;
