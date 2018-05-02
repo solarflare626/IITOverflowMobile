@@ -113,7 +113,7 @@
       </ion-row>
 
     </ion-item-divider>
-      <!-- Comments -->
+      <!-- Comments 
       <ion-grid text-wrap style = "background-color: #E0E0E0;">
         <ion-row>
           <ion-col col-3>
@@ -140,7 +140,7 @@
             </ion-col>
           </ion-row>
         </ion-grid>
-
+-->
 
 
 
@@ -166,9 +166,11 @@
           <p [innerHtml]="answer.answer"></p>
          
         </ion-col>
-        <button ion-button clear style="width:31%; height: 2rem; font-size:1.3rem;" (click)="showHideInputBar(answers,answer)">Comment</button>
         
+         
       </ion-row>
+      <button ion-button clear style="width:31%; height: 2rem; font-size:1.3rem;" (click)="showHideInputBar(answers,answer)">Comment</button>
+   
       
           <!-- Comments -->
           <ion-grid *ngFor="let comment of answer.comments" text-wrap style = "background-color: #E0E0E0;">
@@ -179,8 +181,11 @@
               </ion-col>
               <ion-col>
                 <ion-row>
-                    <p><a [innerHtml]="comment.comment" ></a>– <a (click)="log(comment.user.displayname)" ><font color= "blue">{{comment.user.displayname}} </font></a>{{getDate(comment.updatedAt)}}</p>
-                </ion-row>
+                   
+                    <p><a [innerHtml]="comment.comment" ></a><br>– <a (click)="log(comment.user.displayname)" ><font color= "blue">{{comment.user.displayname}} </font></a>{{getDate(comment.updatedAt)}}</p>
+                    <ion-icon *ngIf="selected_question.user.id == user.id" name="md-more" (click)="presentActionSheet( answer.comments,comment,'comment')" float-right padding></ion-icon>
+         
+                  </ion-row>
               </ion-col>
             </ion-row>
           </ion-grid>
@@ -193,17 +198,18 @@
   </ion-list>
 
 </ion-content>
-<ion-footer [hidden]="!viewCommentBar" style="background-color: white; margin-right: 10px;">
+<ion-footer [hidden]="!viewCommentBar"  style="background-color: white; margin-right: 10px;">
 
-       
-          <ion-item class="input-container" >
-          <ion-textarea #myInput id="myInput"  rows="1" (keyup)="resize()"   [(ngModel)]="inputItem.value" class="comment-answer-input" ></ion-textarea>
+
+          <ion-item class="input-container" id="myInputParent">
+          <ion-textarea #myInput id="myInput"   rows="4"  (blur)="checkBlur($event)"  [(ngModel)]="inputItem.value" class="comment-answer-input" ></ion-textarea>
           
           <div item-right>
-            <ion-icon class="vertical-align: middle;  " style="zoom:2.0;"  (click)="post()" name="attach"></ion-icon>
-         
+            <!--
+              <button ion-button id="attach" clear icon-only class="vertical-align: middle;"     (click)="post()"><ion-icon class="vertical-align: middle;"  id="attach" style="zoom:2.0;"  (click)="post()" name="attach"></ion-icon></button>
+         -->
         
-          <ion-icon class="vertical-align: middle;" style="zoom:2.0;"  (click)="post()" name="send"></ion-icon>
+          <button ion-button id="send" clear icon-only class="vertical-align: middle;"     (click)="post()"><ion-icon zoom="2.0" name="send"></ion-icon></button>
             </div>
            </ion-item>
     

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { GLOBALS } from '../../models/globals';
+//import { stringify } from '@angular/compiler/src/util';
 @Injectable()
 export class NewsfeedProvider {
   posts: any;
@@ -83,10 +84,16 @@ export class NewsfeedProvider {
     this.http.post(this.globals.baseUrl + "/api/Questions", JSON.parse(post)).subscribe();
   }
   //////////////////////////////////////////////////////////////// -> post/edit/delete answers functions
-  postAnswer(post) {
-    return this.http.post(this.globals.baseUrl + "/api/Answers", JSON.parse(post));
+ 
+ postAnswer(post) {
+    return this.http.post(this.globals.baseUrl + "/api/Answers", JSON.stringify(post));
   }
-
+  postComment(post) {
+    return this.http.post(this.globals.baseUrl + "/api/Comments", JSON.stringify(post));
+  }
+  deleteComment(comment_id) {
+    return this.http.delete(this.globals.baseUrl+'/api/Answers/'+comment_id);
+    }
   deleteAnswer(answer_id) {
     return this.http.delete(this.globals.baseUrl+'/api/Answers/'+answer_id);
   }

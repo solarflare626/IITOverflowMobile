@@ -49,12 +49,12 @@ export class LoginPage {
 
         this.api.post('/users/OAuthLogin', { "idToken": res.idToken }, {}).then(data => {
           //data = JSON.parse(data.data);
-          data = JSON.parse(data.data);
+          var data2 = JSON.parse(data.data);
 
-          var accessToken = data.id;
+          var accessToken = data2.id;
           var user;
           //console.log("data", data.userId);
-          this.api.get('/users/' + data.userId, {}, {}).then(resp => {
+          this.api.get('/users/' + data2.userId, {}, {}).then(resp => {
             user = JSON.parse(resp.data);
             user.accessToken = accessToken;
             //console.log("idtoken", JSON.stringify(data));

@@ -13,6 +13,9 @@ page-question {
         background-color: #0080ff;
         color: white;
     }
+    textarea {
+        height:"auto";
+}
     .comment-answer-input {
         
         background-color: white;
@@ -26,6 +29,7 @@ page-question {
     p{
         white-space: pre-line;
     }
+    a { color: inherit; } 
     .input-container {
         background-color: white;
         
