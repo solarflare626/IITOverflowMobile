@@ -14,6 +14,7 @@ export class QuestionPage {
   @ViewChild('myInput') myInput: ElementRef;
   @ViewChild('mynputParent') myInputParent:   ElementRef;
   resize() {
+    //this.myInput = @ViewChild('myInput') myInput: ElementRef;
     var element = this.myInput['_elementRef'].nativeElement.getElementsByClassName("text-input")[0];
      
       console.log('scrollheight',element.scrollHeight);
@@ -26,7 +27,7 @@ export class QuestionPage {
       //scrollHeight= element.height;
       
       this.myInput['_elementRef'].nativeElement.style.height = (scrollHeight + 10) + 'px';
-      this.myInputParent['_elementRef'].nativeElement.style.height = (scrollHeight + 40) + 'px';
+      //this.myInputParent['_elementRef'].nativeElement.style.height = (scrollHeight + 40) + 'px';
     }
   }
   input : any = {};
@@ -55,6 +56,7 @@ export class QuestionPage {
   comment : String;
   answer : String;
   answers : any;
+  questions: any;
 
   inputParent:any= {};
   inputItem:any = {};
@@ -78,6 +80,10 @@ export class QuestionPage {
     this.selected_question = this
       .navParams
       .get('question');
+    this.questions =  this
+    .navParams
+    .get('questions');
+    console.log("Questions",JSON.stringify(this.questions));
     this.selected_question_id = this.selected_question.id;
 
     console.log("qUser", this.selected_question.user.id);
@@ -115,7 +121,7 @@ export class QuestionPage {
     
   }
 
-  post(){
+  post(parent,input){
     var parent = this.inputParent;
     var input = this.inputItem;
     if(!parent){
@@ -134,7 +140,7 @@ export class QuestionPage {
         data2.comments = [];
         data2.user = this.user;
         this.answers.push(data2);
-        this.inputItem.value ="";
+        input.value ="";
         this.viewCommentBar= false;
 
       }).catch(error=>{
@@ -147,7 +153,7 @@ export class QuestionPage {
 
       let hold = {
         userId: this.user.id,
-        answerId: parent.id,
+        answerId: input.id,
         comment: input.value
       };
       this.nativeApiProvider.post('/Comments',hold,{}).then((data)=>{
@@ -156,8 +162,8 @@ export class QuestionPage {
        
         data2.user = this.user;
 
-        this.inputItem.comments.push(data2);
-        this.inputItem.value ="";
+        input.comments.push(data2);
+        input.value ="";
         this.viewCommentBar= false;
       this.viewCommentBar= false;
 
@@ -198,10 +204,43 @@ export class QuestionPage {
                       handler: () => {
                         console.log('Confirm clicked');
                         if (item) {
+                          if(name == "answer"){
+                            this.nativeApiProvider.delete("/Answers/"+item.id,{},{}).then(data =>{
 
-                          var index = holder.indexOf(item);
-                          holder.splice(index, 1);
+                              
 
+                                var index = holder.indexOf(item);
+                                holder.splice(index, 1);
+  
+                              
+
+                            }).catch(error=>{
+                              console.log(JSON.stringify(error));
+                            });
+                           
+                          }else if(name == "comment"){
+
+                            this.nativeApiProvider.delete("/Comments/"+item.id,{},{}).then(data =>{
+
+                              var index = holder.indexOf(item);
+                                holder.splice(index, 1);
+
+                            }).catch(error=>{
+                              console.log(JSON.stringify(error));
+                            });
+                          }else if(name == "question"){
+                            this.nativeApiProvider.delete("/Questions/"+item.id,{},{}).then(data =>{
+                             // console.log(JSON.stringify(holder));
+                               var index = holder.indexOf(item);
+                                holder.splice(index, 1);
+
+                                this.navCtrl.pop();
+                             
+                            }).catch(error=>{
+                              console.log(JSON.stringify(error));
+                            });
+                            
+                          }
                         }
                       }
                     }
@@ -358,38 +397,48 @@ export class QuestionPage {
     //
     
     //this.viewCommentBar = !(this.viewCommentBar);
-    this.viewCommentBar = true;
+    
+    
     /*if (this.viewAnswerBar) {
       this.viewAnswerBar = !(this.viewAnswerBar);
       this.inputParent = {};
       this.inputItem = {};
     }else{*/
-      if(child.value)
+      
+
+      try {
+        if(child.value)
         this.inputItem = child;
       else{
         child.value = "";
         this.inputItem = child;
        console.log("qwe");
        
-
-      //this.myInput['_elementRef'].nativeElement.style.height = 28 + 'px';
-    
        
+      }
+      this.viewCommentBar = true;
+      } catch (error) {
+        
+      }finally{
+        let element = this.myInput['_elementRef'].nativeElement.getElementsByClassName("text-input")[0];
+        this.renderer.invokeElementMethod(element, 'focus', []);
       }
       
       
       //console.log(JSON.stringify(child));
       this.inputParent = parent;
-      
+    
+        
+   
       
      
        //this.inputItem.value = value;
     //}
       
     
-    }
-  
-  postComment() {
+      }
+    
+    postComment() {
     console.log("Comment: ", this.comment);
     this.viewCommentBar = false;
     this.comment = '';

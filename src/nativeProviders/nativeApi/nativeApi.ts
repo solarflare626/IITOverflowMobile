@@ -21,7 +21,7 @@ export class NativeApiProvider {
   } 
 
   public delete(url: string, params: any = {}, headers: any = {}) {
-    return this.http.post(this.baseUrl + url, params, headers);
+    return this.http.delete(this.baseUrl + url, params, headers);
 
   } 
 

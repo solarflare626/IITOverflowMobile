@@ -23,13 +23,14 @@ import { File } from '@ionic-native/file';
 import { Camera } from '@ionic-native/camera';
 import { IonicStorageModule } from '@ionic/storage';
 
-import { LoginPage } from '../pages/login/login';
+
 import { ProfilePage } from '../pages/profile/profile';
 import { NotificationPage } from '../pages/notification/notification';
 import { MessagingPage } from '../pages/messaging/messaging';
 import { NewsFeedPage } from '../pages/newsfeed/newsfeed';
 import { TabsPage } from '../pages/tabs/tabs';
 import { QuestionPage } from '../pages/question/question';
+import { LoginPage } from '../pages/login/login';
 
 @NgModule({
   declarations: [
