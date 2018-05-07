@@ -27,7 +27,15 @@ export class NewsFeedPage {
   ) {
       this.select_categories = 'Select category...';
       this.select_sort = 'Sort by...';
-      this.user = {"id": 9,  "displayname": "Hokage", "picture": "random"};
+      this.user = {
+        "email": "chrisjabel11@gmail.com",
+        "displayname": "Christine Beleta",
+        "picture": "https://lh5.googleusercontent.com/-EiereXA5ywg/AAAAAAAAAAI/AAAAAAAAAAA/ACLGyWBD2Ch2uvojXnwMvIPaZhMMW2yWBg/s96-c/photo.jpg",
+        "createdAt": "2018-05-02T06:18:44.131Z",
+        "updatedAt": "2018-05-02T06:18:44.123Z",
+        "deletedAt": null,
+        "id": 8
+      };
     //this.reload();
     
   }
@@ -52,7 +60,7 @@ export class NewsFeedPage {
   }
 //////////////////////////////////////////////////////////////// -> question functions
   postQuestion() {
-    this.navCtrl.push(AddquestionPage, {option: true});
+    this.navCtrl.push(AddquestionPage, {userid: this.user.id});
   }
 
   viewQuestion(question) {

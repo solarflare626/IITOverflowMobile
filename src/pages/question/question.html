@@ -108,7 +108,7 @@
       
 
       <ion-row *ngIf="viewAnswerBar">
-        <div class="input-container"><textarea [(ngModel)]="answer" class="comment-answer-input" placeholder="Enter answer here..." ></textarea></div>
+        <div [froalaEditor] placeholder="Enter answer here..." [(ngModel)]="answer"></div>
         <button class="post" (click)="postAnswer()">Post Answer</button>
       </ion-row>
 
@@ -164,7 +164,7 @@
           <ion-icon *ngIf="answer.user.id == user.id" name="md-more" (click)="presentActionSheet(answers,answer, 'answer')" float-right padding></ion-icon>
           <h6>Posted by: {{ answer.user.displayname }}</h6>
           <p [innerHtml]="answer.answer"></p>
-         
+      
         </ion-col>
         <button ion-button clear style="width:31%; height: 2rem; font-size:1.3rem;" (click)="showHideInputBar(answers,answer)">Comment</button>
         
@@ -196,7 +196,7 @@
 <ion-footer [hidden]="!viewCommentBar" style="background-color: white; margin-right: 10px;">
 
        
-          <ion-item class="input-container" >
+          <!--<ion-item class="input-container" >
           <ion-textarea #myInput id="myInput"  rows="1" (keyup)="resize()"   [(ngModel)]="inputItem.value" class="comment-answer-input" ></ion-textarea>
           
           <div item-right>
@@ -205,7 +205,7 @@
         
           <ion-icon class="vertical-align: middle;" style="zoom:2.0;"  (click)="post()" name="send"></ion-icon>
             </div>
-           </ion-item>
-    
-
+           </ion-item>-->
+              <textarea [froalaEditor] [(ngModel)]="inputItem.value"></textarea>
+              <button type="submit" (click)="post()">Submit</button>
 </ion-footer>

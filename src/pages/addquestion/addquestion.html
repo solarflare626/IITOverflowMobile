@@ -18,6 +18,20 @@
 </ion-header>
 
 <ion-content padding>
-    <ion-textarea placeholder= "Question Title" [(ngModel)]="answer"></ion-textarea>
-  <div [froalaEditor] placeholder = "Question Description"></div>
+  <ion-list>
+    <ion-item>
+        <input class="input-question-title" placeholder="Question Title" [(ngModel)]="question"/>
+    </ion-item>
+    <ion-item>
+        <div [froalaEditor] placeholder = "Question Description" [(ngModel)]="questiondesc"></div>
+    </ion-item>
+    <ion-item>
+        <ion-select [(ngModel)]="selected_category" placeholder="Select category..." (ionChange)="showSelectedCategory()">
+          <ion-option *ngFor="let c of categories" value="{{ c.id }}">
+            {{ c.name }}
+          </ion-option>
+        </ion-select>
+    </ion-item>
+  </ion-list>
 </ion-content>
+
