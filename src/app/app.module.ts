@@ -37,6 +37,8 @@ import "froala-editor/js/froala_editor.pkgd.min.js";
 
 // Import Angular2 plugin.
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import { NativeApiProvider } from '../nativeProviders/nativeApi/nativeApi';
+import { NativeUserProvider } from '../nativeProviders/nativeUser/nativeUser';
 
 @NgModule({
   declarations: [
@@ -95,7 +97,8 @@ import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
     UserProvider,
     HTTP,
     ApiProvider,
-    HttpModule,
+    HttpModule,NativeApiProvider,
+    NativeUserProvider
   ]
 })
 

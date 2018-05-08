@@ -2,7 +2,7 @@ import { Component,ViewChild,Renderer,ElementRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { NewsfeedProvider } from '../../providers/newsfeed/newsfeed';
-//import { UserProvider } from '../../providers/user/user';
+import { UserProvider } from '../../providers/user/user';
 import 'rxjs/add/operator/debounceTime';
 import { ActionSheetController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
@@ -58,17 +58,19 @@ export class QuestionPage {
   inputParent:any= {};
   inputItem:any = {};
   inputValue:String ="";
-  constructor(public navCtrl : NavController, public navParams : NavParams, public dataService : NewsfeedProvider/*, private userProvider : NativeUserProvider*/, public toastCtrl : ToastController, public actionSheetCtrl : ActionSheetController, private alertCtrl : AlertController,
+  constructor(public navCtrl : NavController, public navParams : NavParams, public dataService : NewsfeedProvider, private userProvider : NativeUserProvider, public toastCtrl : ToastController, public actionSheetCtrl : ActionSheetController, private alertCtrl : AlertController,
     private renderer:Renderer, private elementRef:ElementRef) {
-    /*this
+    this
       .userProvider
       .get()
       .then(data => {
         if (data) {
           this.user = data;
           console.log("curruser", this.user.id);
+        }else{
+          this
         }
-      })*/
+      })
     this.option = this
       .navParams
       .get('option');

@@ -23,7 +23,7 @@
         <input class="input-question-title" placeholder="Question Title" [(ngModel)]="question"/>
     </ion-item>
     <ion-item>
-        <div [froalaEditor] placeholder = "Question Description" [(ngModel)]="questiondesc"></div>
+        <ion-textarea [froalaEditor] placeholder = "Question Description" [(ngModel)]="questiondesc"></ion-textarea>
     </ion-item>
     <ion-item>
         <ion-select [(ngModel)]="selected_category" placeholder="Select category..." (ionChange)="showSelectedCategory()">
