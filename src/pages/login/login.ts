@@ -31,7 +31,7 @@ export class User{
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
-   providers: [GooglePlus]
+  providers: [GooglePlus]
 })
 
 export class LoginPage {

@@ -1,55 +1,48 @@
 page-newsfeed {
-
-.questiondetails {
-    border: 1px solid #c0c0c0;
-    border-radius: 5px;
-    padding: 10px;
-}
-
-.comment {
-    border: 1px solid #c0c0c0;
-    border-radius: 30px;
-    margin: 10px;
-    width: 75%;
-    padding: 10px;
-    float: left;
-}
-
-.comment_answer {
-    width: 20%;
-    border-radius: 30px;
-    margin: 10px;
-    padding: 10px;
-    float: left;
-    background-color: #0080ff;
-    color: white;
-}
-
-.center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-}
-.select_home {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-}
-
-.upvote {
-    background-color:#4CAF50;
-}
-
-.downvote {
-    background-color: #f44336;
-
-
-}
-
-.vote {
-    width: 50px;
-}
+   
+    .note {
+        font-size: 12px;
+    }
+    
+    #tags {
+        text-align:"left"
+    }
+    
+    #timestamp {
+        text-align:"right"
+    }
+    
+    .question { 
+        font-size: 18px !important; 
+        font-weight: bold;
+    }
+    
+    .items {
+        min-width: 70px;
+    }
+    
+    .item-md{
+        padding: 0 16px;
+    }
+    
+    .item-md.item-block .item-inner {
+        border-bottom: none;
+    }
+    .item .item-block .item-md .item-select{
+        padding-left: 0;
+    
+    }
+    .list-md {
+        margin: 0;
+    }
+    
+    .select-md {
+        padding: 20px 0px 13px 0px;
+    }
+    .select-md .select-icon {
+        position: relative;
+        width: 15px;
+        height: 19px;
+    }
 
 }

@@ -1,4 +1,4 @@
-<ion-content padding>
+<!-- <ion-content padding>
   <ion-content id="homeScroll">
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
@@ -24,15 +24,6 @@
 
 <ion-list>
     <ion-item *ngFor="let question of questions">
-      <!--<ion-item-sliding #item>
-      <ion-item class="questiondetails" no lines>
-        <h1>VOTES: {{ question.votes }} </h1>
-      </ion-item>
-      <ion-item-options side="left">
-        <button ion-button class="upvote">UPVOTE</button>
-        <button ion-button class="downvote">DOWNVOTE</button>
-      </ion-item-options>
-      </ion-item-sliding>-->
       <ion-card >
         
         <ion-row>
@@ -72,4 +63,94 @@
       </ion-item>
     </ion-item>
 </ion-list>
+</ion-content>
+ -->
+
+
+ <ion-header>
+  <ion-navbar>
+    <ion-title>IIT Overflow</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid fixed>
+    <ion-row justify-content-start>
+      <ion-col col-8>
+        <ion-searchbar 
+          placeholder= "Search Questions" 
+          animated = true>
+        </ion-searchbar>
+      </ion-col>
+
+      <ion-col>
+        <ion-item>
+          <ion-select 
+            placeholder = "Sort by"
+            interface = "popover"
+            class = "items">
+              <ion-option value="Active">Active</ion-option>
+              <ion-option value="Newest">Newest</ion-option>
+              <ion-option value="Votes">Votes</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
+  <ion-list>
+      <ion-item-divider>
+        <ion-avatar item-start>
+          <img src="../../assets/imgs/test1.png">
+        </ion-avatar>
+       <p class = "question">How to Declare a variable in Javascript?</p>
+        <ion-row>
+          <ion-col col-8>
+              <ion-note item-start class = "note"> Python,Web Development </ion-note>
+          </ion-col>
+          <ion-col >
+              <ion-note><p style="text-align:right; font-size: 12px; color: #c5c5c5;"> 1min ago</p></ion-note>
+          </ion-col>
+        </ion-row>
+      </ion-item-divider>
+  </ion-list>
+
+  <ion-list>
+      <ion-item-divider>
+        <ion-avatar item-start>
+          <img src="../../assets/imgs/test1.png">
+        </ion-avatar>
+       <p class = "question">iOS 11 Basics: Laying out views in a scrollView</p>
+        <ion-row>
+          <ion-col col-8>
+              <ion-note item-start class = "note"> Ios, swift, uiscrollview</ion-note>
+          </ion-col>
+          <ion-col >
+              <ion-note><p style="text-align:right; font-size: 12px; color: #c5c5c5;"> 3mins ago</p></ion-note>
+          </ion-col>
+        </ion-row>
+      </ion-item-divider>
+  </ion-list>
+
+  <ion-list>
+      <ion-item-divider>
+        <ion-avatar item-start>
+          <img src="../../assets/imgs/test1.png">
+        </ion-avatar>
+         <p class = "question">How to assign multiple classes to an HTML container?</p>
+        <ion-row>
+          <ion-col col-8>
+              <ion-note item-start class = "note"> html, css, html5</ion-note>
+          </ion-col>
+          <ion-col >
+              <ion-note><p style="text-align:right; font-size: 12px; color: #c5c5c5;"> 5hrs ago</p></ion-note>
+          </ion-col>
+        </ion-row>
+      </ion-item-divider>
+  </ion-list>
+
+  <ion-fab right bottom>
+      <button ion-fab><ion-icon name="md-bulb" style="zoom:1.4;"></ion-icon></button>
+    </ion-fab>
 </ion-content>
