@@ -1,17 +1,31 @@
-import { App } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { NavController, IonicPage, ToastController, AlertController } from 'ionic-angular';
-import { UserProvider } from '../../providers/user/user';
+import { Http } from '@angular/http';
 import { GooglePlus } from '@ionic-native/google-plus';
+import { App, NavController, 
+  IonicPage, 
+  ToastController, 
+  AlertController } from 'ionic-angular';
+
+import { UserProvider } from '../../providers/user/user';
+
+import { GLOBALS } from '../../models/globals';
+
 import { LoginPage } from '../../pages/login/login';
+import { FollowersPage } from '../../pages/followers/followers';
+import { FollowingPage } from '../../pages/following/following';
+import { QuestionPage } from '../../pages/question/question';
+
 @Component({
   selector: 'page-profile',
   templateUrl: 'profile.html'
 })
 export class ProfilePage {
- 
+  questions: any;
   following = false;
-  user = {
+  user: any;
+  questionPage: QuestionPage;
+
+  user1 = {
     name: 'Mark Angelo G. Nambatac',
     profileImage: '../../assets/imgs/avatar/avatar.jpg',
     coverImage: '../../assets/imgs/background/background-5.jpg',
@@ -23,52 +37,61 @@ export class ProfilePage {
     followers: 456,
     following: 1052,
     posts: 35
+   
   };
 
-  posts = [
-    {
-      postImageUrl: '../../assets/imgs/background/background-2.jpg',
-      mainQuestion: 'How to declare a variable in Javascript?',
-      text: `Hi Guys, I am having a hard time on learning javascript. Can someone help me on how to declare a variable in javascript?`,
-      date: 'April 1, 2018',
-      likes: 12,
-      comments: 4,
-      timestamp: '11h ago',
-      categories: [ 'python', 'web development']
-    },
-    {
-      postImageUrl: '../../assets/imgs/background/background-3.jpg',
-      mainQuestion: 'Unsaon pag padakog itlog?',
-      text: 'Do not go where the path may lead, go instead where there is no path and leave a trail.',
-      date: 'October 23, 2016',
-      likes: 30,
-      comments: 64,
-      timestamp: '30d ago'
-    },
-    {
-      postImageUrl: '../../assets/imgs/background/background-4.jpg',
-      mainQuestion: 'Unsay course ang pinaka ayos sa IIT?',
-      date: 'June 28, 2016',
-      likes: 46,
-      text: `Hope is the thing with feathers that perches in the soul
-             and sings the tune without the words And never stops at all.`,
-      comments: 66,
-      timestamp: '4mo ago'
-    },
-  ];
+  // posts = [
+  //   {
+  //     postImageUrl: '../../assets/imgs/background/background-2.jpg',
+  //     mainQuestion: 'How to declare a variable in Javascript?',
+  //     text: `Hi Guys, I am having a hard time on learning javascript. Can someone help me on how to declare a variable in javascript?`,
+  //     date: 'April 1, 2018',
+  //     likes: 12,
+  //     comments: 4,
+  //     timestamp: '11h ago',
+  //     categories: [ 'python', 'web development']
+  //   },
+  //   {
+  //     postImageUrl: '../../assets/imgs/background/background-3.jpg',
+  //     mainQuestion: 'Unsaon pag padakog itlog?',
+  //     text: 'Do not go where the path may lead, go instead where there is no path and leave a trail.',
+  //     date: 'October 23, 2016',
+  //     likes: 30,
+  //     comments: 64,
+  //     timestamp: '30d ago'
+  //   },
+  //   {
+  //     postImageUrl: '../../assets/imgs/background/background-4.jpg',
+  //     mainQuestion: 'Unsay course ang pinaka ayos sa IIT?',
+  //     date: 'June 28, 2016',
+  //     likes: 46,
+  //     text: `Hope is the thing with feathers that perches in the soul
+  //            and sings the tune without the words And never stops at all.`,
+  //     comments: 66,
+  //     timestamp: '4mo ago'
+  //   },
+  // ];
 
-  constructor(public navCtrl: NavController, public toastCtrl: ToastController, private alertCtrl: AlertController,
+  constructor(public navCtrl: NavController, 
+    public toastCtrl: ToastController, 
+    private alertCtrl: AlertController,
     private googlePlus: GooglePlus, 
-     private userProvider:UserProvider,
+    private userProvider:UserProvider,
     public appCtrl: App) {
-
-
-      
-     }
+      this.user = {"id": "4", "email": "christinejane.beleta@g.msuiit.edu.ph", "displayname": "Cjbeleta", "picture": "../../assets/imgs/avatar/avatar.jpg"};
+    }
+    
 
   ionViewDidLoad() {
-    console.log('Hello ProfileFour Page');
-  }
+    this.userProvider.listQuestions(this.user.id).subscribe(
+      data => {
+        this.questions = data;
+      },
+      err => {
+        console.log("ERROR Q");
+      });
+
+    }
 
   follow() {
     this.following = !this.following;
@@ -152,5 +175,18 @@ export class ProfilePage {
     alert.present();
   }
 
+  viewFollowers() {
+    this.navCtrl.push(FollowersPage);
+    console.log("Followers Clicked!");
+  }
+
+  viewFollowing() {
+    this.navCtrl.push(FollowingPage);
+
+  }
+
+  viewQuestion(question) {
+    this.navCtrl.push(QuestionPage, {option: false, question: question});
+  }
 }
 

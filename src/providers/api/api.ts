@@ -16,8 +16,7 @@ export class ApiProvider {
   }
 
    static baseUrl() {
-      //return 'http://192.168.0.118:3000/api';
-      return 'http://192.168.43.72:3000/api';
+      return 'http://iitoverflow.herokuapp.com';
       
          
     }

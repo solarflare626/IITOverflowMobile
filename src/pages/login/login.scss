@@ -1,14 +1,16 @@
-@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans|Poppins:900');
+page-login {
 
-// ion-avatar img {
-//     width:100% !important;
-//     height : 100% !important;
-//     max-width: 100px !important;  //any size
-//     max-height: 100px !important;
-//     -webkit-border-radius: 30px; /* Saf3+, Chrome */
-//     border-radius: 100px;
+    @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans|Poppins:900');
+
+ion-avatar img {
+    width:100% !important;
+    height : 100% !important;
+    max-width: 100px !important;  //any size
+    max-height: 100px !important;
+    -webkit-border-radius: 30px; /* Saf3+, Chrome */
+    border-radius: 100px;
     
-// }
+}
 
 .center {
     display: block;
@@ -77,4 +79,6 @@
     top: 250px;
 
 }
+}
+
 }

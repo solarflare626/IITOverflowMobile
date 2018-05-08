@@ -1,67 +1,54 @@
 <ion-content padding class="transparent-header">
   
 
-  <div id="profile-bg" [ngStyle]="{'background-image': 'url('+ user.coverImage +')'}"></div>
+  <div id="profile-bg" [ngStyle]="{'background-image': 'url('+ user1.coverImage +')'}"></div>
+ 
   <div id="content">
     <div id="profile-info" padding>
-      <img id="profile-image" [src]="user.profileImage">
-      <h3 id="profile-name">{{user.name}}</h3>
-      <p>{{user.occupation}} &bull; {{user.college}}  &bull; {{user.course}}</p>
-      <p class="profile-description">{{user.description}}</p>
-      <div><button ion-button (click)="presentConfirm()" class = "center">Logout From Google</button></div>
+      <img id="profile-image" [src]="user1.profileImage">
+      <h3 id="profile-name">{{user1.name}}</h3>
+      <p>{{user.occupation}} &bull; {{user1.college}}  &bull; {{user1.course}}</p>
+      <p class="profile-description">{{user1.description}}</p>
+      <!-- <div><button ion-button (click)="presentConfirm()" class = "center">Logout From Google</button></div> -->
       <button ion-button *ngIf="!following" small color="purple" (click)="follow()">Follow</button>
       <button ion-button *ngIf="following" class="follow-button" small color="purple" (click)="unfollow()">Following<ion-icon name="checkmark"></ion-icon></button>
     </div>
-    <hr/>
+    <br>
+    <br>
+    <hr>
     <ion-row class="profile-numbers">
       <ion-col col-4>
         <p>Posts</p>
-        <span>{{user.posts}}</span>
+        <span>{{user1.posts}}</span>
       </ion-col>
-      <ion-col col-4>
+      <ion-col col-4 (click)= "viewFollowing()">
         <p>Following</p>
-        <span>{{user.following}}</span>
+        <span>{{user1.following}}</span>
       </ion-col>
-      <ion-col col-4>
+      <ion-col col-4 (click)= "viewFollowers()">
         <p>Followers</p>
-        <span>{{user.followers}}</span>
+        <span>{{user1.followers}}</span>
       </ion-col>
     </ion-row>
 
-    <div id="posts">
-      <ion-card *ngFor="let post of posts">
-        <ion-item>
-          <ion-avatar item-start>
-            <img [src]="user.profileImage">
-          </ion-avatar>
-          <h2 class="sticky">{{user.name}}</h2>
-          <p>{{post.date}}</p>
-        </ion-item>
-     
-        <ion-card-content class = "card rounded">
-          <strong>{{  post.mainQuestion }}</strong> 
-          <p>  {{ post.text }}</p>
-        </ion-card-content>
+    <br>
+
+    
+  </div>
+  <ion-list>
+      <ion-item-divider *ngFor="let question of questions" (click)="viewQuestion(question)" class="question-container">
+        <ion-avatar item-start style="width: 20px; height: 20px; color: white; background-color: #0099ff; text-align: center; padding-top: 10px; border-radius: 50%;">
+          <p style="color: white;">5</p>
+        </ion-avatar>
+        <p class = "question">{{ question.question }}</p>
         <ion-row>
-          <ion-col col-4>
-            <button ion-button color="purple" clear small icon-left (click)="like(post)">
-                <ion-icon name='thumbs-up'></ion-icon>
-                {{post.likes}} Upvotes
-              </button>
+          <ion-col col-8>
+              <ion-note item-start class = "note"> Html, Css, Ionic</ion-note>
           </ion-col>
-          <ion-col col-5>
-            <button ion-button no-padding color="purple" clear small icon-left (click)="comment(post)">
-                <ion-icon name='text'></ion-icon>
-                {{post.comments}} Answers
-              </button>
-          </ion-col>
-          <ion-col col-3 align-self-center text-center>
-            <p>
-              {{post.timestamp}}
-            </p>
+          <ion-col >
+              <ion-note><p style="text-align:right; font-size: 12px; color: #c5c5c5;">3 mins ago</p></ion-note>
           </ion-col>
         </ion-row>
-      </ion-card>
-    </div>
-  </div>
+      </ion-item-divider>
+  </ion-list> 
 </ion-content>

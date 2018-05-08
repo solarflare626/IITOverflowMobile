@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
 import { MyApp } from './app.component';
 import { UserProvider } from '../providers/user/user';
 import { MessagingProvider } from '../providers/messaging/messaging';
@@ -27,7 +27,16 @@ import { MessagingPage } from '../pages/messaging/messaging';
 import { NewsFeedPage } from '../pages/newsfeed/newsfeed';
 import { TabsPage } from '../pages/tabs/tabs';
 import { QuestionPage } from '../pages/question/question';
-import { StatusBar } from '@ionic-native/status-bar';
+import { AnswerPage } from '../pages/answer/answer';
+import { FollowersPage } from '../pages/followers/followers';
+import { FollowingPage } from '../pages/following/following';
+import { AddquestionPage } from '../pages/addquestion/addquestion';
+
+// Import Froala Editor.
+import "froala-editor/js/froala_editor.pkgd.min.js";
+
+// Import Angular2 plugin.
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 
 @NgModule({
   declarations: [
@@ -38,7 +47,11 @@ import { StatusBar } from '@ionic-native/status-bar';
     NewsFeedPage,
     MessagingPage,
     QuestionPage,
-    TabsPage
+    AnswerPage,
+    TabsPage,
+    FollowersPage,
+    FollowingPage,
+    AddquestionPage
   ],
   imports: [
     BrowserModule,
@@ -47,7 +60,10 @@ import { StatusBar } from '@ionic-native/status-bar';
     IonicStorageModule.forRoot({
       name: '__mydb',
          driverOrder: ['indexeddb', 'sqlite', 'websql']
-    })
+    }),
+    FroalaEditorModule.forRoot(), 
+    FroalaViewModule.forRoot(),
+ 
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -58,10 +74,15 @@ import { StatusBar } from '@ionic-native/status-bar';
     NewsFeedPage,
     MessagingPage,
     QuestionPage,
-    TabsPage
+    AnswerPage,
+    TabsPage,
+    FollowersPage,
+    FollowingPage,
+    AddquestionPage
   ],
   providers: [
     SplashScreen,
+    StatusBar,
     GooglePlus,
     MessagingProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
@@ -75,7 +96,6 @@ import { StatusBar } from '@ionic-native/status-bar';
     HTTP,
     ApiProvider,
     HttpModule,
-    StatusBar
   ]
 })
 
