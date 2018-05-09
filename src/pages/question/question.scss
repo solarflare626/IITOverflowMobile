@@ -13,6 +13,9 @@ page-question {
         background-color: #0080ff;
         color: white;
     }
+    textarea {
+        height:"auto";
+}
     .comment-answer-input {
         
         background-color: white;
@@ -20,7 +23,9 @@ page-question {
 		overflow-y: auto;
 		//  padding: 10px;
 		font-size: 12px;
-        border-radius: 30px;
+        //border-radius: 30px;
+        padding-top: 10px;
+    
         
     }
     p{
@@ -31,19 +36,24 @@ page-question {
         position: absolute;
         top: -99999999px;
       }
+    a { color: inherit; } 
+    
     .input-container {
         background-color: white;
-        
         border: 1px solid #d9d9d9;
         border-radius: 30px;
         height: auto;
-        margin: 10px;
+        margin: 5px;
         text-align: center;
-        width: 98%;
         display: flex!important;
      align-content: center!important;
      align-items: center!important;
-	}
+    }
+    #myInput{
+        
+        border-bottom-color: transparent !important;
+        box-shadow: none !important;
+    }
 	.post {
 		width: 100%;
 		background-color: #0080ff;
@@ -63,11 +73,48 @@ page-question {
         background-color: #BBDEFB;
     }
    
- 
 
     ion-label {
         margin: 0px !important;
     }
+
+    .item-md.item-input.input-has-focus .item-inner {
+        border-bottom-color: transparent !important;
+        box-shadow: none !important;
+      }
+      
+      .list-md .item-input.input-has-focus:last-child {
+        border-bottom-color: transparent !important;
+        box-shadow: none !important;
+      }
+      
+      .list-md .item-input.input-has-focus:last-child .item-inner {
+        box-shadow: none;
+      }
+      
+      .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus) .item-inner {
+        border-bottom-color: transparent !important;
+        box-shadow: none !important;
+      }
+      
+      .list-md .item-input.ng-valid.input-has-value:not(.input-has-focus):last-child {
+        border-bottom-color: transparent !important;
+        box-shadow: none !important;
+      }
+      
+      .list-md .item-input.ng-valid.input-has-value:not(.input-has-focus):last-child .item-inner {
+        box-shadow: none;
+      }
+      
+      .item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus) .item-inner {
+        border-bottom-color: transparent !important;
+        box-shadow: none !important;
+      }
+      
+      .list-md .item-input.ng-invalid.ng-touched:not(.input-has-focus):last-child {
+        border-bottom-color: transparent !important;
+        box-shadow: none !important;
+      }
 
 
 }

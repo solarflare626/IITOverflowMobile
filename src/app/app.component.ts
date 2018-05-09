@@ -11,12 +11,13 @@ import { NewsFeedPage } from '../pages/newsfeed/newsfeed';
 import { TabsPage } from '../pages/tabs/tabs';
 import { QuestionPage } from '../pages/question/question';
 
+
 import { timer } from 'rxjs/observable/timer';
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = TabsPage;
+  rootPage:any = LoginPage;
   showSplash = true;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {

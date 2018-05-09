@@ -16,12 +16,12 @@ export class NativeApiProvider {
   }
 
  public post(url: string, params: any = {}, headers: any = {}) {
-    return this.http.post(this.baseUrl + url, params, headers).then((data) => {
-      return data;
-    }
-    ).catch((error) => {
-      return error;
-    });
+    return this.http.post(this.baseUrl + url, params, headers);
+
+  } 
+
+  public delete(url: string, params: any = {}, headers: any = {}) {
+    return this.http.delete(this.baseUrl + url, params, headers);
 
   } 
 

@@ -1,0 +1,442 @@
+{
+	"id": "9b378acd-72a3-4366-a9b4-acecda405706",
+	"name": "IITOverflow API",
+	"allTests": [],
+	"timestamp": "2018-05-04T03:14:45.566Z",
+	"collection_id": "d0cc0369-53d1-4022-817a-6b78fd02a5d6",
+	"folder_id": 0,
+	"target_type": "collection",
+	"environment_id": "0",
+	"data": [],
+	"delay": 0,
+	"count": 1,
+	"collection": {
+		"id": "d0cc0369-53d1-4022-817a-6b78fd02a5d6",
+		"name": "IITOverflow API",
+		"description": "# Introduction\nWhat does your API do?\n\n# Overview\nThings that the developers should know about\n\n# Authentication\nWhat is the preferred way of using the API?\n\n# Error Codes\nWhat errors and status codes can a user expect?\n\n# Rate limit\nIs there a limit to the number of requests an user can send?",
+		"auth": null,
+		"events": null,
+		"variables": null,
+		"order": [
+			"fbc64db5-ce98-4942-a6aa-1207b943ca81",
+			"cf2a9dd7-6cfe-4a4a-b78e-5709332c71d4",
+			"88a93aa8-f7e2-4432-8f35-bcd9ce7c8aa2",
+			"994b9169-e5dc-4666-a1f9-701f79caba7c",
+			"27798567-73a2-425f-9af3-7313ff095f7b",
+			"0d71034c-43c0-4a38-ad35-09f5ab2e4293",
+			"945b3e40-0687-4b71-83dc-c679c0c9ee7c",
+			"12f96b57-a405-4496-9fc6-b836a9ebccc1",
+			"e314b5ab-2839-4706-a8c3-42d2ae09d67e",
+			"e39dd901-e97d-421c-917a-308a4e221ea7"
+		],
+		"folders_order": [],
+		"owner": "4150810",
+		"permissions": {},
+		"favorite": false,
+		"shared": false,
+		"type": "collection",
+		"depth": 0
+	},
+	"folder": null,
+	"environment": null,
+	"globals": [],
+	"results": [
+		{
+			"name": "Login",
+			"id": "fbc64db5-ce98-4942-a6aa-1207b943ca81",
+			"url": "https://iitoverflow.herokuapp.com/api/users/OAuthLogin",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {},
+			"times": [
+				"325"
+			],
+			"allTests": [
+				{}
+			],
+			"time": "325",
+			"totalRequestTime": "325",
+			"iterationResults": {}
+		},
+		{
+			"name": "Querying datas from models",
+			"id": "cf2a9dd7-6cfe-4a4a-b78e-5709332c71d4",
+			"url": "http://iitoverflow.herokuapp.com/api/Questions",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {},
+			"times": [
+				"742"
+			],
+			"allTests": [
+				{}
+			],
+			"time": "742",
+			"totalRequestTime": "742",
+			"iterationResults": {}
+		},
+		{
+			"name": "Querying specific data from models",
+			"id": "88a93aa8-f7e2-4432-8f35-bcd9ce7c8aa2",
+			"url": "http://iitoverflow.herokuapp.com/api/Questions/1",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {},
+			"times": [
+				"379"
+			],
+			"allTests": [
+				{}
+			],
+			"time": "379",
+			"totalRequestTime": "379",
+			"iterationResults": {}
+		},
+		{
+			"name": "Adding filter to models",
+			"id": "994b9169-e5dc-4666-a1f9-701f79caba7c",
+			"url": "http://iitoverflow.herokuapp.com/api/Questions?filter[where][id]=1",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {},
+			"times": [
+				"262"
+			],
+			"allTests": [
+				{}
+			],
+			"time": "262",
+			"totalRequestTime": "262",
+			"iterationResults": {}
+		},
+		{
+			"name": "Including related model",
+			"id": "27798567-73a2-425f-9af3-7313ff095f7b",
+			"url": "https://iitoverflow.herokuapp.com/api/Questions?filter[include]=answers",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {},
+			"times": [
+				"304"
+			],
+			"allTests": [
+				{}
+			],
+			"time": "304",
+			"totalRequestTime": "304",
+			"iterationResults": {}
+		},
+		{
+			"name": "user model",
+			"id": "0d71034c-43c0-4a38-ad35-09f5ab2e4293",
+			"url": "https://iitoverflow.herokuapp.com/api/users/1?filter[include]=questions",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {},
+			"times": [
+				"260"
+			],
+			"allTests": [
+				{}
+			],
+			"time": "260",
+			"totalRequestTime": "260",
+			"iterationResults": {}
+		},
+		{
+			"name": "Question Model",
+			"id": "945b3e40-0687-4b71-83dc-c679c0c9ee7c",
+			"url": "https://iitoverflow.herokuapp.com/api/Questions/1?filter[include]=answers",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {},
+			"times": [
+				"295"
+			],
+			"allTests": [
+				{}
+			],
+			"time": "295",
+			"totalRequestTime": "295",
+			"iterationResults": {}
+		},
+		{
+			"name": "Answer Model",
+			"id": "12f96b57-a405-4496-9fc6-b836a9ebccc1",
+			"url": "https://iitoverflow.herokuapp.com/api/Answers/1?filter[include]=comments",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {},
+			"times": [
+				"370"
+			],
+			"allTests": [
+				{}
+			],
+			"time": "370",
+			"totalRequestTime": "370",
+			"iterationResults": {}
+		},
+		{
+			"name": "Category Model",
+			"id": "e314b5ab-2839-4706-a8c3-42d2ae09d67e",
+			"url": "https://iitoverflow.herokuapp.com/api/Categories/1?filter[include]=tags",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {},
+			"times": [
+				"364"
+			],
+			"allTests": [
+				{}
+			],
+			"time": "364",
+			"totalRequestTime": "364",
+			"iterationResults": {}
+		},
+		{
+			"name": "Tag Model",
+			"id": "e39dd901-e97d-421c-917a-308a4e221ea7",
+			"url": "https://iitoverflow.herokuapp.com/api/Tags/1?filter[include]=category",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {},
+			"times": [
+				"291"
+			],
+			"allTests": [
+				{}
+			],
+			"time": "291",
+			"totalRequestTime": "291",
+			"iterationResults": {}
+		}
+	],
+	"totalPass": 0,
+	"totalFail": 0,
+	"totalTime": 3592,
+	"lifecycle": "done",
+	"requests": [
+		{
+			"name": "Login",
+			"id": "fbc64db5-ce98-4942-a6aa-1207b943ca81",
+			"url": "https://iitoverflow.herokuapp.com/api/users/OAuthLogin",
+			"time": "2018-05-04T03:14:45.566Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "Querying datas from models",
+			"id": "cf2a9dd7-6cfe-4a4a-b78e-5709332c71d4",
+			"url": "http://iitoverflow.herokuapp.com/api/Questions",
+			"time": "2018-05-04T03:14:45.566Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "Querying specific data from models",
+			"id": "88a93aa8-f7e2-4432-8f35-bcd9ce7c8aa2",
+			"url": "http://iitoverflow.herokuapp.com/api/Questions/1",
+			"time": "2018-05-04T03:14:45.566Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "Adding filter to models",
+			"id": "994b9169-e5dc-4666-a1f9-701f79caba7c",
+			"url": "http://iitoverflow.herokuapp.com/api/Questions?filter[where][id]=1",
+			"time": "2018-05-04T03:14:45.566Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "Including related model",
+			"id": "27798567-73a2-425f-9af3-7313ff095f7b",
+			"url": "https://iitoverflow.herokuapp.com/api/Questions?filter[include]=answers",
+			"time": "2018-05-04T03:14:45.566Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "user model",
+			"id": "0d71034c-43c0-4a38-ad35-09f5ab2e4293",
+			"url": "https://iitoverflow.herokuapp.com/api/users/1?filter[include]=questions",
+			"time": "2018-05-04T03:14:45.566Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "Question Model",
+			"id": "945b3e40-0687-4b71-83dc-c679c0c9ee7c",
+			"url": "https://iitoverflow.herokuapp.com/api/Questions/1?filter[include]=answers",
+			"time": "2018-05-04T03:14:45.566Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "Answer Model",
+			"id": "12f96b57-a405-4496-9fc6-b836a9ebccc1",
+			"url": "https://iitoverflow.herokuapp.com/api/Answers/1?filter[include]=comments",
+			"time": "2018-05-04T03:14:45.566Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "Category Model",
+			"id": "e314b5ab-2839-4706-a8c3-42d2ae09d67e",
+			"url": "https://iitoverflow.herokuapp.com/api/Categories/1?filter[include]=tags",
+			"time": "2018-05-04T03:14:45.566Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "Tag Model",
+			"id": "e39dd901-e97d-421c-917a-308a4e221ea7",
+			"url": "https://iitoverflow.herokuapp.com/api/Tags/1?filter[include]=category",
+			"time": "2018-05-04T03:14:45.566Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		}
+	],
+	"synced": false
+}

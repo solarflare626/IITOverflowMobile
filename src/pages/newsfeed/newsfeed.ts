@@ -6,6 +6,8 @@ import { QuestionPage } from '../../pages/question/question';
 import {AddquestionPage } from '../../pages/addquestion/addquestion';
 import { Http } from '@angular/http';
 import { GLOBALS } from '../../models/globals';
+import {NativeApiProvider} from '../../nativeProviders/nativeApi/nativeApi';
+import {NativeUserProvider} from '../../nativeProviders/nativeUser/nativeUser';
 @Component({ 
   selector: 'page-newsfeed',
   templateUrl: 'newsfeed.html'
@@ -23,11 +25,12 @@ export class NewsFeedPage {
   constructor(public navCtrl: NavController, 
     public dataService: NewsfeedProvider, 
     public http: Http,
-    public appCtrl: App
+    public appCtrl: App,
+    private userProvider : NativeUserProvider
   ) {
       this.select_categories = 'Select category...';
       this.select_sort = 'Sort by...';
-      this.user = {
+      /*this.user = {
         "email": "chrisjabel11@gmail.com",
         "displayname": "Christine Beleta",
         "picture": "https://lh5.googleusercontent.com/-EiereXA5ywg/AAAAAAAAAAI/AAAAAAAAAAA/ACLGyWBD2Ch2uvojXnwMvIPaZhMMW2yWBg/s96-c/photo.jpg",
@@ -35,7 +38,18 @@ export class NewsFeedPage {
         "updatedAt": "2018-05-02T06:18:44.123Z",
         "deletedAt": null,
         "id": 8
-      };
+      };*/
+      this
+      .userProvider
+      .get()
+      .then(data => {
+        if (data) {
+          this.user = data;
+          console.log("curruser", this.user.id);
+        }else{
+          this
+        }
+      })
     //this.reload();
     
   }
@@ -60,11 +74,11 @@ export class NewsFeedPage {
   }
 //////////////////////////////////////////////////////////////// -> question functions
   postQuestion() {
-    this.navCtrl.push(AddquestionPage, {userid: this.user.id});
+    this.navCtrl.push(AddquestionPage, {userid: this.user.id,questions: this.questions});
   }
 
   viewQuestion(question) {
-    this.appCtrl.getRootNav().push(this.questionpage, {option: false, question: question});
+    this.appCtrl.getRootNav().push(this.questionpage, {option: false, question: question, questions: this.questions});
  
     //this.navCtrl.push(this.questionpage, {option: false, question: question});
   }

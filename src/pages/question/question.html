@@ -20,7 +20,7 @@
       <!--<ion-item *ngFor="let tag of tags" (click)="addTags(tag.id);">
           <h4 style="float: left;">{{ tag.name }}</h4>
       </ion-item>-->
-    </ion-item>
+    </ion-item >
 
     <ion-item>
       <h2>Selected tags:</h2>
@@ -54,11 +54,12 @@
 
       
         <ion-col style="padding: 0 1.5px 1.5px 3px; ">
-          <ion-icon *ngIf="selected_question.user.id == user.id" name="md-more" (click)="presentActionSheet( selected_question,null,'question')" float-right padding></ion-icon>
+          <ion-icon *ngIf="selected_question.user.id == user.id" name="md-more" (click)="presentActionSheet(questions, selected_question,'question')" float-right padding></ion-icon>
          
           <ion-row>
             <ion-item style="padding: 0; font-weight:bold;" text-wrap>
-              {{ selected_question.question }} 
+                <p [innerHtml]="selected_question.question"></p>
+
             </ion-item>
           </ion-row>
 
@@ -68,19 +69,18 @@
               </ion-col>
           </ion-row>
 
-          <!--<ion-row>
-            <button ion-button icon-left small round outline *ngFor="let tag of selected_question.tags" style="font-size: 10px;">
-              {{ tag.name }}
-            </button>
-          </ion-row>
-          -->
+          
+            
+          
+         
         </ion-col>
       </ion-row>
      
       <hr>
       
       <!-- Question Description will be placed here -->
-      <p text-wrap> {{ selected_question.questiondesc }}</p>
+ 
+      <p text-wrap [innerHtml]="selected_question.questiondesc"> </p>
       <br>
       
       <!-- Info of the User who posted the Question -->
@@ -106,14 +106,15 @@
       <br>
       
       
-
+<!--
       <ion-row *ngIf="viewAnswerBar">
         <div [froalaEditor] placeholder="Enter answer here..." [(ngModel)]="answer"></div>
         <button class="post" (click)="postAnswer()">Post Answer</button>
       </ion-row>
+      -->
 
     </ion-item-divider>
-      <!-- Comments -->
+      <!-- Comments 
       <ion-grid text-wrap style = "background-color: #E0E0E0;">
         <ion-row>
           <ion-col col-3>
@@ -140,7 +141,7 @@
             </ion-col>
           </ion-row>
         </ion-grid>
-
+-->
 
 
 
@@ -163,29 +164,33 @@
         <ion-col text-wrap >
           <ion-icon *ngIf="answer.user.id == user.id" name="md-more" (click)="presentActionSheet(answers,answer, 'answer')" float-right padding></ion-icon>
           <h6>Posted by: {{ answer.user.displayname }}</h6>
+          {{getDate(answer.updatedAt)}}
           <p [innerHtml]="answer.answer"></p>
       
         </ion-col>
-        <button ion-button clear style="width:31%; height: 2rem; font-size:1.3rem;" (click)="showHideInputBar(answers,answer)">Comment</button>
         
+         
       </ion-row>
+      <button ion-button clear style="width:31%; height: 2rem; font-size:1.3rem;" (click)="showHideInputBar(answers,answer)">Comment</button>
+
       
           <!-- Comments -->
           <ion-grid *ngFor="let comment of answer.comments" text-wrap style = "background-color: #E0E0E0;">
             <br>
             <ion-row>
               <ion-col col-3>
-                <p></p>
+                  
               </ion-col>
-              <ion-col>
-                <ion-row>
-                    <p><a [innerHtml]="comment.comment" ></a>– <a (click)="log(comment.user.displayname)" ><font color= "blue">{{comment.user.displayname}} </font></a>{{getDate(comment.updatedAt)}}</p>
-                </ion-row>
+              <ion-col col-9>
+                    <p><a [innerHtml]="comment.comment" ></a><br><ion-icon *ngIf="comment.user.id == user.id" name="md-more" (click)="presentActionSheet( answer.comments,comment,'comment')" ></ion-icon>– <a (click)="log(comment.user.displayname)" ><font color= "blue">{{comment.user.displayname}} </font></a>{{getDate(comment.updatedAt)}}</p>
+
               </ion-col>
+              
             </ion-row>
+            <br>
           </ion-grid>
 
-        
+        <hr>
       </div>
     </ion-item-divider>
      
@@ -193,19 +198,28 @@
   </ion-list>
 
 </ion-content>
-<ion-footer [hidden]="!viewCommentBar" style="background-color: white; margin-right: 10px;">
+<ion-footer [hidden]="!viewCommentBar.value"  style="background-color: white; margin-right: 10px;">
 
        
           <!--<ion-item class="input-container" >
           <ion-textarea #myInput id="myInput"  rows="1" (keyup)="resize()"   [(ngModel)]="inputItem.value" class="comment-answer-input" ></ion-textarea>
+      <ion-row>      
+          <ion-item class="input-container" id="myInputParent">
+          <ion-textarea #myInput id="myInput"    rows="2"  (blur)="checkBlur($event)"  [(ngModel)]="inputItem.value" class="comment-answer-input" ></ion-textarea>
           
           <div item-right>
-            <ion-icon class="vertical-align: middle;  " style="zoom:2.0;"  (click)="post()" name="attach"></ion-icon>
-         
+            <!--
+              <button ion-button id="attach" clear icon-only class="vertical-align: middle;"     (click)="post()"><ion-icon class="vertical-align: middle;"  id="attach" style="zoom:2.0;"  (click)="post()" name="attach"></ion-icon></button>
+         -->
         
-          <ion-icon class="vertical-align: middle;" style="zoom:2.0;"  (click)="post()" name="send"></ion-icon>
+          <!--<button ion-button id="send" clear icon-only class="vertical-align: middle;"     (click)="post(inputParent,inputItem)"><ion-icon zoom="2.0" name="send"></ion-icon></button>
             </div>
            </ion-item>-->
-              <textarea [froalaEditor] [(ngModel)]="inputItem.value"></textarea>
-              <ion-icon class="vertical-align: middle;" style="zoom:2.0;"  (click)="post()" name="send"></ion-icon>
+           <form>
+              <div [froalaEditor]='options' (blur)="checkBlur($event)" [(froalaModel)]="inputItem.value"></div>
+              <button ion-button id="send" clear icon-only class="vertical-align: middle;"     (click)="post(inputParent,inputItem)"><ion-icon zoom="2.0" name="send"></ion-icon></button>
+          </form>
+
+    
+
 </ion-footer>

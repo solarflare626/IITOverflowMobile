@@ -20,7 +20,7 @@ import { File } from '@ionic-native/file';
 import { Camera } from '@ionic-native/camera';
 import { IonicStorageModule } from '@ionic/storage';
 
-import { LoginPage } from '../pages/login/login';
+
 import { ProfilePage } from '../pages/profile/profile';
 import { NotificationPage } from '../pages/notification/notification';
 import { MessagingPage } from '../pages/messaging/messaging';
@@ -39,6 +39,7 @@ import "froala-editor/js/froala_editor.pkgd.min.js";
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { NativeApiProvider } from '../nativeProviders/nativeApi/nativeApi';
 import { NativeUserProvider } from '../nativeProviders/nativeUser/nativeUser';
+import { LoginPage } from '../pages/login/login';
 
 @NgModule({
   declarations: [

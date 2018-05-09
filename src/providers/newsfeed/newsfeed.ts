@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { GLOBALS } from '../../models/globals';
+//import { stringify } from '@angular/compiler/src/util';
 @Injectable()
 export class NewsfeedProvider {
   posts: any;
@@ -20,7 +21,7 @@ export class NewsfeedProvider {
     return this.http
       .get(
         this.globals.baseUrl + 
-          '/api/Questions?filter={"include":[{"relation":"answers","scope":{"include":"user"}},{"relation":"category"},{"relation":"user"}]}'
+          '/api/Questions?filter={"include":[{"relation":"answers","scope":{"include":"user"}},{"relation":"category"},{"relation":"user"}], "order":  "updatedAt DESC " }'
           //'/api/Questions?filter[include]=category&filter[include]=user'
       )
       .map(res => res.json());
@@ -79,14 +80,32 @@ export class NewsfeedProvider {
     });
   }
   //////////////////////////////////////////////////////////////// -> post/edit/delete questions functions
-  postQuestion(post) {
-    this.http.post(this.globals.baseUrl + "/api/Questions", JSON.parse(post)).subscribe();
+
+  getQuestion(id){
+    return this.http
+      .get(
+        this.globals.baseUrl + 
+          '/api/Questions/' + id+ '/?filter={"include":[{"relation":"answers","scope":{"include":"user"}},{"relation":"category"},{"relation":"user"}]}'
+          //'/api/Questions?filter[include]=category&filter[include]=user'
+      )
+      .map(res2 => res2.json());
   }
-  //////////////////////////////////////////////////////////////// -> post/edit/delete answers functions
-  postAnswer(post) {
-    return this.http.post(this.globals.baseUrl + "/api/Answers", JSON.parse(post));
+  postQuestion(post) { 
+    return this.http.post(this.globals.baseUrl + "/api/Questions", JSON.parse(post)).map(res=>res.json());
   }
 
+  
+  //////////////////////////////////////////////////////////////// -> post/edit/delete answers functions
+ 
+ postAnswer(post) {
+    return this.http.post(this.globals.baseUrl + "/api/Answers", JSON.stringify(post));
+  }
+  postComment(post) {
+    return this.http.post(this.globals.baseUrl + "/api/Comments", JSON.stringify(post));
+  }
+  deleteComment(comment_id) {
+    return this.http.delete(this.globals.baseUrl+'/api/Answers/'+comment_id);
+    }
   deleteAnswer(answer_id) {
     return this.http.delete(this.globals.baseUrl+'/api/Answers/'+answer_id);
   }

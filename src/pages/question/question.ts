@@ -4,28 +4,33 @@ import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { NewsfeedProvider } from '../../providers/newsfeed/newsfeed';
 import { UserProvider } from '../../providers/user/user';
 import 'rxjs/add/operator/debounceTime';
-import { ActionSheetController } from 'ionic-angular';
-import { AlertController } from 'ionic-angular';
-import { NativeUserProvider } from '../../nativeProviders/nativeUser/nativeUser';
+import {ActionSheetController} from 'ionic-angular';
+import {AlertController} from 'ionic-angular';
+import {NativeUserProvider} from '../../nativeProviders/nativeUser/nativeUser';
+import {NativeApiProvider} from '../../nativeProviders/nativeApi/nativeApi';
 
 
+var commentbar = {value:null};
+commentbar.value = null;
 @Component({selector: 'page-question', templateUrl: 'question.html'})
 export class QuestionPage {
   @ViewChild('myInput') myInput: ElementRef;
-  @ViewChild('focusInput') myInput2 ;
+  @ViewChild('mynputParent') myInputParent:   ElementRef;
   resize() {
+    //this.myInput = @ViewChild('myInput') myInput: ElementRef;
     var element = this.myInput['_elementRef'].nativeElement.getElementsByClassName("text-input")[0];
-      
-      
+     
       console.log('scrollheight',element.scrollHeight);
       console.log('height',element.style.height);
       var scrollHeight = element.scrollHeight;
     if(scrollHeight+10 < 120){
       
+      
       element.style.height = scrollHeight + 'px';
-      scrollHeight= element.height;
+      //scrollHeight= element.height;
       
       this.myInput['_elementRef'].nativeElement.style.height = (scrollHeight + 10) + 'px';
+      //this.myInputParent['_elementRef'].nativeElement.style.height = (scrollHeight + 40) + 'px';
     }
   }
   input : any = {};
@@ -48,18 +53,47 @@ export class QuestionPage {
   selected_question_id : any;
   selected_question : any;
   selected_answer : any;
-  viewCommentBar : boolean = false;
+  public viewCommentBar = commentbar;
   viewAnswerBar : boolean = false;
   viewAnswerActionBar : boolean = false;
   comment : String;
   answer : String;
   answers : any;
-
+  questions: any;
+  
   inputParent:any= {};
   inputItem:any = {};
   inputValue:String ="";
+  parent = this;
+  public options: Object = {
+    placeholder: "Edit Me",
+    events : {
+      'froalaEditor.blur' : function(e, editor) {
+        console.log(editor.selection.get());
+       // console.log(this.inputItem.value);
+       commentbar.value = false;
+        //console.log(JSON.stringify());
+        //commentbar.value= false;
+        if(e.relatedTarget){
+
+          console.log( 'id',JSON.stringify(e.relatedTarget.id));
+          if(e.relatedTarget.id == "send")
+           this.post();
+          else{
+           commentbar.value= false;
+          }
+
+          }else{
+            commentbar.value = false;
+            //this.viewCommentBar.value = false;
+          }
+      }
+    }
+  }
   constructor(public navCtrl : NavController, public navParams : NavParams, public dataService : NewsfeedProvider, private userProvider : NativeUserProvider, public toastCtrl : ToastController, public actionSheetCtrl : ActionSheetController, private alertCtrl : AlertController,
-    private renderer:Renderer, private elementRef:ElementRef) {
+    private renderer:Renderer, private elementRef:ElementRef,
+  private nativeApiProvider: NativeApiProvider
+  ) {
     this
       .userProvider
       .get()
@@ -77,6 +111,10 @@ export class QuestionPage {
     this.selected_question = this
       .navParams
       .get('question');
+    this.questions =  this
+    .navParams
+    .get('questions');
+    console.log("Questions",JSON.stringify(this.questions));
     this.selected_question_id = this.selected_question.id;
 
     console.log("qUser", this.selected_question.user.id);
@@ -114,21 +152,58 @@ export class QuestionPage {
     
   }
 
-  post(){
-    console.log(this.answers);
-    if(!this.inputParent){
-          var answer = {"id":3,"answer":this.inputItem.value,"createdAt":"2018-04-30T21:08:15.189Z","updatedAt":"2018-04-30T21:08:15.188Z","deletedAt":null,"userId":1,"questionId":1,"user":{"email":"roygoraposon@gmail.com","displayname":"Roy Raposon","picture":"http://128.199.115.0:9000/profile/1525124030512_1_27d9d48933241e5c6fed3c34c70f26694f8c9155_Minion-Quote-Legend-says.jpg","createdAt":"2018-04-30T18:38:49.369Z","updatedAt":"2018-04-30T21:33:51.597Z","deletedAt":null,"id":1},"value":""};
-      this.answers.unshift(answer);
-      this.inputItem.value ="";
-      this.viewCommentBar= false;
+  post(parent,input){
+    var parent = this.inputParent;
+    var input = this.inputItem;
+    if(!parent){
+      let hold = {
+        userId: this.user.id,
+        questionId: this.selected_question.id,
+        answer: input.value
+
+      };
+      console.log('answer',JSON.stringify(hold));
+      this.nativeApiProvider.post('/Answers',hold,{}).then((data)=>{
+
+        console.log("answer returned",JSON.stringify(data.data));
+
+        var data2 = JSON.parse(data.data);
+        data2.comments = [];
+        data2.user = this.user;
+        this.answers.push(data2);
+        input.value ="";
+        this.viewCommentBar.value= false;
+
+      }).catch(error=>{
+        console.log(JSON.stringify(error));
+      });
+     
 
 
     }else{
-      var comment ={"id":1,"comment":this.inputItem.value,"createdAt":"2018-04-30T21:08:48.141Z","updatedAt":"2018-04-30T21:08:48.140Z","deletedAt":null,"userId":1,"answerId":3,"user":{"email":"roygoraposon@gmail.com","displayname":"Roy Raposon","picture":"http://128.199.115.0:9000/profile/1525124030512_1_27d9d48933241e5c6fed3c34c70f26694f8c9155_Minion-Quote-Legend-says.jpg","createdAt":"2018-04-30T18:38:49.369Z","updatedAt":"2018-04-30T21:33:51.597Z","deletedAt":null,"id":1}};
-      this.inputItem.comments.unshift(comment);
-      this.inputItem.value ="";
-      this.viewCommentBar= false;
-      console.log("error");
+
+      let hold = {
+        userId: this.user.id,
+        answerId: input.id,
+        comment: input.value
+      };
+      console.log('answer',JSON.stringify(hold));
+      this.nativeApiProvider.post('/Comments',hold,{}).then((data)=>{
+
+        var data2 = JSON.parse(data.data);
+       
+        data2.user = this.user;
+
+        input.comments.push(data2);
+        input.value ="";
+        this.viewCommentBar.value= false;
+      this.viewCommentBar.value= false;
+
+      }).catch(error=>{
+        console.log(JSON.stringify(error));
+      });
+     
+     
     }
 
   }
@@ -161,10 +236,43 @@ export class QuestionPage {
                       handler: () => {
                         console.log('Confirm clicked');
                         if (item) {
+                          if(name == "answer"){
+                            this.nativeApiProvider.delete("/Answers/"+item.id,{},{}).then(data =>{
 
-                          var index = holder.indexOf(item);
-                          holder.splice(index, 1);
+                              
 
+                                var index = holder.indexOf(item);
+                                holder.splice(index, 1);
+  
+                              
+
+                            }).catch(error=>{
+                              console.log(JSON.stringify(error));
+                            });
+                           
+                          }else if(name == "comment"){
+
+                            this.nativeApiProvider.delete("/Comments/"+item.id,{},{}).then(data =>{
+
+                              var index = holder.indexOf(item);
+                                holder.splice(index, 1);
+
+                            }).catch(error=>{
+                              console.log(JSON.stringify(error));
+                            });
+                          }else if(name == "question"){
+                            this.nativeApiProvider.delete("/Questions/"+item.id,{},{}).then(data =>{
+                             // console.log(JSON.stringify(holder));
+                               var index = holder.indexOf(item);
+                                holder.splice(index, 1);
+
+                                this.navCtrl.pop();
+                             
+                            }).catch(error=>{
+                              console.log(JSON.stringify(error));
+                            });
+                            
+                          }
                         }
                       }
                     }
@@ -208,12 +316,14 @@ export class QuestionPage {
   }
 
   setAnswers() {
-    return this
+    this
       .dataService
       .getSpecificQuestionAnswers(this.selected_question_id)
       .subscribe(data => {
-        console.log("ANSWERS: ", data);
+        console.log("ANSWERS: ", JSON.stringify(data));
         this.answers = data;
+        //return data;
+        
       }, err => {
         console.log("ERROR SQA");
       });
@@ -299,47 +409,80 @@ export class QuestionPage {
   }
   // ////////////////////////////////////////////////////////////// ->
   // post/edit/delete comment functions
+
+  checkBlur(e){
+    if(e.relatedTarget){
+    console.log( 'id',JSON.stringify(e.relatedTarget.id));
+    if(e.relatedTarget.id == "send")
+      return //this.post();
+    else
+      this.viewCommentBar.value = false;
+    }else{
+      this.viewCommentBar.value = false;
+    }
+
+      
+  }
   showHideInputBar(parent, child) {
-    //this.myInput['_elementRef'].nativeElement.style.height = 28 + 'px';
+   
+    //if(child.value)
+    //
     
     //this.viewCommentBar = !(this.viewCommentBar);
-    this.viewCommentBar = true;
+    
+    
     /*if (this.viewAnswerBar) {
       this.viewAnswerBar = !(this.viewAnswerBar);
       this.inputParent = {};
       this.inputItem = {};
     }else{*/
-
       
-      if(child.value)
+
+      try {
+        if(child.value)
         this.inputItem = child;
       else{
         child.value = "";
         this.inputItem = child;
+       console.log("qwe");
+       
+       
       }
-      console.log(JSON.stringify(child));
-      this.inputParent = parent;
+      this.viewCommentBar.value = true;
+      } catch (error) {
+        
+      }finally{
+        //let element = this.myInput['_elementRef'].nativeElement.getElementsByClassName("text-input")[0];
+        //this.renderer.invokeElementMethod(element, 'focus', []);
+      }
       
+      
+      //console.log(JSON.stringify(child));
+      this.inputParent = parent;
+    
+        
+   
       
      
        //this.inputItem.value = value;
     //}
       
     
-    }
-  
-  postComment() {
+      }
+    
+    postComment() {
     console.log("Comment: ", this.comment);
-    this.viewCommentBar = false;
+    this.viewCommentBar.value = false;
     this.comment = '';
   }
   // ////////////////////////////////////////////////////////////// ->
   // post/edit/delete answer functions
   showHideAnswerBar() {
-    this.viewAnswerBar = !(this.viewAnswerBar);
-    if (this.viewCommentBar) 
-      this.viewCommentBar = !(this.viewCommentBar);
-    }
+    this.viewAnswerBar= !(this.viewAnswerBar);
+    if (this.viewCommentBar.value) 
+      this.viewCommentBar.value = !(this.viewCommentBar.value);
+    
+}
   
   showHideAnswerActionBar(answer_id) {
     this.viewAnswerActionBar = !(this.viewAnswerActionBar);
