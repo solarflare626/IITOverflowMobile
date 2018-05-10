@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 @Injectable()
 export class NativeUserProvider {
   user: any = null;
+  accessToken: any= null;
   constructor(public storage: Storage) {
     this.storage.get('user').then((val) => {
       this.user = JSON.parse(val);
@@ -29,9 +30,16 @@ export class NativeUserProvider {
     });
   }
   public set(data: any ={}){
-  	this.storage.set('user', JSON.stringify(data));
-    console.log("set user to", JSON.stringify(data));
     this.user = data;
+    if(data.accessToken){
+      this.accessToken = data.accessToken;
+    }else{
+      this.user.accessToken = this.accessToken;
+    }
+    this.storage.set('user', JSON.stringify(this.user));
+    console.log("set user to", JSON.stringify(data));
+    
+  	
 
   }
   public delete(){

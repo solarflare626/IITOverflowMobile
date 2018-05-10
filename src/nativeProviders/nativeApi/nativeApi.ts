@@ -19,6 +19,10 @@ export class NativeApiProvider {
     return this.http.post(this.baseUrl + url, params, headers);
 
   } 
+  public patch(url: string, params: any = {}, headers: any = {}) {
+    return this.http.patch(this.baseUrl + url, params, headers);
+
+  } 
 
   public delete(url: string, params: any = {}, headers: any = {}) {
     return this.http.delete(this.baseUrl + url, params, headers);

@@ -101,10 +101,8 @@ export class QuestionPage {
         if (data) {
           this.user = data;
           console.log("curruser", this.user.id);
-        }else{
-          this
         }
-      })
+      });
     this.option = this
       .navParams
       .get('option');

@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Setup Profile
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <!-- Get Username here  -->
+  <h1>Welcome, {{user.displayname}}!</h1>  
+     <p>Change your information if you want to change the default info.</p>
+
+     <p><ion-avatar item-left>
+        <img [src]="imageFileName" *ngIf="imageFileName" alt="Ionic File" class="profilePic" (click)="presentActionSheet()"/>
+          <!-- <img src="{{user.picture}}" class = "center" > -->
+        <img [src]="defaultImage" *ngIf="!imageFileName" alt="Ionic File" class="profilePic" (click)="presentActionSheet()"/>
+        </ion-avatar>
+      </p>
+      
+    <ion-list>
+      <!--
+        <ion-item>
+          <ion-label fixed>Full Name</ion-label>
+          <ion-input type="text" value=" {{ displayName }}"></ion-input>
+        </ion-item>
+        -->
+        <ion-item>
+            <ion-label fixed>Display Name</ion-label>
+            <ion-input type="text" [(ngModel)]="user.displayname"></ion-input>
+        </ion-item>
+
+        <!-- Get Email here from Google  
+        <ion-item>
+            <ion-label fixed>Email</ion-label>
+            <ion-input type="text" value=" {{email}}"></ion-input>
+        </ion-item>-->
+
+        <!-- Loop Here on all of the Categories -->
+        <ion-item>
+            <ion-label>Interests</ion-label>
+            <ion-select [(ngModel)]="toppings" multiple="true" cancelText="Cancel" okText="Done!">
+              <ion-option value="Mathematics" selected="true"> Mathematics</ion-option>
+              <ion-option value="CS">Computer and Information Sciences</ion-option>
+              <ion-option value="Physical science">Physical Science</ion-option>
+              <ion-option value="Chemical science">Chemical Science</ion-option>
+              <ion-option value="Environmental science">Environmental Sciences</ion-option>
+              <ion-option value="Biological science">Biological Science</ion-option>
+              <ion-option value="Psychology">Psychology</ion-option>
+              <ion-option value="Sociology">Sociology</ion-option>
+              <ion-option value="Law">Law</ion-option>
+              <ion-option value="Nano technology">Nano technology</ion-option>
+            </ion-select>
+          </ion-item>
+          <br>
+          <!-- Submit All information including the Profile Pic -->
+          <button ion-button (click)="uploadFile()" class = "center"  style="border-radius: 100px"><ion-icon name="md-cloud-upload"></ion-icon>&nbsp;&nbsp;Submit</button>
+      
+
+
+     </ion-list>
+</ion-content>

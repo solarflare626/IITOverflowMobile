@@ -40,6 +40,8 @@ import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { NativeApiProvider } from '../nativeProviders/nativeApi/nativeApi';
 import { NativeUserProvider } from '../nativeProviders/nativeUser/nativeUser';
 import { LoginPage } from '../pages/login/login';
+import { EditProfilePage } from '../pages/edit-profile/edit-profile';
+import { FilePath } from '@ionic-native/file-path';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,8 @@ import { LoginPage } from '../pages/login/login';
     TabsPage,
     FollowersPage,
     FollowingPage,
-    AddquestionPage
+    AddquestionPage,
+    EditProfilePage 
   ],
   imports: [
     BrowserModule,
@@ -81,7 +84,8 @@ import { LoginPage } from '../pages/login/login';
     TabsPage,
     FollowersPage,
     FollowingPage,
-    AddquestionPage
+    AddquestionPage,
+    EditProfilePage 
   ],
   providers: [
     SplashScreen,
@@ -99,7 +103,8 @@ import { LoginPage } from '../pages/login/login';
     HTTP,
     ApiProvider,
     HttpModule,NativeApiProvider,
-    NativeUserProvider
+    NativeUserProvider,
+    FilePath
   ]
 })
 
