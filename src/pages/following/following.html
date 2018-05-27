@@ -1,5 +1,5 @@
 <!--
-  Generated template for the FollowingPage page.
+  Generated template for the FollowersPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -13,33 +13,71 @@
 </ion-header>
 
 
-<ion-content>
-    <ion-card>
-       <ion-item>
-         <ion-avatar item-left>
-           <img src="../../assets/imgs/avatar/test2.jpg" style="width: 40px !important;" >
-         </ion-avatar>
-         <h2>Mark Angelo G. Nambatac</h2>
-       </ion-item>
-    </ion-card>
+<ion-content padding class="transparent-header">
   
-    <ion-card>
-        <ion-item>
-          <ion-avatar item-left>
-              <img src="../../assets/imgs/avatar/images.jpg" style="width: 40px !important;" >
-          </ion-avatar>
-          <h2>Franco Jigu Pacaña</h2>
-        </ion-item>
-     </ion-card>
-  
-     <ion-card>
-        <ion-item>
-          <ion-avatar item-left>
-            <img src="../../assets/imgs/avatar/kit.jpg" style="width: 40px !important;" >
-          </ion-avatar>
-          <h2>Kit Jimenez</h2>
-        </ion-item>
-     </ion-card>
-  
-  </ion-content>
-  
+
+  <div id="profile-bg" [ngStyle]="{'background-image': 'url('+ user.coverImage +')'}"></div>
+ 
+  <div id="content">
+    <div id="profile-info" padding>
+      <img id="profile-image" src="{{ user.picture }}">
+      <h3 id="profile-name">{{user.displayname}}</h3>
+      <h6>{{user.email}}</h6>
+      <div><button ion-button (click)="presentConfirm()" class = "center">Logout From Google</button></div> 
+      <button ion-button *ngIf="" small color="purple" (click)="follow()">Follow</button>
+      <button ion-button *ngIf="" class="follow-button" small color="purple" (click)="unfollow()">Following<ion-icon name="checkmark"></ion-icon></button>
+      <button *ngIf="!isFollowed" (click)="followUser()" ion-button="" class="disable-hover button button-md button-default button-default-md"><span class="button-inner">Follow</span><div class="button-effect" style="transform: translate3d(-2px, -71px, 0px) scale(1); height: 175px; width: 175px; opacity: 0; transition: transform 317ms ease 0s, opacity 222ms ease 95ms;"></div></button>
+        <button *ngIf="isFollowed" (click)="unfollowUser()" ion-button="" class="disable-hover button button-md button-default button-default-md"><span class="button-inner">Unfollow</span><div class="button-effect" style="transform: translate3d(-2px, -71px, 0px) scale(1); height: 175px; width: 175px; opacity: 0; transition: transform 317ms ease 0s, opacity 222ms ease 95ms;"></div></button>
+    </div>
+    <hr>
+    <div>
+      <ion-segment [(ngModel)]="tab">
+          <ion-segment-button value="posts">
+            POSTS
+          </ion-segment-button>
+          <ion-segment-button value="followingusers">
+            {{ followingcount }}
+            FOLLOWING
+          </ion-segment-button>
+          <ion-segment-button value="followersusers">
+            {{ followerscount }}
+            FOLLOWERS
+          </ion-segment-button>
+      </ion-segment>
+
+    </div>
+
+    <div [ngSwitch]="tab">
+      <ion-list *ngSwitchCase="'posts'">
+        <ion-list>
+            <ion-item>
+                <h3 style="padding-top: 10px;">My Questions</h3>
+            </ion-item>
+            <ion-item>
+              <h3 style="padding-top: 10px;">Answered Questions</h3>
+            </ion-item>
+            <ion-item>
+                <h3 style="padding-top: 10px;">Followed Questions</h3>
+            </ion-item>
+      </ion-list>
+      </ion-list>
+    
+      <ion-list *ngSwitchCase="'followingusers'">
+        <ion-list>
+            <ion-item *ngFor="let user of followingusers" (click)="viewFollowingUser(user)">
+              <h3 style="padding-top: 10px;">{{ user.displayname }}</h3>
+            </ion-item>
+      </ion-list>
+      </ion-list>
+      <ion-list *ngSwitchCase="'followersusers'">
+        <ion-list>
+            <ion-item *ngFor="let user of followersusers" (click)="viewFollowerUser(user)">
+              <h3 style="padding-top: 10px;">{{ user.displayname }}</h3>
+            </ion-item>
+      </ion-list>
+      </ion-list>
+    </div>
+
+    <br> 
+</div>
+</ion-content>

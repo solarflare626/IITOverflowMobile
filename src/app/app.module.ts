@@ -19,6 +19,8 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 import { File } from '@ionic-native/file';
 import { Camera } from '@ionic-native/camera';
 import { IonicStorageModule } from '@ionic/storage';
+import { ExpandableComponent } from '../components/expandable/expandable';
+import { PopoverComponent } from '../components/popover/popover';
 
 
 import { ProfilePage } from '../pages/profile/profile';
@@ -31,6 +33,9 @@ import { AnswerPage } from '../pages/answer/answer';
 import { FollowersPage } from '../pages/followers/followers';
 import { FollowingPage } from '../pages/following/following';
 import { AddquestionPage } from '../pages/addquestion/addquestion';
+import { EditQuestionPage } from '../pages/edit-question/edit-question';
+import { LoginPage } from '../pages/login/login';
+import { EditProfilePage } from '../pages/edit-profile/edit-profile';
 
 // Import Froala Editor.
 import "froala-editor/js/froala_editor.pkgd.min.js";
@@ -39,9 +44,8 @@ import "froala-editor/js/froala_editor.pkgd.min.js";
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { NativeApiProvider } from '../nativeProviders/nativeApi/nativeApi';
 import { NativeUserProvider } from '../nativeProviders/nativeUser/nativeUser';
-import { LoginPage } from '../pages/login/login';
-import { EditProfilePage } from '../pages/edit-profile/edit-profile';
 import { FilePath } from '@ionic-native/file-path';
+
 
 @NgModule({
   declarations: [
@@ -57,7 +61,11 @@ import { FilePath } from '@ionic-native/file-path';
     FollowersPage,
     FollowingPage,
     AddquestionPage,
-    EditProfilePage 
+    EditProfilePage,
+    EditQuestionPage,
+    ExpandableComponent,
+    PopoverComponent,
+  
   ],
   imports: [
     BrowserModule,
@@ -85,7 +93,10 @@ import { FilePath } from '@ionic-native/file-path';
     FollowersPage,
     FollowingPage,
     AddquestionPage,
-    EditProfilePage 
+    EditQuestionPage,
+    ExpandableComponent,
+    PopoverComponent,
+  
   ],
   providers: [
     SplashScreen,

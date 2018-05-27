@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { GLOBALS } from '../../models/globals';
+import { BaseInput } from 'ionic-angular/util/base-input';
 /*
   Generated class for the UserProvider provider.
 
@@ -45,5 +46,47 @@ export class UserProvider {
       )
       .map(res => res.json());
   }
+
+  questionsCount(user_id) {
+    return this.http.get(this.globals.baseUrl+'/api/users/'+user_id+'/questions/count').map(res => res.json());
+  }
+
+  listFollowers(user_id) {
+    return this.http.get(this.globals.baseUrl+'/api/users/'+user_id+'/followers').map(res => res.json());
+  }
+
+  followersCount(user_id) {
+    return this.http.get(this.globals.baseUrl+'/api/users/'+user_id+'/followers/count').map(res => res.json());
+  }
+
+  listFollowing(user_id) {
+    return this.http.get(this.globals.baseUrl+'/api/users/'+user_id+'/following').map(res =>res.json());
+  }
+
+  followingCount(user_id) {
+    return this.http.get(this.globals.baseUrl+'/api/users/'+user_id+'/following/count').map(res => res.json());
+  }
+
+  listInterests(user_id) {
+    return this.http.get(this.globals.baseUrl+'/api/users/'+user_id+'/interests').map(res => res.json());
+  }
+
+  checkFollowStatus(user_id, userid) {
+    return this.http.head(this.globals.baseUrl+'/api/users/'+user_id+'/following/rel/'+userid);
+  }
+
+  followUser(user_id, userid) {
+    let data = {
+      "user_id": user_id,
+      "userid": userid
+    }
+    JSON.stringify(data);
+    return this.http.put(this.globals.baseUrl+'/api/users/'+user_id+'/following/rel/'+userid, data).map(res => res.json());
+  }
+
+  unfollowUser(user_id, userid) {
+    return this.http.delete(this.globals.baseUrl+'/api/users/'+user_id+'/following/rel/'+userid).map(res => res.json());
+  }
+
 
 }

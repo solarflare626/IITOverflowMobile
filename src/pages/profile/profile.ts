@@ -14,20 +14,30 @@ import { LoginPage } from '../../pages/login/login';
 import { FollowersPage } from '../../pages/followers/followers';
 import { FollowingPage } from '../../pages/following/following';
 import { QuestionPage } from '../../pages/question/question';
+import { EditProfilePage } from '../../pages/edit-profile/edit-profile';
 
 @Component({
   selector: 'page-profile',
   templateUrl: 'profile.html'
 })
 export class ProfilePage {
+  following: boolean;
   questions: any;
-  following = false;
-  user: any;
   questionPage: QuestionPage;
+  editProfilePage: EditProfilePage;
+  followersusers: any;
+  followerscount: any;
+  followingusers: any;
+  followingcount: any;
+  posts: any;
+  postscount: any;
+  tab = 'posts';
 
-  user1 = {
-    name: 'Mark Angelo G. Nambatac',
-    profileImage: '../../assets/imgs/avatar/avatar.jpg',
+  user = {
+    id: 18,
+    displayname: "Christine Jane Beleta",
+    email: "christinejane.beleta@g.msuiit.edu.ph",
+    picture: "https://lh3.googleusercontent.com/-4cY7jxqGToA/AAAAAAAAAAI/AAAAAAAAAAA/AIcfdXBUX58qkK27YO69l2tVBe3v6Joakw/s96-c/photo.jpg",
     coverImage: '../../assets/imgs/background/background-5.jpg',
     occupation: 'Student',
     college: 'SCS',
@@ -78,21 +88,74 @@ export class ProfilePage {
     private googlePlus: GooglePlus, 
     private userProvider:UserProvider,
     public appCtrl: App) {
-      this.user = {"id": "4", "email": "christinejane.beleta@g.msuiit.edu.ph", "displayname": "Cjbeleta", "picture": "../../assets/imgs/avatar/avatar.jpg"};
+      
     }
     
 
   ionViewDidLoad() {
+
+    this.listFollowing();
+    this.listFollowers();
+    this.listQuestions();
+      
+      
+    }
+
+  listQuestions() {
     this.userProvider.listQuestions(this.user.id).subscribe(
       data => {
-        this.questions = data;
+        this.posts = data;
       },
       err => {
         console.log("ERROR Q");
       });
+      
+      
+      this.userProvider.questionsCount(this.user.id).subscribe(
+        data => {
+          console.log(data);
+          this.postscount = data.count;
+        }
+      );
+  }
+  
+  listFollowers() {
+    this.userProvider.listFollowers(this.user.id).subscribe(
+      data => {
+        this.followersusers = data;
+        console.log("Listed Followers");
+      },
+      err => {
+        console.log("Error Followers");
+      }
+    );
+    this.userProvider.followersCount(this.user.id).subscribe(
+      data => {
+        console.log(data);
+        this.followerscount = data.count;
+      }
+    );
+  }
 
-    }
+  listFollowing() {
+    this.userProvider.listFollowing(this.user.id).subscribe(
+      data => {
+        this.followingusers = data;
+        console.log("Listed Following");
+      },
+      err => {
+        console.log("Error Following");
+      }
+    );
+    this.userProvider.followingCount(this.user.id).subscribe(
+      data => {
+        console.log(data);
+        this.followingcount = data.count;
+      }
+    );
 
+  }
+  
   follow() {
     this.following = !this.following;
     this.toastCtrl.create({
@@ -125,6 +188,10 @@ export class ProfilePage {
       ]
     });
     alert.present();
+  }
+
+  editProfile() {
+    this.navCtrl.push(EditProfilePage, {"user": this.user});
   }
   imageTapped(post) {
     this.toastCtrl.create({message:'Post image clicked'});
@@ -175,16 +242,14 @@ export class ProfilePage {
     alert.present();
   }
 
-  viewFollowers() {
-    this.navCtrl.push(FollowersPage);
-    console.log("Followers Clicked!");
+  viewFollowerUser(user) {
+    this.navCtrl.push(FollowersPage, {"user": user, "curuser": this.user.id, "page": this});
   }
 
-  viewFollowing() {
-    this.navCtrl.push(FollowingPage);
+  viewFollowingUser(user) {
+    this.navCtrl.push(FollowingPage, {"user": user, "curuser": this.user.id, "page": this});
 
   }
-
   viewQuestion(question) {
     this.navCtrl.push(QuestionPage, {option: false, question: question});
   }

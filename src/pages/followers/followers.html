@@ -14,31 +14,23 @@
 
 
 <ion-content>
-  <ion-card>
-     <ion-item>
-       <ion-avatar item-left>
-         <img src="../../assets/imgs/avatar/test2.jpg" style="width: 40px !important;" >
-       </ion-avatar>
-       <h2>Mark Angelo G. Nambatac</h2>
-     </ion-item>
-  </ion-card>
-
-  <ion-card>
-      <ion-item>
-        <ion-avatar item-left>
-          <img src="../../assets/imgs/avatar/images.jpg" style="width: 40px !important;" >
-        </ion-avatar>
-        <h2>Franco Jigu Pacaña</h2>
-      </ion-item>
-   </ion-card>
-
-   <ion-card>
-      <ion-item>
-        <ion-avatar item-left>
-          <img src="../../assets/imgs/avatar/kit.jpg" style="width: 40px !important;" >
-        </ion-avatar>
-        <h2>Kit Jimenez</h2>
-      </ion-item>
-   </ion-card>
-
+    <ion-card>
+        <button *ngIf="!isFollowed" (click)="followUser()" ion-button="" class="disable-hover button button-md button-default button-default-md"><span class="button-inner">Follow</span><div class="button-effect" style="transform: translate3d(-2px, -71px, 0px) scale(1); height: 175px; width: 175px; opacity: 0; transition: transform 317ms ease 0s, opacity 222ms ease 95ms;"></div></button>
+        <button *ngIf="isFollowed" (click)="unfollowUser()" ion-button="" class="disable-hover button button-md button-default button-default-md"><span class="button-inner">Unfollow</span><div class="button-effect" style="transform: translate3d(-2px, -71px, 0px) scale(1); height: 175px; width: 175px; opacity: 0; transition: transform 317ms ease 0s, opacity 222ms ease 95ms;"></div></button>
+        <ion-list>
+          <ion-item>
+            {{ user.displayname }}
+          </ion-item>
+          <ion-item>
+            {{ user.email }}
+          </ion-item>
+          <img src="{{ user.picture }}">
+        </ion-list>
+      </ion-card>
+      <ion-card>
+        <ion-list>
+          <h1>Interests: </h1>
+           <ion-item *ngFor="let interest of interests">{{ interest.name }}</ion-item>
+        </ion-list>
+      </ion-card>
 </ion-content>

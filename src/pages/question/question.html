@@ -1,225 +1,105 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Question
-    </ion-title>
-  </ion-navbar>
-</ion-header>
-
-<ion-content>
-  <!-- View Question -->
-  <ion-list no-lines *ngIf="option">
-    <ion-item>
-         
-      <ion-label floating>Question</ion-label>
-      <ion-textarea  rows="3" [(ngModel)]="question"></ion-textarea>
-    </ion-item>
-
-    <ion-item>
-      <ion-searchbar [(ngModel)]="searchTerm" [formControl]="searchControl"></ion-searchbar>
-      <!--<ion-item *ngFor="let tag of tags" (click)="addTags(tag.id);">
-          <h4 style="float: left;">{{ tag.name }}</h4>
-      </ion-item>-->
-    </ion-item >
-
-    <ion-item>
-      <h2>Selected tags:</h2>
-      <button ion-button icon-left small round outline 
-      *ngFor="let tag of select_tags" 
-      style="font-size: 10px;"
-      (click)="removeTags(tag.id);">
-        {{ tag }}
-      </button>
-    </ion-item>
-    <ion-item>
-      <button ion-button block full (click)="postQuestion();">POST</button>
-    </ion-item>
-  </ion-list>
-
-  <ion-list no-lines *ngIf="!option">
-    <br>
-    <ion-item-divider style="padding-right: 16px">
-      <ion-row>
-        <ion-col col-auto style = "padding: 12px 12px 12px 1.5px;" >
-          <ion-row>
-              <button ion-button clear><ion-icon name="md-arrow-dropup" ></ion-icon></button>
-          </ion-row>
-          <ion-row >
-              <div style="margin-left: auto; margin-right: auto; display: block;"><strong><p>1350</p></strong></div>
-          </ion-row>
-          <ion-row>
-              <button ion-button clear><ion-icon name="md-arrow-dropdown"></ion-icon></button>
-          </ion-row>
-        </ion-col>
-
-      
-        <ion-col style="padding: 0 1.5px 1.5px 3px; ">
-          <ion-icon *ngIf="selected_question.user.id == user.id" name="md-more" (click)="presentActionSheet(questions, selected_question,'question')" float-right padding></ion-icon>
-         
-          <ion-row>
-            <ion-item style="padding: 0; font-weight:bold;" text-wrap>
-                <p [innerHtml]="selected_question.question"></p>
-
-            </ion-item>
-          </ion-row>
-
-          <ion-row>
-              <ion-col col-8>
-                  <ion-note item-start class = "note">Category: {{ selected_question.category.name }}</ion-note>
-              </ion-col>
-          </ion-row>
-
-          
-            
-          
-         
-        </ion-col>
-      </ion-row>
-     
-      <hr>
-      
-      <!-- Question Description will be placed here -->
- 
-      <p text-wrap [innerHtml]="selected_question.questiondesc"> </p>
-      <br>
-      
-      <!-- Info of the User who posted the Question -->
-      <p>Asked By:</p>
-      <ion-card style="margin:0px; width: 65%; border-radius: 10px;" class= "info"> 
-        <ion-item class = "test">
-          <ion-avatar item-start >
-            <img src={{selected_question.user.picture}} style= "width: 40px !important;">
-          </ion-avatar>
-          
-          <h3>{{ selected_question.user.displayname }}</h3>
-          <p>{{ getDate(selected_question.createdAt) }}</p>
-        </ion-item>      
-      </ion-card>
-     
-      <hr>
-      <ion-row>
-          <button ion-button clear style="width:31%;height: 2rem; font-size:1.4rem;" *ngIf="followed" (click)="unfollowQuestion()">Unfollow</button>
-          <button ion-button clear style="width:31%;height: 2rem; font-size:1.4rem;" *ngIf="!followed" (click)="followQuestion()"><ion-icon name="ion-star"></ion-icon>Follow</button>
-          <button ion-button clear style="width:31%; height: 2rem; font-size:1.4rem;" (click)="showHideInputBar(null, selected_question)"><ion-icon name="ion-edit"></ion-icon>Answer</button>
-          </ion-row>
-
-      <br>
-      
-      
-<!--
-      <ion-row *ngIf="viewAnswerBar">
-        <div [froalaEditor] placeholder="Enter answer here..." [(ngModel)]="answer"></div>
-        <button class="post" (click)="postAnswer()">Post Answer</button>
-      </ion-row>
-      -->
-
-    </ion-item-divider>
-      <!-- Comments 
-      <ion-grid text-wrap style = "background-color: #E0E0E0;">
-        <ion-row>
-          <ion-col col-3>
-            <p></p>
-          </ion-col>
-          <ion-col>
-            <ion-row>
-                <p>open-quote does open a quotation. It doesn't refer to a double-quote character. – <font color= "blue">Bergi </font> Apr 26 at 18:03</p>
-            </ion-row>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-
-      <ion-grid text-wrap style = "background-color: #E0E0E0;">
-          <ion-row>
-            <ion-col col-3>
-              <p></p>
-            </ion-col>
-            <ion-col>
-              <ion-row>
-                  <p>From what I remember there's some known bugs in GCC here. That being said, don't use bit-fields. 
-                    Don't read a book teaching you to use bit-fields – <font color= "blue">makoooy123 </font> Apr 12 at 14:03</p>
-              </ion-row>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
--->
-
-
-
-        <ion-item-divider style="padding-right: 16px">
-      <!-- Answers -->
-      <div *ngFor="let answer of answers">
-      <ion-row >
-        <ion-col col-auto style = "padding: 12px 12px 12px 1.5px;" >
-          <ion-row>
-              <button ion-button clear><ion-icon name="md-arrow-dropup" ></ion-icon></button>
-          </ion-row>
-          <ion-row >
-              <div style="margin-left: auto; margin-right: auto; display: block;"><strong><p>12</p></strong></div>
-          </ion-row>
-          <ion-row>
-              <button ion-button clear><ion-icon name="md-arrow-dropdown"></ion-icon></button>
-          </ion-row>
-        </ion-col>
-        
-        <ion-col text-wrap >
-          <ion-icon *ngIf="answer.user.id == user.id" name="md-more" (click)="presentActionSheet(answers,answer, 'answer')" float-right padding></ion-icon>
-          <h6>Posted by: {{ answer.user.displayname }}</h6>
-          {{getDate(answer.updatedAt)}}
-          <p [innerHtml]="answer.answer"></p>
-      
-        </ion-col>
-        
-         
-      </ion-row>
-      <button ion-button clear style="width:31%; height: 2rem; font-size:1.3rem;" (click)="showHideInputBar(answers,answer)">Comment</button>
-
-      
-          <!-- Comments -->
-          <ion-grid *ngFor="let comment of answer.comments" text-wrap style = "background-color: #E0E0E0;">
-            <br>
-            <ion-row>
-              <ion-col col-3>
-                  
-              </ion-col>
-              <ion-col col-9>
-                    <p><a [innerHtml]="comment.comment" ></a><br><ion-icon *ngIf="comment.user.id == user.id" name="md-more" (click)="presentActionSheet( answer.comments,comment,'comment')" ></ion-icon>– <a (click)="log(comment.user.displayname)" ><font color= "blue">{{comment.user.displayname}} </font></a>{{getDate(comment.updatedAt)}}</p>
-
-              </ion-col>
-              
-            </ion-row>
-            <br>
-          </ion-grid>
-
-        <hr>
-      </div>
-    </ion-item-divider>
-     
-
-  </ion-list>
-
-</ion-content>
-<ion-footer [hidden]="!viewCommentBar.value"  style="background-color: white; margin-right: 10px;">
-
-       
-          <!--<ion-item class="input-container" >
-          <ion-textarea #myInput id="myInput"  rows="1" (keyup)="resize()"   [(ngModel)]="inputItem.value" class="comment-answer-input" ></ion-textarea>
-      <ion-row>      
-          <ion-item class="input-container" id="myInputParent">
-          <ion-textarea #myInput id="myInput"    rows="2"  (blur)="checkBlur($event)"  [(ngModel)]="inputItem.value" class="comment-answer-input" ></ion-textarea>
-          
-          <div item-right>
-            <!--
-              <button ion-button id="attach" clear icon-only class="vertical-align: middle;"     (click)="post()"><ion-icon class="vertical-align: middle;"  id="attach" style="zoom:2.0;"  (click)="post()" name="attach"></ion-icon></button>
-         -->
-        
-          <!--<button ion-button id="send" clear icon-only class="vertical-align: middle;"     (click)="post(inputParent,inputItem)"><ion-icon zoom="2.0" name="send"></ion-icon></button>
-            </div>
-           </ion-item>-->
-           <form>
-              <div [froalaEditor]='options' (blur)="checkBlur($event)" [(froalaModel)]="inputItem.value"></div>
-              <button ion-button id="send" clear icon-only class="vertical-align: middle;"     (click)="post(inputParent,inputItem)"><ion-icon zoom="2.0" name="send"></ion-icon></button>
-          </form>
-
+    <ion-navbar>
+      <ion-title>&nbsp; Question</ion-title>
+      <ion-buttons end>
+          <button ion-button icon-only (click)="presentPopover($event)"><ion-icon name="more" ></ion-icon></button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
     
+  <ion-content>  
+    <div class = "questionHead" padding>
+      <h2>{{ selected_question.question }}</h2>
+      <br>
+  
+      <ion-chip>
+        <ion-icon name="heart" color="dark"></ion-icon>
+        <ion-label *ngIf="followed" (click)="unfollowQuestion()">&nbsp;&nbsp;Unfollow&nbsp;&nbsp;</ion-label>
+        <ion-label *ngIf="!followed" (click)="followQuestion()">&nbsp;&nbsp;Follow&nbsp;&nbsp;</ion-label>
+      </ion-chip>
 
-</ion-footer>
+      <!-- Query Categories Here  -->
+      <p class = "questionDesc" [innerHTML] = "selected_question.questiondesc"></p>  
+      <ion-chip>
+          <ion-label>&nbsp;&nbsp;HTML&nbsp;&nbsp;</ion-label>
+      </ion-chip>
+      <ion-chip>
+        <ion-label>&nbsp;&nbsp; C++ &nbsp;&nbsp;</ion-label>
+      </ion-chip>
+      <ion-chip>
+          <ion-label>&nbsp;&nbsp;Computer Science&nbsp;&nbsp;</ion-label>
+      </ion-chip>
+      <ion-chip>
+        <ion-label>&nbsp;&nbsp; Programming &nbsp;&nbsp;</ion-label>
+      </ion-chip>
+      <br>
+      <br>
+  
+      <ion-row>
+        <ion-col>
+          <button ion-button round color = "light" (click) = "upvote()">&nbsp;UpVote&nbsp;</button>
+        </ion-col>
+  
+        <ion-col>
+          <div class = "voteCount">
+            <ion-icon name="star" style= "font-size: 1.8em;"></ion-icon>
+            <p> 4 </p>
+          </div>
+        </ion-col>
+  
+        <ion-col>
+            <button ion-button round color = "light">Downvote</button>
+        </ion-col>
+      </ion-row>
+    </div>
+    
+    <div class = "answer">
+      <ion-list>
+        <button detail-none ion-item (click)="expandItem(answer)" 
+                                    (press)="pressEvent($event)" 
+                                    *ngFor="let answer of answers" class= "answer1">
+          <ion-row>
+            <ion-col col-2 style = "padding-top: 20px; padding-left: 20px;">
+              <ion-icon name="arrow-dropup-circle" style = "font-size: 2.5rem; color: #333;"></ion-icon>
+                <p>34</p>
+              <ion-icon name="arrow-dropdown-circle" style = "font-size: 2.5rem; color: #333;"></ion-icon>
+            </ion-col>
+  
+            <ion-col style="padding: 20px;">
+              <h2 [innerHTML] = "answer.answer" text-wrap></h2>
+              <p > Asked by: <font style= "color:#850f13">{{ answer.user.displayname }}</font></p>  
+            </ion-col>
+          </ion-row> 
+  
+          <ion-row justify-content-center>
+              <button ion-button right round style = "height: 2.5rem; font-size: 1.2rem" >View Comments </button>  
+          </ion-row>
+        
+          <expandable [expandHeight] = "itemExpandHeight" [expanded] = "answer.expanded" >
+            <div no lines style = "border-bottom: 2px dotted black;" text-wrap *ngFor = "let comment of answer.comments">
+              <ion-row>
+                <ion-col col-10 >
+                    <strong><p [innerHTML] = "comment.comment"></p></strong>
+                    <p> {{ comment.createdAt }} </p>
+                </ion-col>
+                <ion-col>
+                    <ion-icon name="create"></ion-icon>
+                </ion-col>
+                <ion-col>
+                    <ion-icon name="trash"></ion-icon>
+                </ion-col>
+              </ion-row>
+            </div>
+            <button ion-button full (click) = "addComment()">Add Comment</button>
+          </expandable> 
+        </button>
+      </ion-list>
+    </div>
+  </ion-content>
+  
+  <ion-footer no-shadow>
+      <ion-toolbar position="bottom">
+        <button ion-button full (click)="postAnswer()">Add Answer</button>
+      </ion-toolbar>  
+  </ion-footer>
+  

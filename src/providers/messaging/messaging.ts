@@ -1,41 +1,36 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { GLOBALS } from '../../models/globals';
  
 @Injectable()
 export class MessagingProvider {
- 
+    globals = new GLOBALS();
     contacts: any;
     convos: any;
  
     constructor(public http: Http) {
- 
-        this.contacts = ['Sumwan U. Dunno', 'Noan I. Knoe', 'Phat A. Miebitch', 'Deekom P. Teetivs'];
-        this.convos = [
-        {
-        	'name': 'Phillip Espina',
-        	'preview': 'You: Pagtarong na dw trabaho...'
-        },
-        {
-        	'name': 'Jigu Pacana',
-        	'preview': 'You: Tsada kaayo, Call Me By...'
-        }
-        ];
- 
+        this.convos = [{"sender": "Someone", "message": "BTS@BBMAs"}];
     }
+
  
     filterContacts(searchTerm){
- 
-        return this.contacts.filter((contacts) => {
-            return contacts.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
-        });    
+        this.http.get(this.globals.baseUrl+'/api/users').map(res => res.json()).subscribe(
+            data => {
+                this.contacts = data;
+                return this.contacts.filter((contacts) => {
+                    return contacts.displayname.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
+                }); 
+            }
+        );
+           
  
     }
 
     filterConvos(searchTerm){
 
     	return this.convos.filter((convos) => {
-    		return convos.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
+    		return convos.sender.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
     	});
     }
  

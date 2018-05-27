@@ -1,14 +1,21 @@
 import { Component,ViewChild,Renderer,ElementRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, 
+        NavParams, 
+        ToastController, 
+        PopoverController, 
+        AlertController, 
+        ActionSheetController } from 'ionic-angular';
+
+import { NativeUserProvider } from '../../nativeProviders/nativeUser/nativeUser';
+import { NativeApiProvider } from '../../nativeProviders/nativeApi/nativeApi';
 import { NewsfeedProvider } from '../../providers/newsfeed/newsfeed';
 import { UserProvider } from '../../providers/user/user';
-import 'rxjs/add/operator/debounceTime';
-import {ActionSheetController} from 'ionic-angular';
-import {AlertController} from 'ionic-angular';
-import {NativeUserProvider} from '../../nativeProviders/nativeUser/nativeUser';
-import {NativeApiProvider} from '../../nativeProviders/nativeApi/nativeApi';
 
+import { ExpandableComponent } from '../../components/expandable/expandable';
+import { PopoverComponent} from '../../components/popover/popover';
+
+import 'rxjs/add/operator/debounceTime';
 
 var commentbar = {value:null};
 commentbar.value = null;
@@ -17,12 +24,10 @@ export class QuestionPage {
   @ViewChild('myInput') myInput: ElementRef;
   @ViewChild('mynputParent') myInputParent:   ElementRef;
   resize() {
-    //this.myInput = @ViewChild('myInput') myInput: ElementRef;
     var element = this.myInput['_elementRef'].nativeElement.getElementsByClassName("text-input")[0];
-     
-      console.log('scrollheight',element.scrollHeight);
-      console.log('height',element.style.height);
-      var scrollHeight = element.scrollHeight;
+    console.log('scrollheight',element.scrollHeight);
+    console.log('height',element.style.height);
+    var scrollHeight = element.scrollHeight;
     if(scrollHeight+10 < 120){
       
       
@@ -59,8 +64,9 @@ export class QuestionPage {
   comment : String;
   answer : String;
   answers : any;
+  answerCount: any;
   questions: any;
-  
+  itemExpandHeight: string = "auto";
   inputParent:any= {};
   inputItem:any = {};
   inputValue:String ="";
@@ -90,31 +96,36 @@ export class QuestionPage {
       }
     }
   }
-  constructor(public navCtrl : NavController, public navParams : NavParams, public dataService : NewsfeedProvider, private userProvider : NativeUserProvider, public toastCtrl : ToastController, public actionSheetCtrl : ActionSheetController, private alertCtrl : AlertController,
-    private renderer:Renderer, private elementRef:ElementRef,
-  private nativeApiProvider: NativeApiProvider
-  ) {
-    this
-      .userProvider
-      .get()
-      .then(data => {
+  constructor(public navCtrl : NavController, 
+    public navParams : NavParams, 
+    public dataService : NewsfeedProvider, 
+    private userProvider : NativeUserProvider, 
+    public toastCtrl : ToastController, 
+    public actionSheetCtrl : ActionSheetController, 
+    private alertCtrl : AlertController,
+    private renderer:Renderer, 
+    private elementRef:ElementRef,
+    private nativeApiProvider: NativeApiProvider,
+    public  popoverCtrl : PopoverController) 
+    {
+      this.userProvider.get().then(data => {
         if (data) {
           this.user = data;
           console.log("curruser", this.user.id);
         }
       });
-    this.option = this
-      .navParams
-      .get('option');
-    this.selected_question = this
-      .navParams
-      .get('question');
-    this.questions =  this
-    .navParams
-    .get('questions');
+      this.user = {
+        "id": 18,
+        "displayname": "CHRISTINE JANE BELETA",
+        "email": "christinejane.beleta@g.msuiit.edu.ph",
+        "picture": 	"https://lh3.googleusercontent.com/-4cY7jxqGToA/AAAAAAAAAAI/AAAAAAAAAAA/AIcfdXBUX58qkK27YO69l2tVBe3v6Joakw/s96-c/photo.jpg"
+      }
+    this.option = this.navParams.get('option');
+    this.selected_question = this.navParams.get('question');
+    this.questions =  this.navParams.get('questions');
     console.log("Questions",JSON.stringify(this.questions));
     this.selected_question_id = this.selected_question.id;
-
+    this.answerCount = this.dataService.getQuestionAnswersCount(this.selected_question_id);
     console.log("qUser", this.selected_question.user.id);
 
     this.select_tags = [];
@@ -148,6 +159,19 @@ export class QuestionPage {
     
         return new Date(date).toUTCString();
     
+  }
+
+  expandItem(answer){
+    console.log("BEFORE: ",answer.expanded); 
+    this.answers.map((listItem) => {
+        if(answer.id == listItem.id){
+            listItem.expanded = !listItem.expanded;
+        } else {
+            listItem.expanded = false;
+        }
+        console.log("AFTER: ", listItem.expanded);
+        return listItem;
+    });
   }
 
   post(parent,input){
@@ -299,6 +323,7 @@ export class QuestionPage {
       });
     actionSheet.present();
   }
+
   ionViewDidLoad() {
     this.setAnswers();
     this.setCategories();
@@ -320,8 +345,8 @@ export class QuestionPage {
       .subscribe(data => {
         console.log("ANSWERS: ", JSON.stringify(data));
         this.answers = data;
-        //return data;
-        
+        this.answers.forEach(answer => answer.expanded = false);
+        console.log(data);
       }, err => {
         console.log("ERROR SQA");
       });
@@ -343,8 +368,7 @@ export class QuestionPage {
       .dataService
       .filterTags(this.searchTerm);
   }
-  // ////////////////////////////////////////////////////////////// -> tag
-  // functions
+
   addTags(tag) {
     this
       .select_tags
@@ -362,30 +386,26 @@ export class QuestionPage {
         .splice(index, 1);
     }
   }
-  // ////////////////////////////////////////////////////////////// ->
-  // follow/unfollow functions
 
   checkFollowStatus() {
     this
       .dataService
-      .followStatus(4, this.selected_question_id)
+      .followStatus(this.user.id, this.selected_question_id)
       .subscribe(data => {
         this.followed = true;
         console.log("FOLLOWED");
       }, err => {
         this.followed = false;
         console.log("NOT FOLLOWED");
-
       });
   }
+
   followQuestion() {
-    // this.dataService.followQuestion(this.user, this.selected_question);
-    // console.log("ME FOLLOW QUESTION");
-    let put = JSON.stringify({"questionId": this.selected_question_id, "userId": 4});
+    let put = JSON.stringify({"questionId": this.selected_question_id, "userId": this.user.id});
     this.followed = true;
     this
       .dataService
-      .followQuestion(4, this.selected_question_id, put);
+      .followQuestion(this.user.id, this.selected_question_id, put);
     this.checkFollowStatus();
     this
       .toastCtrl
@@ -394,10 +414,9 @@ export class QuestionPage {
   }
 
   unfollowQuestion() {
-    //console.log("ME UNFOLLOW QUESTION");
     this
       .dataService
-      .unfollowQuestion(4, this.selected_question_id);
+      .unfollowQuestion(this.user.id, this.selected_question_id);
     this.followed = false;
     this.checkFollowStatus();
     this
@@ -405,8 +424,7 @@ export class QuestionPage {
       .create({message: 'Question Unfollowed', position: 'bottom', duration: 3000})
       .present();
   }
-  // ////////////////////////////////////////////////////////////// ->
-  // post/edit/delete comment functions
+
 
   checkBlur(e){
     if(e.relatedTarget){
@@ -422,20 +440,6 @@ export class QuestionPage {
       
   }
   showHideInputBar(parent, child) {
-   
-    //if(child.value)
-    //
-    
-    //this.viewCommentBar = !(this.viewCommentBar);
-    
-    
-    /*if (this.viewAnswerBar) {
-      this.viewAnswerBar = !(this.viewAnswerBar);
-      this.inputParent = {};
-      this.inputItem = {};
-    }else{*/
-      
-
       try {
         if(child.value)
         this.inputItem = child;
@@ -534,5 +538,36 @@ export class QuestionPage {
       .postQuestion(data);
 
   }
+
+  presentPopover(myEvent) {
+    console.log("Clicked!");
+    let popover = this.popoverCtrl.create(PopoverComponent, {question: this.selected_question.question, questiondesc: this.selected_question.questiondesc });
+    popover.present({
+      ev: myEvent
+    });
+  }
+
+  pressEvent(e){
+    console.log("Comment Pressed");
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'What do you want to do?',
+      buttons: [
+        {
+          text: 'Edit Answer',
+          role: 'destructive',
+          handler: () => {
+            console.log('Edit Button clicked');
+          }
+        },{
+          text: 'Delete Answer',
+          handler: () => {
+            console.log('Delete clicked');
+          }
+        }
+      ]
+    });
+    actionSheet.present();
+  }
+  
 
 }

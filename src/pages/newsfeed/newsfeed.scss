@@ -47,4 +47,18 @@ page-newsfeed {
     .question-container:hover {
         background-color: #66ccff;
     } 
+
+    .toolbar-background-md {
+        background-color: #850f13;
+        color: white;
+    }
+    
+    .toolbar-title-md {
+        color: white;
+        letter-spacing: 2px;
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 1.4rem;
+    }
+    
 }

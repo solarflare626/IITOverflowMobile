@@ -27,6 +27,17 @@ export class NewsfeedProvider {
       .map(res => res.json());
   }
 
+  getQuestionAnswersCount(user_id) {
+    this.http.get(this.globals.baseUrl+'/api/Questions/'+user_id+'/answers/count').map(res => res.json()).subscribe(
+      data => {
+        return data.count;
+      },
+      err => {
+        return 0;
+      }
+    );
+  }
+
   getSpecificQuestionAnswers(question_id) {
     return this.http
       .get(

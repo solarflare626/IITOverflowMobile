@@ -1,40 +1,68 @@
 <ion-content padding class="transparent-header">
   
 
-  <div id="profile-bg" [ngStyle]="{'background-image': 'url('+ user1.coverImage +')'}"></div>
+  <div id="profile-bg" [ngStyle]="{'background-image': 'url('+ user.coverImage +')'}"></div>
  
   <div id="content">
     <div id="profile-info" padding>
-      <img id="profile-image" [src]="user1.profileImage">
-      <h3 id="profile-name">{{user1.name}}</h3>
-      <p>{{user.occupation}} &bull; {{user1.college}}  &bull; {{user1.course}}</p>
-      <p class="profile-description">{{user1.description}}</p>
+      <img id="profile-image" src="{{ user.picture }}">
+      <h3 id="profile-name">{{user.displayname}}</h3>
+      <h6>{{user.email}}</h6>
       <div><button ion-button (click)="presentConfirm()" class = "center">Logout From Google</button></div> 
-      <button ion-button *ngIf="!following" small color="purple" (click)="follow()">Follow</button>
-      <button ion-button *ngIf="following" class="follow-button" small color="purple" (click)="unfollow()">Following<ion-icon name="checkmark"></ion-icon></button>
+      <button ion-button *ngIf="" small color="purple" (click)="follow()">Follow</button>
+      <button ion-button *ngIf="" class="follow-button" small color="purple" (click)="unfollow()">Following<ion-icon name="checkmark"></ion-icon></button>
+      <button ion-button (click)="editProfile()">Edit Profile</button>
     </div>
-    <br>
-    <br>
     <hr>
-    <ion-row class="profile-numbers">
-      <ion-col col-4>
-        <p>Posts</p>
-        <span>{{user1.posts}}</span>
-      </ion-col>
-      <ion-col col-4 (click)= "viewFollowing()">
-        <p>Following</p>
-        <span>{{user1.following}}</span>
-      </ion-col>
-      <ion-col col-4 (click)= "viewFollowers()">
-        <p>Followers</p>
-        <span>{{user1.followers}}</span>
-      </ion-col>
-    </ion-row>
+    <div>
+      <ion-segment [(ngModel)]="tab">
+          <ion-segment-button value="posts">
+            POSTS
+          </ion-segment-button>
+          <ion-segment-button value="followingusers">
+            {{ followingcount }}
+            FOLLOWING
+          </ion-segment-button>
+          <ion-segment-button value="followersusers">
+            {{ followerscount }}
+            FOLLOWERS
+          </ion-segment-button>
+      </ion-segment>
+
+    </div>
+
+    <div [ngSwitch]="tab">
+      <ion-list *ngSwitchCase="'posts'">
+        <ion-list>
+            <ion-item>
+                <h3 style="padding-top: 10px;">My Questions</h3>
+            </ion-item>
+            <ion-item>
+              <h3 style="padding-top: 10px;">Answered Questions</h3>
+            </ion-item>
+            <ion-item>
+                <h3 style="padding-top: 10px;">Followed Questions</h3>
+            </ion-item>
+      </ion-list>
+      </ion-list>
+    
+      <ion-list *ngSwitchCase="'followingusers'">
+        <ion-list>
+            <ion-item *ngFor="let user of followingusers" (click)="viewFollowingUser(user)">
+              <h3 style="padding-top: 10px;">{{ user.displayname }}</h3>
+            </ion-item>
+      </ion-list>
+      </ion-list>
+      <ion-list *ngSwitchCase="'followersusers'">
+        <ion-list>
+            <ion-item *ngFor="let user of followersusers" (click)="viewFollowerUser(user)">
+              <h3 style="padding-top: 10px;">{{ user.displayname }}</h3>
+            </ion-item>
+      </ion-list>
+      </ion-list>
+    </div>
 
     <br>
-
-    
-  </div>
   <ion-list>
       <ion-item-divider *ngFor="let question of questions" (click)="viewQuestion(question)" class="question-container">
         <ion-avatar item-start style="width: 20px; height: 20px; color: white; background-color: #0099ff; text-align: center; padding-top: 10px; border-radius: 50%;">
@@ -51,4 +79,5 @@
         </ion-row>
       </ion-item-divider>
   </ion-list> 
+</div>
 </ion-content>

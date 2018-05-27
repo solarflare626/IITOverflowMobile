@@ -7,32 +7,17 @@
 <ion-content>
   <ion-grid fixed>
     <ion-row justify-content-start>
-      <ion-col col-8>
         <ion-searchbar 
           placeholder= "Search Questions" 
           animated = true>
         </ion-searchbar>
-      </ion-col>
-      <ion-col>
-        <ion-item>
-          <ion-select 
-            placeholder = "Sort by"
-            interface = "popover"
-            class = "items">
-              <ion-option value="Active">Active</ion-option>
-              <ion-option value="Newest">Newest</ion-option>
-              <ion-option value="Votes">Votes</ion-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-
     </ion-row>
   </ion-grid>
-  
+
   <ion-list>
       <ion-item-divider *ngFor="let question of questions" (click)="viewQuestion(question)" class="question-container">
         <ion-avatar item-start >
-          <img src={{question.user.picture}} style= "width: 40px !important;">
+          <img src={{question.user.picture}} style= "width: 40px !important; border: 2px double #850f13">
         </ion-avatar>
         <p class = "question">{{ question.question }}</p>
         <ion-row>
@@ -46,6 +31,6 @@
       </ion-item-divider>
   </ion-list>
   <ion-fab right bottom>
-    <button ion-fab (click)="postQuestion()"><ion-icon name="md-bulb" style="zoom:1.4;"></ion-icon></button>
+    <button ion-fab (click)="postQuestion()"><ion-icon name="add" style="zoom:1.4;"></ion-icon></button>
   </ion-fab>
 </ion-content>

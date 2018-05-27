@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Edit Question</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-item>
+        <ion-label color="primary" stacked>Question Title</ion-label>
+        <ion-input type="text" [(ngModel)]="questionHead"  clearInput> </ion-input>
+    </ion-item>
+    <ion-item >
+        <ion-label color="primary" stacked>Question Body</ion-label>
+    </ion-item>
+    <div [froalaEditor] = "options" [(ngModel)] = "questionDesc"> 
+    </div>
+    <br>
+
+    <button ion-button full round> Submit</button>
+</ion-content>
