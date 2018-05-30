@@ -16,6 +16,7 @@ import { ExpandableComponent } from '../../components/expandable/expandable';
 import { PopoverComponent} from '../../components/popover/popover';
 
 import 'rxjs/add/operator/debounceTime';
+import { AddAnswerPage } from '../../pages/add-answer/add-answer';
 
 var commentbar = {value:null};
 commentbar.value = null;
@@ -569,5 +570,44 @@ export class QuestionPage {
     actionSheet.present();
   }
   
+  deleteComment() {
+    let alert = this.alertCtrl.create({
+      title: 'Confirm Action',
+      message: 'Are you sure you want to delete this Comment?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Delete',
+          handler: () => {
+            console.log('Delete clicked');
+          }
+        }
+      ]
+    });
+    alert.present();
 
+
+  }
+
+  editComment() {
+
+
+  }
+
+
+  addComment() {
+    console.log("Add Answer Clicked!!!");
+  }
+
+
+  addAnswer() {
+    this.navCtrl.push(AddAnswerPage);
+
+  }
 }

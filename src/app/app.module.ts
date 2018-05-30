@@ -45,6 +45,11 @@ import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { NativeApiProvider } from '../nativeProviders/nativeApi/nativeApi';
 import { NativeUserProvider } from '../nativeProviders/nativeUser/nativeUser';
 import { FilePath } from '@ionic-native/file-path';
+import { AddAnswerPage } from '../pages/add-answer/add-answer';
+import { EditCommentPage } from '../pages/edit-comment/edit-comment';
+import { EditAnswerPage } from '../pages/edit-answer/edit-answer';
+import { ChatsPage } from '../pages/chat/chat';
+import { MessagesPage } from '../pages/chat/messages/messages';
 
 
 @NgModule({
@@ -57,12 +62,18 @@ import { FilePath } from '@ionic-native/file-path';
     MessagingPage,
     QuestionPage,
     AnswerPage,
+    MessagesPage,
     TabsPage,
     FollowersPage,
     FollowingPage,
     AddquestionPage,
+    AddAnswerPage,
+    EditCommentPage,
     EditProfilePage,
     EditQuestionPage,
+    EditAnswerPage,
+  
+    ChatsPage,
     ExpandableComponent,
     PopoverComponent,
   
@@ -92,8 +103,13 @@ import { FilePath } from '@ionic-native/file-path';
     TabsPage,
     FollowersPage,
     FollowingPage,
-    AddquestionPage,
+    AddAnswerPage,
+    EditCommentPage,
+    EditAnswerPage,
     EditQuestionPage,
+    AddquestionPage,
+    MessagesPage,
+    ChatsPage,
     ExpandableComponent,
     PopoverComponent,
   

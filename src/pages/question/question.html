@@ -55,9 +55,10 @@
     
     <div class = "answer">
       <ion-list>
-        <button detail-none ion-item (click)="expandItem(answer)" 
+        <button detail-none ion-item (click)="expandItem(answer)"  
                                     (press)="pressEvent($event)" 
                                     *ngFor="let answer of answers" class= "answer1">
+          
           <ion-row>
             <ion-col col-2 style = "padding-top: 20px; padding-left: 20px;">
               <ion-icon name="arrow-dropup-circle" style = "font-size: 2.5rem; color: #333;"></ion-icon>
@@ -80,13 +81,13 @@
               <ion-row>
                 <ion-col col-10 >
                     <strong><p [innerHTML] = "comment.comment"></p></strong>
-                    <p> {{ comment.createdAt }} </p>
+                    <p> {{getDate(comment.updatedAt)}} </p>
                 </ion-col>
                 <ion-col>
-                    <ion-icon name="create"></ion-icon>
+                 <ion-icon name="create" (click)="editComment()"></ion-icon>
                 </ion-col>
                 <ion-col>
-                    <ion-icon name="trash"></ion-icon>
+                  <ion-icon name="trash" (click)="deleteComment()"></ion-icon>
                 </ion-col>
               </ion-row>
             </div>
@@ -99,7 +100,7 @@
   
   <ion-footer no-shadow>
       <ion-toolbar position="bottom">
-        <button ion-button full (click)="postAnswer()">Add Answer</button>
+        <button ion-button full (click)="addAnswer()">Add Answer</button>
       </ion-toolbar>  
   </ion-footer>
   

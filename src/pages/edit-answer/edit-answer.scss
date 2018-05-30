@@ -1,10 +1,4 @@
-page-chat {
-    ion-note {
-        font-size: 12px;
-        align-self: flex-start;
-        margin-top: 14px;
-    }
-
+page-edit-answer {
     .toolbar-background-md {
         background-color: #850f13;
         color: white;
@@ -21,4 +15,6 @@ page-chat {
     .bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default{
         color: white;
     }
-}
+    }
+
+

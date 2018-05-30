@@ -100,11 +100,7 @@ export class NewsFeedPage {
     
     if(Math.floor(seconds / 1))
         return  ""+Math.floor(seconds / 1)+" seconds ago";
-    
-    
         return new Date(date).toUTCString().slice(0,-10);
-    
-  
   }
   /*
    reload(){
