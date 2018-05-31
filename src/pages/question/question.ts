@@ -17,6 +17,8 @@ import { PopoverComponent} from '../../components/popover/popover';
 
 import 'rxjs/add/operator/debounceTime';
 import { AddAnswerPage } from '../../pages/add-answer/add-answer';
+import { EditCommentPage } from '../edit-comment/edit-comment';
+import { AddCommentPage } from '../add-comment/add-comment';
 
 var commentbar = {value:null};
 commentbar.value = null;
@@ -109,12 +111,12 @@ export class QuestionPage {
     private nativeApiProvider: NativeApiProvider,
     public  popoverCtrl : PopoverController) 
     {
-      this.userProvider.get().then(data => {
-        if (data) {
-          this.user = data;
-          console.log("curruser", this.user.id);
-        }
-      });
+      // this.userProvider.get().then(data => {
+      //   if (data) {
+      //     this.user = data;
+      //     console.log("curruser", this.user.id);
+      //   }
+      // });
       this.user = {
         "id": 18,
         "displayname": "CHRISTINE JANE BELETA",
@@ -123,11 +125,12 @@ export class QuestionPage {
       }
     this.option = this.navParams.get('option');
     this.selected_question = this.navParams.get('question');
+    console.log("Selected Question: ", JSON.stringify(this.selected_question));
     this.questions =  this.navParams.get('questions');
-    console.log("Questions",JSON.stringify(this.questions));
+    console.log("Questions: ",JSON.stringify(this.questions));
     this.selected_question_id = this.selected_question.id;
     this.answerCount = this.dataService.getQuestionAnswersCount(this.selected_question_id);
-    console.log("qUser", this.selected_question.user.id);
+    //console.log("qUser", this.selected_question.user.id);
 
     this.select_tags = [];
     this.searchControl = new FormControl();
@@ -473,7 +476,7 @@ export class QuestionPage {
     
       }
     
-    postComment() {
+  postComment() {
     console.log("Comment: ", this.comment);
     this.viewCommentBar.value = false;
     this.comment = '';
@@ -570,7 +573,7 @@ export class QuestionPage {
     actionSheet.present();
   }
   
-  deleteComment() {
+  deleteComment(answer_id) {
     let alert = this.alertCtrl.create({
       title: 'Confirm Action',
       message: 'Are you sure you want to delete this Comment?',
@@ -586,6 +589,12 @@ export class QuestionPage {
           text: 'Delete',
           handler: () => {
             console.log('Delete clicked');
+            this
+            .dataService
+            .deleteAnswer(answer_id)
+            .subscribe(data => {
+              this.setAnswers();
+            });
           }
         }
       ]
@@ -595,19 +604,18 @@ export class QuestionPage {
 
   }
 
-  editComment() {
-
-
+  editComment(comment) {
+    this.navCtrl.push(EditCommentPage,{'comment': comment});
   }
 
 
   addComment() {
     console.log("Add Answer Clicked!!!");
+    this.navCtrl.push(AddCommentPage);
   }
 
 
   addAnswer() {
-    this.navCtrl.push(AddAnswerPage);
-
+    this.navCtrl.push(AddAnswerPage, {'questionId': this.selected_question_id });
   }
 }

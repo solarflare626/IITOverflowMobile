@@ -27,6 +27,18 @@ export class NewsfeedProvider {
       .map(res => res.json());
   }
 
+  listAnsweredQuestions(user_id) {
+    
+  }
+
+  listFollowedQuestions(user_id) {
+    return this.http.get(this.globals.baseUrl+'/api/users/'+user_id+'/questionsfollowed?filter={"include":[{"relation":"answers","scope":{"include":"user"}},{"relation":"category"},{"relation":"user"}, {"relation": "tags"}], "order":  "updatedAt DESC " }').map(res => res.json());
+  }
+
+  listPostedQuestions(user_id) {
+    return this.http.get(this.globals.baseUrl+'/api/users/'+user_id+'/questions?filter={"include":[{"relation":"answers","scope":{"include":"user"}},{"relation":"category"},{"relation":"user"}], "order":  "updatedAt DESC " }').map(res => res.json());
+  }
+
   getQuestionAnswersCount(user_id) {
     this.http.get(this.globals.baseUrl+'/api/Questions/'+user_id+'/answers/count').map(res => res.json()).subscribe(
       data => {

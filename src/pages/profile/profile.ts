@@ -7,7 +7,7 @@ import { App, NavController,
   AlertController } from 'ionic-angular';
 
 import { UserProvider } from '../../providers/user/user';
-
+ 
 import { GLOBALS } from '../../models/globals';
 
 import { LoginPage } from '../../pages/login/login';
@@ -15,6 +15,9 @@ import { FollowersPage } from '../../pages/followers/followers';
 import { FollowingPage } from '../../pages/following/following';
 import { QuestionPage } from '../../pages/question/question';
 import { EditProfilePage } from '../../pages/edit-profile/edit-profile';
+import { PostedQuestionsPage } from '../../pages/posted-questions/posted-questions';
+import { AnsweredQuestionsPage } from '../../pages/answered-questions/answered-questions';
+import { FollowedQuestionsPage} from '../../pages/followed-questions/followed-questions';
 
 @Component({
   selector: 'page-profile',
@@ -31,6 +34,8 @@ export class ProfilePage {
   followingcount: any;
   posts: any;
   postscount: any;
+  interests: any;
+  categories: any;
   tab = 'posts';
 
   user = {
@@ -38,16 +43,7 @@ export class ProfilePage {
     displayname: "Christine Jane Beleta",
     email: "christinejane.beleta@g.msuiit.edu.ph",
     picture: "https://lh3.googleusercontent.com/-4cY7jxqGToA/AAAAAAAAAAI/AAAAAAAAAAA/AIcfdXBUX58qkK27YO69l2tVBe3v6Joakw/s96-c/photo.jpg",
-    coverImage: '../../assets/imgs/background/background-5.jpg',
-    occupation: 'Student',
-    college: 'SCS',
-    course: 'Computer Science',
-    description: 'A wise man once said: The more you do something, the better you will become at it.',
-    interests: ['Python', 'Javascript', 'Web Development'],
-    followers: 456,
-    following: 1052,
-    posts: 35
-   
+    coverImage: '../../assets/imgs/background/background-5.jpg',  
   };
 
   // posts = [
@@ -97,9 +93,21 @@ export class ProfilePage {
     this.listFollowing();
     this.listFollowers();
     this.listQuestions();
+    this.listInterests();
       
       
     }
+
+  listInterests() {
+    this.userProvider.listInterests(this.user.id).subscribe(
+      data => {
+        this.interests = data;
+      },
+      err => {
+        console.log("Error Interests");
+      }
+    );
+  }
 
   listQuestions() {
     this.userProvider.listQuestions(this.user.id).subscribe(
@@ -191,8 +199,13 @@ export class ProfilePage {
   }
 
   editProfile() {
-    this.navCtrl.push(EditProfilePage, {"user": this.user});
+    this.userProvider.listInterests(this.user.id).subscribe(
+      data => {
+        this.categories = data;
+      });
+    this.navCtrl.push(EditProfilePage, {"user": this.user, "categories": this.categories, "interests": this.interests});
   }
+  
   imageTapped(post) {
     this.toastCtrl.create({message:'Post image clicked'});
   }
@@ -250,8 +263,14 @@ export class ProfilePage {
     this.navCtrl.push(FollowingPage, {"user": user, "curuser": this.user.id, "page": this});
 
   }
-  viewQuestion(question) {
-    this.navCtrl.push(QuestionPage, {option: false, question: question});
+  viewPostedQuestions() {
+    this.navCtrl.push(PostedQuestionsPage, {"curuser": this.user});
+  }
+  viewAnsweredQuestions() {
+    this.navCtrl.push(AnsweredQuestionsPage, {"curuser": this.user});
+  }
+  viewFollowedQuestions() {
+    this.navCtrl.push(FollowedQuestionsPage, {"curuser": this.user});
   }
 }
 

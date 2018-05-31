@@ -25,7 +25,7 @@ import { PopoverComponent } from '../components/popover/popover';
 
 import { ProfilePage } from '../pages/profile/profile';
 import { NotificationPage } from '../pages/notification/notification';
-import { MessagingPage } from '../pages/messaging/messaging';
+
 import { NewsFeedPage } from '../pages/newsfeed/newsfeed';
 import { TabsPage } from '../pages/tabs/tabs';
 import { QuestionPage } from '../pages/question/question';
@@ -50,16 +50,20 @@ import { EditCommentPage } from '../pages/edit-comment/edit-comment';
 import { EditAnswerPage } from '../pages/edit-answer/edit-answer';
 import { ChatsPage } from '../pages/chat/chat';
 import { MessagesPage } from '../pages/chat/messages/messages';
-
+import { PostedQuestionsPage } from '../pages/posted-questions/posted-questions';
+import { AnsweredQuestionsPage } from '../pages/answered-questions/answered-questions';
+import { FollowedQuestionsPage } from '../pages/followed-questions/followed-questions';
+import { IntroPage } from '../pages/intro/intro';
+import { AddCommentPage } from '../pages/add-comment/add-comment';
 
 @NgModule({
   declarations: [
     MyApp,
     LoginPage,
+    IntroPage,
     ProfilePage,
     NotificationPage,
     NewsFeedPage,
-    MessagingPage,
     QuestionPage,
     AnswerPage,
     MessagesPage,
@@ -67,16 +71,18 @@ import { MessagesPage } from '../pages/chat/messages/messages';
     FollowersPage,
     FollowingPage,
     AddquestionPage,
+    AddCommentPage,
     AddAnswerPage,
     EditCommentPage,
     EditProfilePage,
     EditQuestionPage,
     EditAnswerPage,
-  
     ChatsPage,
     ExpandableComponent,
     PopoverComponent,
-  
+    PostedQuestionsPage,
+    AnsweredQuestionsPage,
+    FollowedQuestionsPage
   ],
   imports: [
     BrowserModule,
@@ -94,25 +100,28 @@ import { MessagesPage } from '../pages/chat/messages/messages';
   entryComponents: [
     MyApp,
     LoginPage,
+    IntroPage,
     NotificationPage,
     ProfilePage,
     NewsFeedPage,
-    MessagingPage,
     QuestionPage,
     AnswerPage,
     TabsPage,
     FollowersPage,
     FollowingPage,
     AddAnswerPage,
+    AddCommentPage,
     EditCommentPage,
     EditAnswerPage,
     EditQuestionPage,
+    EditProfilePage,
     AddquestionPage,
-    MessagesPage,
     ChatsPage,
     ExpandableComponent,
     PopoverComponent,
-  
+    PostedQuestionsPage,
+    AnsweredQuestionsPage,
+    FollowedQuestionsPage,
   ],
   providers: [
     SplashScreen,
@@ -131,7 +140,8 @@ import { MessagesPage } from '../pages/chat/messages/messages';
     ApiProvider,
     HttpModule,NativeApiProvider,
     NativeUserProvider,
-    FilePath
+    FilePath,
+    Storage
   ]
 })
 

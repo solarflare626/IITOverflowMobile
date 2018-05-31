@@ -51,6 +51,10 @@ export class UserProvider {
     return this.http.get(this.globals.baseUrl+'/api/users/'+user_id+'/questions/count').map(res => res.json());
   }
 
+  listCategories() {
+    return this.http.get(this.globals.baseUrl+'/api/Categories').map(res => res.json());
+  }
+
   listFollowers(user_id) {
     return this.http.get(this.globals.baseUrl+'/api/users/'+user_id+'/followers').map(res => res.json());
   }

@@ -14,12 +14,25 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'add-comment.html',
 })
 export class AddCommentPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  options: any;
+  constructor(public navCtrl: NavController, public navParams: NavParams,) {
+    this.options = {
+      placeholderText: "Place Answer Here",
+      charCounterCount: false,
+      toolbarButtons: ['bold', 'italic', 'underline','|', 'formatOL', 'formatUL','|', 'undo', 'redo','|', 'insertLink'],
+      theme: 'red',
+      height: 300,
+    }
+  
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddCommentPage');
-  }
+    }
+    
+    postComment() {
 
+
+      
+    }
 }

@@ -14,7 +14,7 @@ import { LoginPage } from '../../pages/login/login';
 @Component({
   selector: 'page-following',
   templateUrl: 'following.html',
-})
+}) 
 export class FollowingPage {
 
   curuser: any;
@@ -57,6 +57,26 @@ export class FollowingPage {
         this.isFollowed = false;
       }
     );
+    }
+
+    getDate(date){
+
+      var date2 = new Date().getTime() - new Date(date).getTime();
+      
+      var seconds = Math.floor( date2 / 1000);
+  
+      if(Math.floor(seconds / 3600) >= 24)
+        return new Date(date).toUTCString().slice(0,-10);
+  
+      if(Math.floor(seconds / 3600))
+        return  ""+Math.floor(seconds / 3600)+" hours ago";
+  
+      if(Math.floor(seconds / 60))
+          return  ""+Math.floor(seconds / 60)+" minutes ago";
+      
+      if(Math.floor(seconds / 1))
+          return  ""+Math.floor(seconds / 1)+" seconds ago";
+          return new Date(date).toUTCString().slice(0,-10);
     }
 
   listQuestions() {
@@ -205,15 +225,16 @@ export class FollowingPage {
   }
 
   viewFollowerUser(user) {
-    this.navCtrl.push(FollowersPage, {"user": user, "curuser": this.user.id, "page": this});
+    this.navCtrl.push(FollowersPage, {"user": user, "curuser": this.curuser, "page": this.profPage});
   }
 
   viewFollowingUser(user) {
-    this.navCtrl.push(FollowingPage, {"user": user, "curuser": this.user.id, "page": this});
+    this.navCtrl.push(FollowingPage, {"user": user, "curuser": this.curuser, "page": this.profPage});
 
   }
   viewQuestion(question) {
-    this.navCtrl.push(QuestionPage, {option: false, question: question});
+    //this.appCtrl.getRootNav().push(QuestionPage, {option: false, question: question, questions: this.posts});
+    this.navCtrl.push(QuestionPage, {"option": false, "question": question, "questions": this.posts});
   }
 
   followUser() {

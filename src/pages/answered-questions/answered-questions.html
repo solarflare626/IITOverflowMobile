@@ -1,29 +1,32 @@
- <ion-header>
+<ion-header>
+
   <ion-navbar>
-    <ion-title> <ion-icon name="desktop"></ion-icon> &nbsp;IIT Overflow</ion-title>
+    <ion-title>Answered Questions</ion-title>
   </ion-navbar>
+
 </ion-header>
 
 <ion-content>
   <ion-grid fixed>
     <ion-row justify-content-start>
+      <ion-col col-8>
         <ion-searchbar 
           placeholder= "Search Questions" 
-          animated = true
-        >
+          animated = true>
         </ion-searchbar>
+      </ion-col>
     </ion-row>
   </ion-grid>
-
+  
   <ion-list>
-      <ion-item-divider *ngFor="let question of questions" (click)="viewQuestion(question)" class="question-container">
+      <ion-item-divider *ngFor="let question of answeredQuestions" (click)="viewQuestion(question)" class="question-container">
         <ion-avatar item-start >
           <img src={{question.user.picture}} style= "width: 40px !important; border: 2px double #850f13">
         </ion-avatar>
         <p class = "question">{{ question.question }}</p>
         <ion-row>
           <ion-col col-6>
-              <ion-note item-start class = "note" *ngFor="let tag of question.tags">{{tag.name}</ion-note>
+              <ion-note item-start class = "note" *ngFor="let tag of question.tags">{{tag.name}}</ion-note>
           </ion-col>
           <ion-col >
               <ion-note><p style="text-align:right; font-size: 12px; color: #c5c5c5;">{{getDate(question.updatedAt)}}</p></ion-note>
@@ -32,6 +35,7 @@
       </ion-item-divider>
   </ion-list>
   <ion-fab right bottom>
-    <button ion-fab (click)="postQuestion()"><ion-icon name="add" style="zoom:1.4;"></ion-icon></button>
+    <button ion-fab (click)="postQuestion()"><ion-icon name="md-bulb" style="zoom:1.4;"></ion-icon></button>
   </ion-fab>
 </ion-content>
+

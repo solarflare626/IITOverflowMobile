@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, ToastController } from 'ionic-angular';
+import { NavController, LoadingController, ToastController, NavParams } from 'ionic-angular';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { FilePath } from '@ionic-native/file-path';
@@ -17,11 +17,17 @@ declare var cordova: any;
 export class EditProfilePage {
 
   user:any = {};
+
+  categories: any;
+  interests: any;
+  notinterests: any;
+
   imageURI:any;
   imageFileName:any;
   lastImage: any;
-  defaultImage: string = "../../assets/imgs/avatar.png";
+  defaultImage: string;
   constructor(public navCtrl: NavController,
+    public navParams: NavParams,
     private transfer: FileTransfer,
     private camera: Camera,
     private filePath: FilePath,
@@ -44,6 +50,12 @@ export class EditProfilePage {
         }
       });
   }
+
+  ionViewDidLoad() {
+    this.categories = this.navParams.get("categories");
+    this.interests = this.navParams.get("interests");
+  }
+
   public presentActionSheet() {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Select Image Source',
@@ -177,10 +189,6 @@ export class EditProfilePage {
       ]
     });
     confirm.present();
-
-    
-    
-
    
   }
 

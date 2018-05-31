@@ -78,9 +78,8 @@ export class NewsFeedPage {
   }
 
   viewQuestion(question) {
-    this.appCtrl.getRootNav().push(this.questionpage, {option: false, question: question, questions: this.questions});
- 
-    //this.navCtrl.push(this.questionpage, {option: false, question: question});
+      // this.appCtrl.getRootNav().push(this.questionpage, {option: false, question: question, questions: this.questions});
+    this.navCtrl.push(this.questionpage, {option: false, question: question, questions: this.questions});
   }
 
   getDate(date){

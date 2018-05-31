@@ -9,9 +9,17 @@
       <h3 id="profile-name">{{user.displayname}}</h3>
       <h6>{{user.email}}</h6>
       <div><button ion-button (click)="presentConfirm()" class = "center">Logout From Google</button></div> 
-      <button ion-button *ngIf="" small color="purple" (click)="follow()">Follow</button>
-      <button ion-button *ngIf="" class="follow-button" small color="purple" (click)="unfollow()">Following<ion-icon name="checkmark"></ion-icon></button>
+      <!-- <button ion-button *ngIf="" small color="purple" (click)="follow()">Follow</button>
+      <button ion-button *ngIf="" class="follow-button" small color="purple" (click)="unfollow()">Following<ion-icon name="checkmark"></ion-icon></button> -->
       <button ion-button (click)="editProfile()">Edit Profile</button>
+    </div>
+    <hr>
+    <h3>Interests</h3>
+    <hr>
+    <div style="height: 80px; overflow-y: auto;">
+      <ion-list>
+        <ion-item *ngFor="let i of interests">{{i.name}}</ion-item>
+      </ion-list>
     </div>
     <hr>
     <div>
@@ -34,13 +42,13 @@
     <div [ngSwitch]="tab">
       <ion-list *ngSwitchCase="'posts'">
         <ion-list>
-            <ion-item>
+            <ion-item (click)="viewPostedQuestions()">
                 <h3 style="padding-top: 10px;">My Questions</h3>
             </ion-item>
-            <ion-item>
+            <ion-item (click)="viewAnsweredQuestions()">
               <h3 style="padding-top: 10px;">Answered Questions</h3>
             </ion-item>
-            <ion-item>
+            <ion-item (click)="viewFollowedQuestions()">
                 <h3 style="padding-top: 10px;">Followed Questions</h3>
             </ion-item>
       </ion-list>

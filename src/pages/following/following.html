@@ -22,12 +22,9 @@
     <div id="profile-info" padding>
       <img id="profile-image" src="{{ user.picture }}">
       <h3 id="profile-name">{{user.displayname}}</h3>
-      <h6>{{user.email}}</h6>
-      <div><button ion-button (click)="presentConfirm()" class = "center">Logout From Google</button></div> 
-      <button ion-button *ngIf="" small color="purple" (click)="follow()">Follow</button>
-      <button ion-button *ngIf="" class="follow-button" small color="purple" (click)="unfollow()">Following<ion-icon name="checkmark"></ion-icon></button>
+      <h6>{{user.email}}</h6> 
       <button *ngIf="!isFollowed" (click)="followUser()" ion-button="" class="disable-hover button button-md button-default button-default-md"><span class="button-inner">Follow</span><div class="button-effect" style="transform: translate3d(-2px, -71px, 0px) scale(1); height: 175px; width: 175px; opacity: 0; transition: transform 317ms ease 0s, opacity 222ms ease 95ms;"></div></button>
-        <button *ngIf="isFollowed" (click)="unfollowUser()" ion-button="" class="disable-hover button button-md button-default button-default-md"><span class="button-inner">Unfollow</span><div class="button-effect" style="transform: translate3d(-2px, -71px, 0px) scale(1); height: 175px; width: 175px; opacity: 0; transition: transform 317ms ease 0s, opacity 222ms ease 95ms;"></div></button>
+      <button *ngIf="isFollowed" (click)="unfollowUser()" ion-button="" class="disable-hover button button-md button-default button-default-md"><span class="button-inner">Unfollow</span><div class="button-effect" style="transform: translate3d(-2px, -71px, 0px) scale(1); height: 175px; width: 175px; opacity: 0; transition: transform 317ms ease 0s, opacity 222ms ease 95ms;"></div></button>
     </div>
     <hr>
     <div>
@@ -50,16 +47,18 @@
     <div [ngSwitch]="tab">
       <ion-list *ngSwitchCase="'posts'">
         <ion-list>
-            <ion-item>
-                <h3 style="padding-top: 10px;">My Questions</h3>
-            </ion-item>
-            <ion-item>
-              <h3 style="padding-top: 10px;">Answered Questions</h3>
-            </ion-item>
-            <ion-item>
-                <h3 style="padding-top: 10px;">Followed Questions</h3>
-            </ion-item>
-      </ion-list>
+                <ion-item-divider *ngFor="let post of posts" class="question-container" (click)="viewQuestion(post)">
+                  <p>{{ post.question }}</p>
+                  <ion-row>
+                    <ion-col col-6>
+                        <ion-note item-start class = "note" *ngFor="let tag of post.tags">{{tag.name}}</ion-note>
+                    </ion-col>
+                    <ion-col >
+                        <ion-note><p style="text-align:right; font-size: 12px; color: #c5c5c5;">{{getDate(post.updatedAt)}}</p></ion-note>
+                    </ion-col>
+                  </ion-row>
+                </ion-item-divider>
+          </ion-list>
       </ion-list>
     
       <ion-list *ngSwitchCase="'followingusers'">

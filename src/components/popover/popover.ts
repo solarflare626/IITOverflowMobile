@@ -29,7 +29,7 @@ export class PopoverComponent {
     console.log(item.item);
     if (item.item == "Edit Question") {
       console.log("Edit Question!");
-      this.navCtrl.push(EditQuestionPage, {question1: this.navParams.get('question'), question2:this.navParams.get('questiondesc') });
+      this.navCtrl.push(EditQuestionPage, {question1: this.navParams.get('question'), question2:this.navParams.get('questiondesc')});
     } else if (item.item == "Delete Question") {
       let alert = this.alertCtrl.create({
         title: 'Delete Question',

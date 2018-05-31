@@ -39,17 +39,9 @@
         <!-- Loop Here on all of the Categories -->
         <ion-item>
             <ion-label>Interests</ion-label>
-            <ion-select [(ngModel)]="toppings" multiple="true" cancelText="Cancel" okText="Done!">
-              <ion-option value="Mathematics" selected="true"> Mathematics</ion-option>
-              <ion-option value="CS">Computer and Information Sciences</ion-option>
-              <ion-option value="Physical science">Physical Science</ion-option>
-              <ion-option value="Chemical science">Chemical Science</ion-option>
-              <ion-option value="Environmental science">Environmental Sciences</ion-option>
-              <ion-option value="Biological science">Biological Science</ion-option>
-              <ion-option value="Psychology">Psychology</ion-option>
-              <ion-option value="Sociology">Sociology</ion-option>
-              <ion-option value="Law">Law</ion-option>
-              <ion-option value="Nano technology">Nano technology</ion-option>
+            <ion-select [(ngModel)]="newInterests" multiple="true" cancelText="Cancel" okText="Done!">
+              <ion-option *ngFor="let i of interests" value="{{i.id}}" selected = "true">{{i.name}}</ion-option>
+              <ion-option *ngFor="let n of notinterests"
             </ion-select>
           </ion-item>
           <br>

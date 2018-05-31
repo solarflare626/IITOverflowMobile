@@ -4,6 +4,7 @@ import { MessagesPage } from '../../pages/chat/messages/messages'
 
 @IonicPage()
 @Component({
+  selector: 'page-chat',
   templateUrl: 'chat.html',
 })
 

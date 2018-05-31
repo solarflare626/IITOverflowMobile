@@ -32,6 +32,10 @@
       <ion-chip>
         <ion-label>&nbsp;&nbsp; Programming &nbsp;&nbsp;</ion-label>
       </ion-chip>
+      
+      <ion-chip>
+        <ion-label *ngFor="let tag of selected_question.tags">&nbsp;&nbsp; {{ tag.name }} &nbsp;&nbsp;</ion-label>
+      </ion-chip>
       <br>
       <br>
   
@@ -55,7 +59,7 @@
     
     <div class = "answer">
       <ion-list>
-        <button detail-none ion-item (click)="expandItem(answer)"  
+        <div detail-none ion-item (click)="expandItem(answer)"  
                                     (press)="pressEvent($event)" 
                                     *ngFor="let answer of answers" class= "answer1">
           
@@ -84,16 +88,16 @@
                     <p> {{getDate(comment.updatedAt)}} </p>
                 </ion-col>
                 <ion-col>
-                 <ion-icon name="create" (click)="editComment()"></ion-icon>
+                 <ion-icon name="create" (click)="editComment(comment.comment)"></ion-icon>
                 </ion-col>
                 <ion-col>
-                  <ion-icon name="trash" (click)="deleteComment()"></ion-icon>
+                  <ion-icon name="trash" (click)="deleteComment(comment.id)"></ion-icon>
                 </ion-col>
               </ion-row>
             </div>
             <button ion-button full (click) = "addComment()">Add Comment</button>
           </expandable> 
-        </button>
+        </div>
       </ion-list>
     </div>
   </ion-content>
