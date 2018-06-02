@@ -6,18 +6,20 @@
 
 <ion-content class="chats">
   <ion-list>
-    <ion-list-header>Today</ion-list-header>
-    <ion-item *ngFor="let chat of chats" (click)="viewMessages(chat)">
+    <ion-item *ngFor="let chat of chatlist" (click)="viewMessages(chat)">
       <ion-avatar item-start>
-        <img [src]="chat.imageUrl">
+        <img [src]="chat.profilepic">
+        
       </ion-avatar>
-      <h2>{{chat.title}}</h2>
-      <p>{{chat.lastMessage}}</p>
-      <ion-note item-end>{{chat.timestamp }}</ion-note>
+      <h2>{{chat.displayname}}</h2>
+      <p>{{chat.lastmessage}}</p>
+      <ion-badge *ngIf="chat.unread >0" item-end>{{chat.unread}}</ion-badge>
+      <span *ngIf="chat.online" class="contact-status" item-end></span>
+      <ion-note>{{getDate(chat.last_activity) }}</ion-note>
     </ion-item>
   </ion-list>
-  <ion-list>
-    <ion-list-header>Yesterday</ion-list-header>
+  <!-- <ion-list>
+   <ion-list-header>Yesterday</ion-list-header>
     <ion-item>
       <ion-avatar item-start>
         <img src="assets/img/avatar/marty-avatar.png">
@@ -53,5 +55,5 @@
       <p>Lorem ipsum dolor sit amet..</p>
       <ion-note item-end>11:11 pm</ion-note>
     </ion-item>
-  </ion-list>
+  </ion-list>-->
 </ion-content>

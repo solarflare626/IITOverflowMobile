@@ -19,12 +19,13 @@ export class UserProvider {
 	    console.log('User init:',JSON.stringify(JSON.parse(val)));
 	 });*/
   }
-
+  
   public get(){
   	return this.storage.get('user').then(val => {
-    	return JSON.parse(val);
-  	});
-  }
+      return JSON.parse(val);
+      //return this.globals.user;
+  });
+}
 
   public set(data: any ={}){
   	this.storage.set('user', JSON.stringify(data));
@@ -49,10 +50,6 @@ export class UserProvider {
 
   questionsCount(user_id) {
     return this.http.get(this.globals.baseUrl+'/api/users/'+user_id+'/questions/count').map(res => res.json());
-  }
-
-  listCategories() {
-    return this.http.get(this.globals.baseUrl+'/api/Categories').map(res => res.json());
   }
 
   listFollowers(user_id) {
@@ -92,5 +89,19 @@ export class UserProvider {
     return this.http.delete(this.globals.baseUrl+'/api/users/'+user_id+'/following/rel/'+userid).map(res => res.json());
   }
 
+  
+  getNotifications(user_id) {
+    return this.http.get(this.globals.baseUrl+'/api/users/'+user_id+'/notifications').map(res => res.json());
+  }
 
+  getIntersts(user_id) {
+    return this.http.get(this.globals.baseUrl+'/api/users/'+user_id+'/interests').map(res => res.json());
+  }
+
+  getFollowedQuestions(user_id) {
+    return this.http.get(this.globals.baseUrl+'/api/users/'+user_id+'/questionsfollowed').map(res => res.json());
+  }
+  getFollowedUsers(user_id) {
+    return this.http.get(this.globals.baseUrl+'/api/users/'+user_id+'/following').map(res => res.json());
+  }
 }

@@ -4,6 +4,7 @@ page-chat {
         align-self: flex-start;
         margin-top: 14px;
     }
+
     .toolbar-background-md {
         background-color: #850f13;
         color: white;
@@ -12,7 +13,7 @@ page-chat {
     .toolbar-title-md {
         color: white;
         letter-spacing: 2px;
-        text-align: center;
+    
         text-transform: uppercase;
         font-size: 1.4rem;
     }
@@ -20,4 +21,12 @@ page-chat {
     .bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default{
         color: white;
     }
+    .contact-status {
+    margin: -2px 0 0 -2px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #2ecc71;
+}
+
 }

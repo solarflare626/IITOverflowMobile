@@ -1,125 +1,89 @@
 import { FormControl, FormBuilder } from '@angular/forms';
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, Content } from 'ionic-angular';
-
+import { IonicPage, NavController, Content,NavParams } from 'ionic-angular';
+import { MessagingProvider } from '../../../providers/messaging/messaging';
 @IonicPage()
 @Component({
   selector: 'page-messages',
   templateUrl: 'messages.html'
 })
 export class MessagesPage {
-  toUser = {
-    _id: '534b8e5aaa5e7afc1b23e69b',
-    pic: '../../../assets/imgs/avatar/avatar.jpg',
-    username: 'Venkman',
-  };
 
-  user = {
-    _id: '534b8fb2aa5e7afc1b23e69c',
-    pic: '../../../assets/imgs/avatar/kit.jpg',
-    username: 'Marty',
-  };
+  
 
   doneLoading = false;
 
-  messages = [
-    {
-      _id: 1,
-      date: new Date(),
-      userId: this.user._id,
-      username: this.user.username,
-      pic: this.user.pic,
-      text: 'OH CRAP!!'
-    },
-    {
-      _id: 2,
-      date: new Date(),
-      userId: this.toUser._id,
-      username: this.toUser.username,
-      pic: this.toUser.pic,
-      text: 'what??'
-    },
-    {
-      _id: 3,
-      date: new Date(),
-      userId: this.toUser._id,
-      username: this.toUser.username,
-      pic: this.toUser.pic,
-      text: 'Pretty long message with lots of content'
-    },
-    {
-      _id: 4,
-      date: new Date(),
-      userId: this.user._id,
-      username: this.user.username,
-      pic: this.user.pic,
-      text: 'Pretty long message with even way more of lots and lots of content'
-    },
-    {
-      _id: 5,
-      date: new Date(),
-      userId: this.user._id,
-      username: this.user.username,
-      pic: this.user.pic,
-      text: 'what??'
-    },
-    {
-      _id: 6,
-      date: new Date(),
-      userId: this.toUser._id,
-      username: this.toUser.username,
-      pic: this.toUser.pic,
-      text: 'yes!'
-    }
-  ];
-
+ 
+  user:any;
+  convo:any;
   @ViewChild(Content) content: Content;
 
   public messageForm: any;
   chatBox: any;
 
-  constructor(public navCtrl: NavController, public formBuilder: FormBuilder) {
+
+  constructor(public messageprovider: MessagingProvider,private navParams: NavParams,public navCtrl: NavController, public formBuilder: FormBuilder) {
     this.messageForm = formBuilder.group({
       message: new FormControl('')
     });
     this.chatBox = '';
+    this.user =  this.navParams.get('globals').user;
+    this.convo =  this.navParams.get('globals').convo;
+    this.convo.messages=[];
+    this.messageprovider.getConvo(this.user.id,this.convo.id).subscribe(
+      data => {
+        this.convo.messages = data;
+        console.log(data);
 
+        
+
+      },
+      err => {
+        console.log("ERROR Q");
+      });
+
+  }
+  ngAfterViewChecked(){
+    this.content.scrollToBottom(0);
+  }
+  
+  ionViewDidLoad() {
+    this.content.scrollToBottom(0);
   }
 
   send(message) {
     if (message && message !== '') {
-      // this.messageService.sendMessage(chatId, message);
+      
+      this.chatBox = "";
+      this.messageprovider.sendMessage(this.user.id,this.convo.id,message).subscribe(
+        data => {
+          this.convo.messages.push({
+            id: data.id,
+            message:data.message,
+            created_at:data.created_at,
+            senderid:data.senderId,
+            conversationid:data.conversationId,
+            picture: this.user.picture,
+            displayname:this.user.displayname
+          });
+  
+          this.navParams.get('globals').conversations.forEach((element,index) => {
+            if(element.id == this.convo.id){
+              element.last_activity = data.created_at;
+              element.lastmessage = data.message;
+                var hold = element;
+                this.navParams.get('globals').conversations.splice(index,1);
+                this.navParams.get('globals').conversations.unshift(hold);
+            }
+            
+          });
+  
+        },
+        err => {
+          console.log("ERROR Q");
+        });
 
-      const messageData =
-        {
-          toId: this.toUser._id,
-          _id: 6,
-          date: new Date(),
-          userId: this.user._id,
-          username: this.toUser.username,
-          pic: this.toUser.pic,
-          text: message
-        };
-
-      this.messages.push(messageData);
-      this.scrollToBottom();
-
-      setTimeout(() => {
-        const replyData =
-          {
-            toId: this.toUser._id,
-            _id: 6,
-            date: new Date(),
-            userId: this.toUser._id,
-            username: this.toUser.username,
-            pic: this.toUser.pic,
-            text: 'Just a quick reply'
-          };
-        this.messages.push(replyData);
-        this.scrollToBottom();
-      }, 1000);
     }
-    this.chatBox = '';
   }
 
   scrollToBottom() {
@@ -127,5 +91,31 @@ export class MessagesPage {
       this.content.scrollToBottom();
     }, 100);
   }
-
+  ionViewWillLeave() {
+    this.convo.id = null;
+    this.convo.messages = [];
+  }
 }
+function getDate(date) {
+
+    var date2 = new Date().getTime() - new Date(date).getTime();
+  
+    var seconds = Math.floor(date2 / 1000);
+  
+    if (Math.floor(seconds / 3600) >= 24)
+        return new Date(date).toUTCString();
+  
+    if (Math.floor(seconds / 3600))
+        return "" + Math.floor(seconds / 3600) + " hours ago";
+  
+    if (Math.floor(seconds / 60))
+        return "" + Math.floor(seconds / 60) + " minutes ago";
+  
+    if (Math.floor(seconds / 1))
+        return "" + Math.floor(seconds / 1) + " seconds ago";
+  
+    return "Just now";
+  
+  
+  
+  }

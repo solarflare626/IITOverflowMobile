@@ -5,8 +5,6 @@ import { App, NavController,
   IonicPage, 
   ToastController, 
   AlertController } from 'ionic-angular';
-
-import { UserProvider } from '../../providers/user/user';
  
 import { GLOBALS } from '../../models/globals';
 
@@ -18,6 +16,7 @@ import { EditProfilePage } from '../../pages/edit-profile/edit-profile';
 import { PostedQuestionsPage } from '../../pages/posted-questions/posted-questions';
 import { AnsweredQuestionsPage } from '../../pages/answered-questions/answered-questions';
 import { FollowedQuestionsPage} from '../../pages/followed-questions/followed-questions';
+import { UserProvider } from '../../providers/user/user';
 
 @Component({
   selector: 'page-profile',
@@ -37,46 +36,8 @@ export class ProfilePage {
   interests: any;
   categories: any;
   tab = 'posts';
-
-  user = {
-    id: 18,
-    displayname: "Christine Jane Beleta",
-    email: "christinejane.beleta@g.msuiit.edu.ph",
-    picture: "https://lh3.googleusercontent.com/-4cY7jxqGToA/AAAAAAAAAAI/AAAAAAAAAAA/AIcfdXBUX58qkK27YO69l2tVBe3v6Joakw/s96-c/photo.jpg",
-    coverImage: '../../assets/imgs/background/background-5.jpg',  
-  };
-
-  // posts = [
-  //   {
-  //     postImageUrl: '../../assets/imgs/background/background-2.jpg',
-  //     mainQuestion: 'How to declare a variable in Javascript?',
-  //     text: `Hi Guys, I am having a hard time on learning javascript. Can someone help me on how to declare a variable in javascript?`,
-  //     date: 'April 1, 2018',
-  //     likes: 12,
-  //     comments: 4,
-  //     timestamp: '11h ago',
-  //     categories: [ 'python', 'web development']
-  //   },
-  //   {
-  //     postImageUrl: '../../assets/imgs/background/background-3.jpg',
-  //     mainQuestion: 'Unsaon pag padakog itlog?',
-  //     text: 'Do not go where the path may lead, go instead where there is no path and leave a trail.',
-  //     date: 'October 23, 2016',
-  //     likes: 30,
-  //     comments: 64,
-  //     timestamp: '30d ago'
-  //   },
-  //   {
-  //     postImageUrl: '../../assets/imgs/background/background-4.jpg',
-  //     mainQuestion: 'Unsay course ang pinaka ayos sa IIT?',
-  //     date: 'June 28, 2016',
-  //     likes: 46,
-  //     text: `Hope is the thing with feathers that perches in the soul
-  //            and sings the tune without the words And never stops at all.`,
-  //     comments: 66,
-  //     timestamp: '4mo ago'
-  //   },
-  // ];
+  globals= new GLOBALS();
+  user: any;
 
   constructor(public navCtrl: NavController, 
     public toastCtrl: ToastController, 
@@ -84,6 +45,17 @@ export class ProfilePage {
     private googlePlus: GooglePlus, 
     private userProvider:UserProvider,
     public appCtrl: App) {
+      this
+      .userProvider
+      .get()
+      .then(data => {
+        if (data) {
+          this.user = data;
+          console.log("curruser", this.user.id);
+        }else{
+          this
+        }
+      })
       
     }
     
@@ -94,8 +66,6 @@ export class ProfilePage {
     this.listFollowers();
     this.listQuestions();
     this.listInterests();
-      
-      
     }
 
   listInterests() {

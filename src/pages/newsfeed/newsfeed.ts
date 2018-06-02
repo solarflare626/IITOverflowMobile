@@ -8,6 +8,7 @@ import { Http } from '@angular/http';
 import { GLOBALS } from '../../models/globals';
 import {NativeApiProvider} from '../../nativeProviders/nativeApi/nativeApi';
 import {NativeUserProvider} from '../../nativeProviders/nativeUser/nativeUser';
+import { UserProvider } from '../../providers/user/user';
 @Component({ 
   selector: 'page-newsfeed',
   templateUrl: 'newsfeed.html'
@@ -26,7 +27,9 @@ export class NewsFeedPage {
     public dataService: NewsfeedProvider, 
     public http: Http,
     public appCtrl: App,
-    private userProvider : NativeUserProvider
+    private userProvider : NativeUserProvider,
+    private userProvider1: UserProvider
+
   ) {
       this.select_categories = 'Select category...';
       this.select_sort = 'Sort by...';
@@ -40,7 +43,7 @@ export class NewsFeedPage {
         "id": 8
       };*/
       this
-      .userProvider
+      .userProvider1
       .get()
       .then(data => {
         if (data) {

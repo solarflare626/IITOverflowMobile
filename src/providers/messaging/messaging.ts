@@ -13,6 +13,22 @@ export class MessagingProvider {
         this.convos = [{"sender": "Someone", "message": "BTS@BBMAs"}];
     }
 
+    getNewConvo(user_id,other_id){
+        return this.http.get(this.globals.baseUrl+'/api/users/'+user_id+'/getconversation/'+other_id).map(res => res.json());
+    }
+    getConversations(user_id) {
+        return this.http.get(this.globals.baseUrl+'/api/users/'+user_id+'/chatlist').map(res => res.json());
+    }
+
+    getConvo(user_id,convo){
+        return this.http.get(this.globals.baseUrl+'/api/users/'+user_id+'/conversation/'+convo.split('_')[1]).map(res => res.json());
+
+    }
+    sendMessage(user_id,convo,message){
+        return this.http.post(this.globals.baseUrl+'/api/users/'+user_id+'/conversation/'+convo.split('_')[1],{msg:message}).map(res => res.json());
+
+    }
+
  
     filterContacts(searchTerm){
         this.http.get(this.globals.baseUrl+'/api/users').map(res => res.json()).subscribe(
