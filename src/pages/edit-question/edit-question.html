@@ -7,14 +7,14 @@
 <ion-content padding>
     <ion-item>
         <ion-label color="primary" stacked>Question Title</ion-label>
-        <ion-input type="text" [(ngModel)]="questionHead"  clearInput> </ion-input>
+        <ion-input type="text" [(ngModel)]="title"  clearInput> </ion-input>
     </ion-item>
     <ion-item >
         <ion-label color="primary" stacked>Question Body</ion-label>
     </ion-item>
-    <div [froalaEditor] = "options" [(ngModel)] = "questionDesc"> 
+    <div [froalaEditor] = "options" [(ngModel)] = "desc"> 
     </div>
     <br>
 
-    <button ion-button full round> Submit</button>
+    <button ion-button full round (click)="editQuestion()"> Submit</button>
 </ion-content>

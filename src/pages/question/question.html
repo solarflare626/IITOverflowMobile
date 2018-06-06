@@ -41,18 +41,18 @@
   
       <ion-row>
         <ion-col>
-          <button ion-button round color = "light" (click) = "upvote()">&nbsp;UpVote&nbsp;</button>
+          <button ion-button round color = "light" (click) = "upvoteQuestion()">&nbsp;UpVote&nbsp;</button>
         </ion-col>
   
         <ion-col>
           <div class = "voteCount">
             <ion-icon name="star" style= "font-size: 1.8em;"></ion-icon>
-            <p> 4 </p>
+            <p> {{ total }} </p>
           </div>
         </ion-col>
   
         <ion-col>
-            <button ion-button round color = "light">Downvote</button>
+            <button ion-button round color = "light" (click) = "downvoteQuestion()">Downvote</button>
         </ion-col>
       </ion-row>
     </div>
@@ -60,7 +60,7 @@
     <div class = "answer">
       <ion-list>
         <div detail-none ion-item (click)="expandItem(answer)"  
-                                    (press)="pressEvent($event)" 
+                                    (press)="pressEvent($event, answer.id)" 
                                     *ngFor="let answer of answers" class= "answer1">
           
           <ion-row>
@@ -87,15 +87,15 @@
                     <strong><p [innerHTML] = "comment.comment"></p></strong>
                     <p> {{getDate(comment.updatedAt)}} </p>
                 </ion-col>
-                <ion-col>
+                <ion-col *ngIf="user.id == comment.user.id">
                  <ion-icon name="create" (click)="editComment(comment.comment)"></ion-icon>
                 </ion-col>
-                <ion-col>
+                <ion-col *ngIf="user.id == comment.user.id">
                   <ion-icon name="trash" (click)="deleteComment(comment.id)"></ion-icon>
                 </ion-col>
               </ion-row>
             </div>
-            <button ion-button full (click) = "addComment()">Add Comment</button>
+            <button ion-button full (click) = "addComment(answer)">Add Comment</button>
           </expandable> 
         </div>
       </ion-list>

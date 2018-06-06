@@ -67,6 +67,7 @@ export class QuestionPage {
   comment : String;
   answer : String;
   answers : any;
+  total: any;
   answerCount: any;
   questions: any;
   itemExpandHeight: string = "auto";
@@ -118,18 +119,23 @@ export class QuestionPage {
       //   }
       // });
       this.user = {
-        "id": 18,
-        "displayname": "CHRISTINE JANE BELETA",
-        "email": "christinejane.beleta@g.msuiit.edu.ph",
-        "picture": 	"https://lh3.googleusercontent.com/-4cY7jxqGToA/AAAAAAAAAAI/AAAAAAAAAAA/AIcfdXBUX58qkK27YO69l2tVBe3v6Joakw/s96-c/photo.jpg"
-      }
+        "email": "roy.raposonjr@g.msuiit.edu.ph",
+        "displayname": "ROY RAPOSON JR",
+        "picture": "https://lh5.googleusercontent.com/-6_jcmzhWhBM/AAAAAAAAAAI/AAAAAAAAAAA/AIcfdXCMj" +
+            "cGHOu8m8ELUNY2qMB20z2C3Qg/s96-c/photo.jpg",
+        "createdAt": "2018-05-12T14:32:52.409Z",
+        "updatedAt": "2018-05-12T14:32:50.972Z",
+        "deletedAt": null,
+        "id": 5
+      };
     this.option = this.navParams.get('option');
     this.selected_question = this.navParams.get('question');
-    console.log("Selected Question: ", JSON.stringify(this.selected_question));
+    console.log("Selected Question: ", this.selected_question.user.id);
     this.questions =  this.navParams.get('questions');
-    console.log("Questions: ",JSON.stringify(this.questions));
+    //console.log("Questions: ",JSON.stringify(this.questions));
     this.selected_question_id = this.selected_question.id;
     this.answerCount = this.dataService.getQuestionAnswersCount(this.selected_question_id);
+    this.totalVotes();
     //console.log("qUser", this.selected_question.user.id);
 
     this.select_tags = [];
@@ -138,6 +144,7 @@ export class QuestionPage {
 
     //this.user = NativeUserProvider.get();
   }
+
 
   log(d){
     console.log(d);
@@ -329,6 +336,7 @@ export class QuestionPage {
   }
 
   ionViewDidLoad() {
+    this.refreshQuestion();
     this.setAnswers();
     this.setCategories();
     this.setFilteredItems();
@@ -497,7 +505,7 @@ export class QuestionPage {
 
   postAnswer() {
     this.new_answer = {
-      userId: this.user.id,
+      userId: 5,
       questionId: this.selected_question.id,
       answer: this.answer
     };
@@ -507,7 +515,6 @@ export class QuestionPage {
       .postAnswer(data)
       .subscribe(data => {
         this.setAnswers();
-
       });
     this.viewAnswerBar = false;
     this.answer = "";
@@ -545,13 +552,13 @@ export class QuestionPage {
 
   presentPopover(myEvent) {
     console.log("Clicked!");
-    let popover = this.popoverCtrl.create(PopoverComponent, {question: this.selected_question.question, questiondesc: this.selected_question.questiondesc });
+    let popover = this.popoverCtrl.create(PopoverComponent, {question: this.selected_question, questionpage: this});
     popover.present({
       ev: myEvent
     });
   }
 
-  pressEvent(e){
+  pressEvent(e, answer_id){
     console.log("Comment Pressed");
     let actionSheet = this.actionSheetCtrl.create({
       title: 'What do you want to do?',
@@ -566,6 +573,7 @@ export class QuestionPage {
           text: 'Delete Answer',
           handler: () => {
             console.log('Delete clicked');
+            this.deleteAnswer(answer_id);
           }
         }
       ]
@@ -573,7 +581,7 @@ export class QuestionPage {
     actionSheet.present();
   }
   
-  deleteComment(answer_id) {
+  deleteComment(comment_id) {
     let alert = this.alertCtrl.create({
       title: 'Confirm Action',
       message: 'Are you sure you want to delete this Comment?',
@@ -591,7 +599,7 @@ export class QuestionPage {
             console.log('Delete clicked');
             this
             .dataService
-            .deleteAnswer(answer_id)
+            .deleteComment(comment_id)
             .subscribe(data => {
               this.setAnswers();
             });
@@ -609,13 +617,41 @@ export class QuestionPage {
   }
 
 
-  addComment() {
+  addComment(answer) {
     console.log("Add Answer Clicked!!!");
-    this.navCtrl.push(AddCommentPage);
+    this.navCtrl.push(AddCommentPage, {"answerid": answer.id});
+    this.setAnswers();
   }
 
 
   addAnswer() {
-    this.navCtrl.push(AddAnswerPage, {'questionId': this.selected_question_id });
+    this.navCtrl.push(AddAnswerPage, {'questionId': this.selected_question_id, 'questionpage': this});
+  }
+
+  upvoteQuestion() {
+    this.dataService.upvoteQuestion(5, this.selected_question_id);
+    this.refreshQuestion();
+    this.totalVotes();
+  }
+
+  downvoteQuestion() {
+    this.dataService.downvoteQuestion(5, this.selected_question_id);
+    this.refreshQuestion();
+    this.totalVotes();
+  }
+  totalVotes() {
+    this.total = this.selected_question.upvotesCount - this.selected_question.downvotesCount;
+  }
+
+  refreshQuestion() {
+    this.dataService.getSpecificQuestion(this.selected_question_id).subscribe(
+      data => {
+        this.selected_question = data;
+        console.log(data);
+      },
+      err => {
+        console.log("Error");
+      }
+    );
   }
 }

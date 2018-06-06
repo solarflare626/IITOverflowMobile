@@ -122,6 +122,7 @@ import { AddCommentPage } from '../pages/add-comment/add-comment';
     PostedQuestionsPage,
     AnsweredQuestionsPage,
     FollowedQuestionsPage,
+    MessagesPage
   ],
   providers: [
     SplashScreen,

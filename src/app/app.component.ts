@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 
 import { timer } from 'rxjs/observable/timer';
+import { LoginPage } from '../pages/login/login';
 import { IntroPage } from '../pages/intro/intro';
 import { Storage } from '@ionic/storage';
 @Component({

@@ -17,6 +17,8 @@ import { PostedQuestionsPage } from '../../pages/posted-questions/posted-questio
 import { AnsweredQuestionsPage } from '../../pages/answered-questions/answered-questions';
 import { FollowedQuestionsPage} from '../../pages/followed-questions/followed-questions';
 import { UserProvider } from '../../providers/user/user';
+import {NativeApiProvider} from '../../nativeProviders/nativeApi/nativeApi';
+import {NativeUserProvider} from '../../nativeProviders/nativeUser/nativeUser';
 
 @Component({
   selector: 'page-profile',
@@ -43,19 +45,31 @@ export class ProfilePage {
     public toastCtrl: ToastController, 
     private alertCtrl: AlertController,
     private googlePlus: GooglePlus, 
-    private userProvider:UserProvider,
+    private userProvider:NativeUserProvider,
+    private apiProvider: NativeApiProvider,
+    private userProvider1: UserProvider,
     public appCtrl: App) {
-      this
-      .userProvider
-      .get()
-      .then(data => {
-        if (data) {
-          this.user = data;
-          console.log("curruser", this.user.id);
-        }else{
-          this
-        }
-      })
+      // this
+      // .userProvider
+      // .get()
+      // .then(data => {
+      //   if (data) {
+      //     this.user = data;
+      //     console.log("curruser", this.user.id);
+      //   }else{
+      //     this
+      //   }
+      // })
+      this.user = {
+        "email": "roy.raposonjr@g.msuiit.edu.ph",
+        "displayname": "ROY RAPOSON JR",
+        "picture": "https://lh5.googleusercontent.com/-6_jcmzhWhBM/AAAAAAAAAAI/AAAAAAAAAAA/AIcfdXCMj" +
+            "cGHOu8m8ELUNY2qMB20z2C3Qg/s96-c/photo.jpg",
+        "createdAt": "2018-05-12T14:32:52.409Z",
+        "updatedAt": "2018-05-12T14:32:50.972Z",
+        "deletedAt": null,
+        "id": 5
+      };
       
     }
     
@@ -69,7 +83,7 @@ export class ProfilePage {
     }
 
   listInterests() {
-    this.userProvider.listInterests(this.user.id).subscribe(
+    this.userProvider1.listInterests(this.user.id).subscribe(
       data => {
         this.interests = data;
       },
@@ -80,7 +94,7 @@ export class ProfilePage {
   }
 
   listQuestions() {
-    this.userProvider.listQuestions(this.user.id).subscribe(
+    this.userProvider1.listQuestions(this.user.id).subscribe(
       data => {
         this.posts = data;
       },
@@ -89,7 +103,7 @@ export class ProfilePage {
       });
       
       
-      this.userProvider.questionsCount(this.user.id).subscribe(
+      this.userProvider1.questionsCount(this.user.id).subscribe(
         data => {
           console.log(data);
           this.postscount = data.count;
@@ -98,7 +112,7 @@ export class ProfilePage {
   }
   
   listFollowers() {
-    this.userProvider.listFollowers(this.user.id).subscribe(
+    this.userProvider1.listFollowers(this.user.id).subscribe(
       data => {
         this.followersusers = data;
         console.log("Listed Followers");
@@ -107,7 +121,7 @@ export class ProfilePage {
         console.log("Error Followers");
       }
     );
-    this.userProvider.followersCount(this.user.id).subscribe(
+    this.userProvider1.followersCount(this.user.id).subscribe(
       data => {
         console.log(data);
         this.followerscount = data.count;
@@ -116,7 +130,7 @@ export class ProfilePage {
   }
 
   listFollowing() {
-    this.userProvider.listFollowing(this.user.id).subscribe(
+    this.userProvider1.listFollowing(this.user.id).subscribe(
       data => {
         this.followingusers = data;
         console.log("Listed Following");
@@ -125,7 +139,7 @@ export class ProfilePage {
         console.log("Error Following");
       }
     );
-    this.userProvider.followingCount(this.user.id).subscribe(
+    this.userProvider1.followingCount(this.user.id).subscribe(
       data => {
         console.log(data);
         this.followingcount = data.count;
@@ -169,7 +183,7 @@ export class ProfilePage {
   }
 
   editProfile() {
-    this.userProvider.listInterests(this.user.id).subscribe(
+    this.userProvider1.listInterests(this.user.id).subscribe(
       data => {
         this.categories = data;
       });

@@ -14,7 +14,7 @@
 
 
 <ion-content padding>
-  <div [froalaEditor] = "options"></div>
+  <div [froalaEditor] placeholder = "Answer" [(froalaModel)]="answer"></div>
   <button ion-button full (click) = "postAnswer()">Add Answer</button>
 
 </ion-content>

@@ -42,18 +42,28 @@ export class NewsFeedPage {
         "deletedAt": null,
         "id": 8
       };*/
-      this
-      .userProvider1
-      .get()
-      .then(data => {
-        if (data) {
-          this.user = data;
-          console.log("curruser", this.user.id);
-        }else{
-          this
-        }
-      })
+      // this
+      // .userProvider1
+      // .get()
+      // .then(data => {
+      //   if (data) {
+      //     this.user = data;
+      //     console.log("curruser", this.user.id);
+      //   }else{
+      //     this
+      //   }
+      // })
     //this.reload();
+    this.user = {
+      "email": "roy.raposonjr@g.msuiit.edu.ph",
+      "displayname": "ROY RAPOSON JR",
+      "picture": "https://lh5.googleusercontent.com/-6_jcmzhWhBM/AAAAAAAAAAI/AAAAAAAAAAA/AIcfdXCMj" +
+          "cGHOu8m8ELUNY2qMB20z2C3Qg/s96-c/photo.jpg",
+      "createdAt": "2018-05-12T14:32:52.409Z",
+      "updatedAt": "2018-05-12T14:32:50.972Z",
+      "deletedAt": null,
+      "id": 5
+    };
     
   }
 //////////////////////////////////////////////////////////////// -> onload

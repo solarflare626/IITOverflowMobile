@@ -10,6 +10,7 @@ import { App,
 import { FollowingPage } from '../../pages/following/following';
 import { QuestionPage } from '../../pages/question/question';
 import { LoginPage } from '../../pages/login/login';
+import { NativeApiProvider } from '../../nativeProviders/nativeApi/nativeApi';
 
 @Component({
   selector: 'page-followers',

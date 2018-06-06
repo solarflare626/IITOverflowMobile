@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ViewController, NavController, AlertController, NavParams } from 'ionic-angular';
-
+import { NewsfeedProvider } from '../../providers/newsfeed/newsfeed';
 import { EditQuestionPage } from '../../pages/edit-question/edit-question'
 
 @Component({
@@ -11,17 +11,18 @@ export class PopoverComponent {
 
   items: any;
   text: string;
+  question: any;
 
   constructor(public viewCtrl: ViewController, 
     public navCtrl: NavController,
     public alertCtrl: AlertController,  
-    public navParams: NavParams) {
+    public navParams: NavParams,
+  private dataService: NewsfeedProvider) {
     this.items = [
       {item : "Edit Question"},
       {item : "Delete Question"},
     ]
-    let questionHead = this.navParams.get('question');
-    let questionDesc = this.navParams.get('questiondesc');
+    this.question = this.navParams.get('question');
 
   }
 
@@ -29,7 +30,7 @@ export class PopoverComponent {
     console.log(item.item);
     if (item.item == "Edit Question") {
       console.log("Edit Question!");
-      this.navCtrl.push(EditQuestionPage, {question1: this.navParams.get('question'), question2:this.navParams.get('questiondesc')});
+      this.navCtrl.push(EditQuestionPage, {question: this.question});
     } else if (item.item == "Delete Question") {
       let alert = this.alertCtrl.create({
         title: 'Delete Question',
@@ -46,6 +47,11 @@ export class PopoverComponent {
             text: 'Delete',
             handler: () => {
               console.log('Delete Confirmed');
+              this.dataService.deleteQuestion(this.question.id).subscribe(
+                data => {
+                  console.log("Deleted");
+                }
+              );
             }
           }
         ]

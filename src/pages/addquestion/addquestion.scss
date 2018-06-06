@@ -9,4 +9,16 @@ page-addquestion {
         position: absolute;
         top: -99999999px;
       }
+      .toolbar-background-md {
+        background-color: #850f13;
+        color: white;
+    }
+    
+    .toolbar-title-md {
+        color: white;
+        letter-spacing: 2px;
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 1.4rem;
+    }
 }

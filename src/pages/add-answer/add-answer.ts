@@ -18,9 +18,10 @@ export class AddAnswerPage {
   selected_question_id1: any;
   selected_question: any;
   selected_answer: any;
-  answer: String;
+  answer: any;
   answers: any;
   options: any;
+  questionpage: any;
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     public dataService: NewsfeedProvider) {
@@ -32,6 +33,7 @@ export class AddAnswerPage {
       height: 300,
     }
     this.selected_question_id1 = this.navParams.get("questionId");
+    this.questionpage = this.navParams.get('questionpage');
     console.log(this.selected_question_id1);
   }
 
@@ -42,15 +44,16 @@ export class AddAnswerPage {
   
   postAnswer(){
     this.new_answer = {
-      userId: 4, 
+      userId: 5, 
       questionId: this.selected_question_id1,
-      answer: this.answer
+      answer: this.answer,
     };
+    console.log("Answer: ",this.new_answer);
     let data = JSON.stringify(this.new_answer);
-    this.dataService.postAnswer(data).subscribe(data=>{
-      this.setAnswers();
-      
-    });
+    this.dataService.postAnswer(data).subscribe(data =>{
+        console.log(data);
+        this.questionpage.setAnswers();
+      });
     this.answer = ""; 
     this.navCtrl.pop();
   }

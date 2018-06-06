@@ -21,7 +21,7 @@ export class NewsfeedProvider {
     return this.http
       .get(
         this.globals.baseUrl + 
-          '/api/Questions?filter={"include":[{"relation":"answers","scope":{"include":"user"}},{"relation":"category"},{"relation":"user"}], "order":  "updatedAt DESC " }'
+          '/api/Questions?filter={"include":[{"relation":"category"},{"relation":"user"}], "order": "updatedAt DESC"}'
           //'/api/Questions?filter[include]=category&filter[include]=user'
       )
       .map(res => res.json());
@@ -120,15 +120,67 @@ export class NewsfeedProvider {
   //////////////////////////////////////////////////////////////// -> post/edit/delete answers functions
  
  postAnswer(post) {
-    return this.http.post(this.globals.baseUrl + "/api/Answers", JSON.stringify(post));
+    return this.http.post(this.globals.baseUrl + "/api/Answers", JSON.parse(post));
   }
   postComment(post) {
-    return this.http.post(this.globals.baseUrl + "/api/Comments", JSON.stringify(post));
+    return this.http.post(this.globals.baseUrl + "/api/Comments", JSON.parse(post));
   }
   deleteComment(comment_id) {
-    return this.http.delete(this.globals.baseUrl+'/api/Answers/'+comment_id);
+    return this.http.delete(this.globals.baseUrl+'/api/Comments/'+comment_id);
     }
   deleteAnswer(answer_id) {
-    return this.http.delete(this.globals.baseUrl+'/api/Answers/'+answer_id);
+    return this.http.delete(this.globals.baseUrl+'/api/Answers/'+answer_id).map(res => res.json());
+  }
+
+  upvoteQuestion(user_id, qid) {
+    var voted;
+    this.http.head(this.globals.baseUrl+ '/api/users/'+user_id+'/questionsupvoted/rel/'+qid).subscribe(
+      data => {
+        console.log("Already upvoted question");
+      },
+      err => {
+        console.log("Not upvoted yet");
+        let data = {};
+        this.http.put(this.globals.baseUrl+ '/api/users/'+user_id+'/questionsupvoted/rel/'+qid, data).map(res => res.json()).subscribe(
+          data => {
+            console.log("UPVOTED");
+          },
+          err => {
+            console.log("Error");
+          }
+        );
+      }
+    );
+  }
+
+  downvoteQuestion(user_id, qid) {
+    this.http.head(this.globals.baseUrl+ '/api/users/'+user_id+'/questionsdownvoted/rel/'+qid).subscribe(
+      data => {
+        console.log("Already downvoted question");
+      },
+      err => {
+        console.log("Not downvoted yet");
+        let data = {};
+        this.http.put(this.globals.baseUrl+ '/api/users/'+user_id+'/questionsdownvoted/rel/'+qid, data).map(res => res.json()).subscribe(
+          data => {
+            console.log("DOWNVOTED");
+          },
+          err => {
+            console.log("Error");
+          }
+        );
+      }
+    );
+  }
+  getSpecificQuestion(qid) {
+    return this.http.get(this.globals.baseUrl+ '/api/Questions/'+qid).map(res => res.json());
+  }
+
+  editQuestion(qid, data) {
+    return this.http.put(this.globals.baseUrl+'/Questions/'+qid, data).map(res => res.json());
+  }
+
+  deleteQuestion(qid) {
+    return this.http.delete(this.globals.baseUrl+'/Questions/'+qid).map(res => res.json());
   }
 }
